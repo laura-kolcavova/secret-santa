@@ -1,22 +1,32 @@
-import { Component, createSignal } from 'solid-js';
-import { userClient } from '~/api/user/userClient';
+import { Component, createEffect, createSignal } from 'solid-js';
+import { useLogin } from './hooks/useLogin';
 
 export const LogIn: Component = () => {
+  const { login, getIsPending, getIsError, getIsSuccess } = useLogin();
+
   const [getEmailValue, setEmailValue] = createSignal<string>('');
   const [getPinValue, setPinValue] = createSignal<string>('');
   const [getErrorMessage, setErrorMessage] = createSignal<string>('');
 
-  const handleSubmit = async (e: SubmitEvent) => {
+  createEffect(() => {
+    console.log('IsPending', getIsPending());
+  });
+
+  createEffect(() => {
+    console.log('IsError', getIsError());
+  });
+
+  createEffect(() => {
+    console.log('IsSuccess', getIsSuccess());
+  });
+
+  const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
 
-    console.log(getEmailValue(), getPinValue());
-
-    const response = await userClient.login({
+    login({
       email: getEmailValue(),
       pin: getPinValue(),
     });
-
-    console.log(response);
   };
 
   return (
