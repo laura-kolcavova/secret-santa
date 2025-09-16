@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 
 import userRoutes from './api/user/userRoutes';
-import { errorHandler } from './api/middlewares/errorHandler';
+import { exceptionHandler } from './api/shared/middlewares/exceptionHandler';
 import { appConfig } from './config/appConfig';
 
 const app = express();
@@ -11,7 +11,7 @@ app.use(cors());
 
 app.use('/api/user', userRoutes);
 
-app.use(errorHandler);
+app.use(exceptionHandler);
 
 const port = appConfig.port;
 

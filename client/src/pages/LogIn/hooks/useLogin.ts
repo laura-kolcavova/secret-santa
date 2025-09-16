@@ -8,7 +8,7 @@ export const useLogin = () => {
   const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
   const [getErrorMessage, setErrorMessage] = createSignal<string | null>(null);
 
-  const loginAsync = async (loginRequest: LoginRequestDto) => {
+  const loginAsync = async (loginRequest: LoginRequestDto, signal?: AbortSignal) => {
     batch(() => {
       setIsPending(true);
       setIsError(false);
@@ -16,7 +16,7 @@ export const useLogin = () => {
     });
 
     try {
-      await userClient.login(loginRequest);
+      await userClient.login(loginRequest, signal);
 
       batch(() => {
         setIsSuccess(true);
@@ -25,14 +25,20 @@ export const useLogin = () => {
     } catch (error) {
       batch(() => {
         setIsError(true);
-        setErrorMessage(error instanceof Error ? error.message : 'Login failed');
+        setErrorMessage(
+          error instanceof Error
+            ? error.message
+            : typeof error === 'string'
+            ? error
+            : 'Login failed',
+        );
         setIsPending(false);
       });
     }
   };
 
-  const login = (loginRequest: LoginRequestDto) => {
-    loginAsync(loginRequest);
+  const login = (loginRequest: LoginRequestDto, signal?: AbortSignal) => {
+    loginAsync(loginRequest, signal);
   };
 
   return { login, getIsPending, getIsError, getIsSuccess, getErrorMessage };

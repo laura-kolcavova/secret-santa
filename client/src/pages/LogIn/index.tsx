@@ -1,4 +1,4 @@
-import { Component, createEffect, createSignal } from 'solid-js';
+import { Component, createEffect, createSignal, Show } from 'solid-js';
 import { useLogin } from './hooks/useLogin';
 
 export const LogIn: Component = () => {
@@ -69,8 +69,32 @@ export const LogIn: Component = () => {
         <div>
           <button
             type="submit"
-            class="w-full py-2 px-4 rounded text-white font-bold bg-blue-500 hover:bg-blue-600 focus:outline-none focus:shadow-outline cursor-pointer">
-            Log In
+            class="w-full py-2 px-4 rounded text-white font-bold bg-blue-500 hover:bg-blue-600 focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center"
+            disabled={getIsPending()}>
+            <Show when={getIsPending()}>
+              <svg
+                class="inline-block animate-spin h-5 w-5 mr-2 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24">
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+              </svg>
+              <span>Přihlašování...</span>
+            </Show>
+
+            <Show when={!getIsPending()}>
+              <span>Přihlásit se</span>
+            </Show>
           </button>
         </div>
       </form>
