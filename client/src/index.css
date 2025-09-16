@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+:root {
+  --page-background-color: #faf7f2;
+}
+
 html,
 body,
 #root {
@@ -10,4 +14,8 @@ body,
 #root {
   display: flex;
   flex-direction: column;
+}
+
+body {
+  background-color: var(--page-background-color);
 }
