@@ -6,12 +6,12 @@ import { A, useNavigate } from '@solidjs/router';
 import { pages } from '~/navigation/pages';
 
 export const LogIn: Component = () => {
+  const navigate = useNavigate();
+
   const { login, getIsPending, getIsSuccess, getIsError, getErrorMessage } = useLogin();
 
   const [getEmailValue, setEmailValue] = createSignal<string>('');
   const [getPinValue, setPinValue] = createSignal<string>('');
-
-  const navigate = useNavigate();
 
   createEffect(() => {
     if (getIsSuccess()) {
@@ -52,6 +52,7 @@ export const LogIn: Component = () => {
               onInput={(e) => setEmailValue(e.currentTarget.value)}
             />
           </div>
+
           <div class="mb-6">
             <label class="block mb-2 text-sm font-bold text-gray-700" for="pin">
               Pin (4 čísla)
@@ -59,7 +60,7 @@ export const LogIn: Component = () => {
 
             <input
               id="pin"
-              type="text"
+              type="password"
               name="pin"
               autocomplete="off"
               required
@@ -71,6 +72,7 @@ export const LogIn: Component = () => {
               onInput={(e) => setPinValue(e.currentTarget.value)}
             />
           </div>
+
           <div>
             <button
               type="submit"
