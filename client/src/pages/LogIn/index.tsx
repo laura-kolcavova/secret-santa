@@ -2,23 +2,21 @@ import { Component, createEffect, createSignal, Show } from 'solid-js';
 import { useLogin } from './hooks/useLogin';
 import { SpinnerIcon } from '../shared/icons/SpinnerIcon';
 import { Alert } from '../shared/Alert';
+import { A, useNavigate } from '@solidjs/router';
+import { pages } from '~/navigation/pages';
 
 export const LogIn: Component = () => {
-  const { login, getIsPending, getIsError, getIsSuccess, getErrorMessage } = useLogin();
+  const { login, getIsPending, getIsSuccess, getIsError, getErrorMessage } = useLogin();
 
   const [getEmailValue, setEmailValue] = createSignal<string>('');
   const [getPinValue, setPinValue] = createSignal<string>('');
 
-  createEffect(() => {
-    console.log('IsPending', getIsPending());
-  });
+  const navigate = useNavigate();
 
   createEffect(() => {
-    console.log('IsError', getIsError());
-  });
-
-  createEffect(() => {
-    console.log('IsSuccess', getIsSuccess());
+    if (getIsSuccess()) {
+      navigate(pages.MyProfile.paths[0]);
+    }
   });
 
   const handleSubmit = (e: SubmitEvent) => {
@@ -32,12 +30,12 @@ export const LogIn: Component = () => {
 
   return (
     <div class="container mx-auto py-12">
-      <Show when={getErrorMessage()}>
+      <Show when={getIsError()}>
         <Alert color="danger">{getErrorMessage()}</Alert>
       </Show>
 
       <div class="flex flex-col items-center">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} class="mb-12 w-full max-w-xs">
           <div class="mb-6">
             <label class="block mb-2 text-sm font-bold text-gray-700" for="email">
               E-mail
@@ -88,6 +86,15 @@ export const LogIn: Component = () => {
             </button>
           </div>
         </form>
+
+        <div>
+          <span>
+            Ještě nemáte profil?{' '}
+            <A href={pages.NewProfile.paths[0]} class="text-blue-600 hover:underline">
+              Vytvořit nový profil
+            </A>
+          </span>
+        </div>
       </div>
     </div>
   );
