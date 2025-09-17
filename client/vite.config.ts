@@ -7,7 +7,7 @@ import path from 'path';
 export default defineConfig({
   plugins: [devtools(), solidPlugin(), tailwindcss()],
   server: {
-    port: 3000,
+    port: 3200,
   },
   build: {
     target: 'esnext',

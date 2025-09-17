@@ -4,11 +4,11 @@ import { PageDefinition } from './PageDefinition';
 import { NewProfile } from '~/pages/NewProfile';
 import { MyProfile } from '~/pages/MyProfile';
 
-type PageDefinitionsType = {
+type PageDefinitions = {
   [key in Page]: PageDefinition;
 };
 
-export const PageDefinitions: PageDefinitionsType = {
+export const pages: PageDefinitions = {
   [Page.LogIn]: {
     paths: ['login', '/'],
     component: LogIn,
