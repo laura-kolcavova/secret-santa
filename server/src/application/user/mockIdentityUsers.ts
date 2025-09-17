@@ -1,4 +1,4 @@
-import { IdentityUser } from '~/models/IdentityUser';
+import { IdentityUser } from '~/application/user/models/IdentityUser';
 
 export const mockIdentityUsers: IdentityUser[] = [
   {
@@ -7,6 +7,6 @@ export const mockIdentityUsers: IdentityUser[] = [
     lastName: 'Last Name MOCK',
     department: 'Department MOCK',
     hobbies: ['Hobby 1 MOCK', 'Hobby 2 MOCK'],
-    pinHash: 'b59c67bf196a4758191e42f76670ceba',
+    pinHash: 'df76742566d102582564aed2bb4543ef',
   },
 ];

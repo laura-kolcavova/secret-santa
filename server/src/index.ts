@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { json } from 'express';
 import cors from 'cors';
 
 import userRoutes from './api/user/userRoutes';
@@ -8,6 +8,7 @@ import { appConfig } from './config/appConfig';
 const app = express();
 
 app.use(cors());
+app.use(json());
 
 app.use('/api/user', userRoutes);
 
