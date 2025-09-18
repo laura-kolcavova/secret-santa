@@ -1,28 +1,26 @@
-function envToString(key: string): string {
-  const value = process.env[key];
+const required = (envKey: string): string => {
+  const value = process.env[envKey];
 
   if (value === undefined) {
-    throw new Error(`Environment variable ${key} is required but not defined.`);
+    throw new Error(`Environment variable ${envKey} is required but not defined.`);
   }
 
   return value;
-}
+};
 
-function envToNumber(key: string): number {
-  const value = process.env[key];
+const toString = (value: string): string => {
+  return value.toString();
+};
 
-  if (value === undefined) {
-    throw new Error(`Environment variable ${key} is required but not defined.`);
-  }
-
+const toNumber = (value: string): number => {
   const num = Number(value);
 
   if (isNaN(num)) {
-    throw new Error(`Environment variable ${key} must be a valid number.`);
+    throw new Error(`Value ${value} must be a valid number.`);
   }
 
   return num;
-}
+};
 
 export interface AppConfig {
   port: number;
@@ -30,6 +28,6 @@ export interface AppConfig {
 }
 
 export const appConfig: AppConfig = {
-  port: envToNumber('PORT'),
-  salt: envToString('SALT'),
+  port: toNumber(required('PORT')),
+  salt: toString(required('SALT')),
 };

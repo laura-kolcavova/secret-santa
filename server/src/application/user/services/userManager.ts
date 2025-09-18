@@ -17,7 +17,30 @@ const checkPin = (user: IdentityUser, pin: string): boolean => {
   return user.pinHash === pinHash;
 };
 
+const createUser = (
+  email: string,
+  pin: string,
+  firstName: string,
+  lastName: string,
+  department: string,
+  hobbies: string[],
+) => {
+  const pinHash = md5(pin + appConfig.salt);
+
+  const user: IdentityUser = {
+    email,
+    pinHash,
+    firstName,
+    lastName,
+    department,
+    hobbies,
+  };
+
+  mockIdentityUsers.push(user);
+};
+
 export const userManager = {
   findByEmail,
   checkPin,
+  createUser,
 };

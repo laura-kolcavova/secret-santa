@@ -2,11 +2,7 @@ import { Component, JSX } from 'solid-js';
 
 export const SpinnerIcon: Component<JSX.HTMLAttributes<SVGElement>> = (props) => {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class={`${props.class}`}
-      fill="none"
-      viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" class={props.class} fill="none" viewBox="0 0 24 24">
       <circle
         class="opacity-25"
         cx="12"
