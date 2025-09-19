@@ -1,4 +1,4 @@
-import { ValidationError } from '~/application/models/ValidationError';
+import { ValidationError } from '~/application/shared/ValidationError';
 import { ProblemDetails } from '../shared/ProblemDetails';
 import { Request } from 'express';
 

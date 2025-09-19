@@ -170,6 +170,10 @@ export const NewProfile: Component = () => {
           </div>
 
           <div class="mb-4 col-1 row-4">
+            <label class="block mb-2 text-sm font-bold text-pallete-4" for="hobbies">
+              Záliby
+            </label>
+
             <HobbiesInput id="hobbies" hobbies={hobbies} onAdd={addHobby} onRemove={removeHobby} />
           </div>
 

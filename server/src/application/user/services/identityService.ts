@@ -17,7 +17,7 @@ const login = (email: string, pin: string): LoginResult => {
   const userHasValidPin = userManager.checkPin(user, pin);
 
   if (!userHasValidPin) {
-    return loginResultError(userErrors.pinDoNotMatch());
+    return loginResultError(userErrors.pinDoesNotMatch());
   }
 
   return loginResultSuccess();

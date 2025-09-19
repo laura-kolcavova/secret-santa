@@ -1,0 +1,17 @@
+{
+    "shared.somethingWentWrong": "Něco se pokazilo",
+    "logIn.email": "E-mail",
+    "logIn.pin": "Pin (4 čísla)",
+    "logIn.logIn": "Přihlásit se",
+    "logIn.userNotFound": "Uživatel nebyl nalezen",
+    "logIn.pinDoesNotMatch": "Neplatný pin",
+    "newProfile.email": "E-mail",
+    "newProfile.firstName": "",
+    "newProfile.department": "",
+    "newProfile.lastName": "",
+    "newProfile.pin": "",
+    "newProfile.pinConfirm": "",
+    "newProfile.hobbies": "",
+    "newProfile.createNewProfile": "",
+    "newProfile.emailAlreadyExists": "Uživatel s tímto e-mailem již existuje"
+}

@@ -10,7 +10,7 @@ const handleErrorMessage = (error: unknown): string => {
     switch (code) {
       case 'User.NotFound':
         return 'Uživatel nebyl nalezen';
-      case 'User.PinDoNotMatch':
+      case 'User.PinDoesNotMatch':
         return 'Neplatný pin';
     }
   }
