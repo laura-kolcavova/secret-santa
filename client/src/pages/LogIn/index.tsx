@@ -6,12 +6,12 @@ import { A, useNavigate } from '@solidjs/router';
 import { pages } from '~/navigation/pages';
 
 export const LogIn: Component = () => {
+  const navigate = useNavigate();
+
   const { login, getIsPending, getIsSuccess, getIsError, getErrorMessage } = useLogin();
 
   const [getEmailValue, setEmailValue] = createSignal<string>('');
   const [getPinValue, setPinValue] = createSignal<string>('');
-
-  const navigate = useNavigate();
 
   createEffect(() => {
     if (getIsSuccess()) {
@@ -37,7 +37,7 @@ export const LogIn: Component = () => {
       <div class="flex flex-col items-center">
         <form onSubmit={handleSubmit} class="mb-12 w-full max-w-xs">
           <div class="mb-6">
-            <label class="block mb-2 text-sm font-bold text-gray-700" for="email">
+            <label class="block mb-2 text-sm font-bold text-pallete-4" for="email">
               E-mail
             </label>
 
@@ -52,14 +52,15 @@ export const LogIn: Component = () => {
               onInput={(e) => setEmailValue(e.currentTarget.value)}
             />
           </div>
-          <div class="mb-6">
-            <label class="block mb-2 text-sm font-bold text-gray-700" for="pin">
+
+          <div class="mb-12">
+            <label class="block mb-2 text-sm font-bold text-pallete-4" for="pin">
               Pin (4 čísla)
             </label>
 
             <input
               id="pin"
-              type="text"
+              type="password"
               name="pin"
               autocomplete="off"
               required
@@ -71,10 +72,11 @@ export const LogIn: Component = () => {
               onInput={(e) => setPinValue(e.currentTarget.value)}
             />
           </div>
+
           <div>
             <button
               type="submit"
-              class="w-full py-2 px-4 rounded text-white font-bold bg-blue-500 hover:bg-blue-600 focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center"
+              class="w-full py-2 px-4 rounded text-white font-bold bg-blue-500 hover:bg-blue-600 focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-7"
               disabled={getIsPending()}>
               <Show when={getIsPending()}>
                 <SpinnerIcon class="animate-spin size-5 mr-2" />
@@ -90,7 +92,7 @@ export const LogIn: Component = () => {
         <div>
           <span>
             Ještě nemáte profil?{' '}
-            <A href={pages.NewProfile.paths[0]} class="text-blue-600 hover:underline">
+            <A href={pages.NewProfile.paths[0]} class="text-pallete-2 font-bold hover:underline">
               Vytvořit nový profil
             </A>
           </span>

@@ -10,15 +10,15 @@ type PageDefinitions = {
 
 export const pages: PageDefinitions = {
   [Page.LogIn]: {
-    paths: ['login', '/'],
+    paths: ['/login', '/'],
     component: LogIn,
   },
   [Page.NewProfile]: {
-    paths: ['new-profile'],
+    paths: ['/new-profile'],
     component: NewProfile,
   },
   [Page.MyProfile]: {
-    paths: ['my-profile'],
+    paths: ['/my-profile'],
     component: MyProfile,
   },
 };

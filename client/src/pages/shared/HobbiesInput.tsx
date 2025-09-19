@@ -1,0 +1,62 @@
+import { Component, createSignal } from 'solid-js';
+import { PlusIcon } from './icons/PlusIcon';
+
+export type HobbiesInputProps = {
+  hobbies: string[];
+  onAdd: (addedHobby: string) => void;
+  onRemove: (removedHobby: string) => void;
+  id?: string;
+};
+
+export const HobbiesInput: Component<HobbiesInputProps> = (props) => {
+  const [getInputValue, setInputValue] = createSignal<string>('');
+
+  const getHobbyFromInput = () => {
+    return getInputValue().trim();
+  };
+
+  const addHobby = () => {
+    const hobby = getHobbyFromInput();
+
+    if (hobby && !props.hobbies.includes(hobby)) {
+      props.onAdd(hobby);
+    }
+  };
+
+  const handleSubmit = (e: SubmitEvent) => {
+    e.preventDefault();
+
+    addHobby();
+
+    setInputValue('');
+  };
+
+  return (
+    <>
+      <label class="block mb-2 text-sm font-bold text-pallete-4" for="hobbies">
+        Záliby
+      </label>
+
+      <form onSubmit={handleSubmit}>
+        <div class="flex flex-row gap-2">
+          <input
+            id={props.id}
+            type="text"
+            autocomplete="off"
+            class='"block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100'
+            placeholder="Zádejte zálibu a stiskněte Enter..."
+            value={getInputValue()}
+            onInput={(e) => setInputValue(e.currentTarget.value)}
+          />
+
+          <button
+            class="px-3 py-2 rounded-md text-base font-normal cursor-pointer bg-pallete-4 hover:bg-pallete-5 text-pallete-7"
+            onClick={addHobby}
+            disabled={!getHobbyFromInput()}>
+            <PlusIcon class="size-5" />
+          </button>
+        </div>
+      </form>
+    </>
+  );
+};
