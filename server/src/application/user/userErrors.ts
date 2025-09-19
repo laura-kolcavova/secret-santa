@@ -5,9 +5,9 @@ const notFound = (): ValidationError => ({
   message: 'User was not found',
 });
 
-const pinDoNotMatch = (): ValidationError => ({
-  code: 'User.PinDoNotMatch',
-  message: 'User was not found',
+const pinDoesNotMatch = (): ValidationError => ({
+  code: 'User.PinDoesNotMatch',
+  message: 'Pin does not match',
 });
 
 const emailAlreadyExists = (): ValidationError => ({
@@ -17,6 +17,6 @@ const emailAlreadyExists = (): ValidationError => ({
 
 export const userErrors = {
   notFound,
-  pinDoNotMatch,
+  pinDoesNotMatch,
   emailAlreadyExists,
 };

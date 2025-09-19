@@ -4,6 +4,8 @@ import { SpinnerIcon } from '../shared/icons/SpinnerIcon';
 import { Alert } from '../shared/Alert';
 import { A, useNavigate } from '@solidjs/router';
 import { pages } from '~/navigation/pages';
+import { FormattedMessage } from '~/translation/FormattedMessage';
+import { messages } from './messages';
 
 export const LogIn: Component = () => {
   const navigate = useNavigate();
@@ -38,7 +40,7 @@ export const LogIn: Component = () => {
         <form onSubmit={handleSubmit} class="mb-12 w-full max-w-xs">
           <div class="mb-6">
             <label class="block mb-2 text-sm font-bold text-pallete-4" for="email">
-              E-mail
+              <FormattedMessage message={messages.email} />
             </label>
 
             <input
@@ -55,7 +57,7 @@ export const LogIn: Component = () => {
 
           <div class="mb-12">
             <label class="block mb-2 text-sm font-bold text-pallete-4" for="pin">
-              Pin (4 čísla)
+              <FormattedMessage message={messages.pin} />
             </label>
 
             <input
@@ -83,7 +85,9 @@ export const LogIn: Component = () => {
               </Show>
 
               <Show when={!getIsPending()}>
-                <span>Přihlásit se</span>
+                <span>
+                  <FormattedMessage message={messages.logIn} />
+                </span>
               </Show>
             </button>
           </div>
@@ -91,9 +95,9 @@ export const LogIn: Component = () => {
 
         <div>
           <span>
-            Ještě nemáte profil?{' '}
+            <FormattedMessage message={messages.noProfileYet} />{' '}
             <A href={pages.NewProfile.paths[0]} class="text-pallete-2 font-bold hover:underline">
-              Vytvořit nový profil
+              <FormattedMessage message={messages.createNewProfile} />
             </A>
           </span>
         </div>

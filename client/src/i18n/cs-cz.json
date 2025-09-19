@@ -1,0 +1,21 @@
+{
+    "shared.somethingWentWrong": "Něco se pokazilo",
+    "logIn.email": "E-mail",
+    "logIn.pin": "Pin (4 čísla)",
+    "logIn.logIn": "Přihlásit se",
+    "logIn.userNotFound": "Uživatel nebyl nalezen",
+    "logIn.pinDoesNotMatch": "Neplatný pin",
+    "logIn.noProfileYet": "Ještě nemáte profil?",
+    "logIn.createNewProfile": "Vytvořit nový profil",
+    "newProfile.firstName": "Jméno",
+    "newProfile.lastName": "Příjmení",
+    "newProfile.department": "Oddělení",
+    "newProfile.email": "E-mail",
+    "newProfile.pin": "Pin (4 čísla)",
+    "newProfile.pinConfirm": "Pin (znovu)",
+    "newProfile.hobbies": "Záliby",
+    "newProfile.create": "Vytvořit",
+    "newProfile.alreadyHaveProfile": "Máte již profil?",
+    "newProfile.logIn": "Přihlásit se",
+    "newProfile.emailAlreadyExists": "Uživatel s tímto e-mailem již existuje"
+}

@@ -33,10 +33,6 @@ export const HobbiesInput: Component<HobbiesInputProps> = (props) => {
 
   return (
     <>
-      <label class="block mb-2 text-sm font-bold text-pallete-4" for="hobbies">
-        Záliby
-      </label>
-
       <form onSubmit={handleSubmit}>
         <div class="flex flex-row gap-2">
           <input

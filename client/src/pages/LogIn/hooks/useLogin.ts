@@ -1,24 +1,11 @@
-import { AxiosError } from 'axios';
 import { batch, createSignal } from 'solid-js';
 import { LoginRequestDto } from '~/api/user/dto/LoginRequestDto';
 import { userClient } from '~/api/user/userClient';
-
-const handleErrorMessage = (error: unknown): string => {
-  if (error instanceof AxiosError && error.response?.data.code) {
-    const code = error.response.data.code;
-
-    switch (code) {
-      case 'User.NotFound':
-        return 'Uživatel nebyl nalezen';
-      case 'User.PinDoNotMatch':
-        return 'Neplatný pin';
-    }
-  }
-
-  return 'Něco se pokazilo';
-};
+import { useLoginErrorHandler } from './useLoginErrorHandler';
 
 export const useLogin = () => {
+  const { handleError } = useLoginErrorHandler();
+
   const [getIsPending, setIsPending] = createSignal<boolean>(false);
   const [getIsError, setIsError] = createSignal<boolean>(false);
   const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
@@ -42,7 +29,7 @@ export const useLogin = () => {
     } catch (error) {
       batch(() => {
         setIsError(true);
-        setErrorMessage(handleErrorMessage(error));
+        setErrorMessage(handleError(error));
         setIsPending(false);
       });
     }

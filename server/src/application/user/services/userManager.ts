@@ -4,7 +4,7 @@ import { mockIdentityUsers } from '../mockIdentityUsers';
 import { IdentityUser } from '../models/IdentityUser';
 
 const findByEmail = (email: string): IdentityUser | undefined => {
-  const normalizedEmail = email.trim().toLocaleLowerCase();
+  const normalizedEmail = normalizeEmail(email);
 
   const user = mockIdentityUsers.find((identityUser) => identityUser.email === normalizedEmail);
 
@@ -12,7 +12,7 @@ const findByEmail = (email: string): IdentityUser | undefined => {
 };
 
 const checkPin = (user: IdentityUser, pin: string): boolean => {
-  const pinHash = md5(pin + appConfig.salt);
+  const pinHash = computePinHash(pin);
 
   return user.pinHash === pinHash;
 };
@@ -25,10 +25,12 @@ const createUser = (
   department: string,
   hobbies: string[],
 ) => {
-  const pinHash = md5(pin + appConfig.salt);
+  const normalizedEmail = normalizeEmail(email);
+
+  const pinHash = computePinHash(pin);
 
   const user: IdentityUser = {
-    email,
+    email: normalizedEmail,
     pinHash,
     firstName,
     lastName,
@@ -37,6 +39,14 @@ const createUser = (
   };
 
   mockIdentityUsers.push(user);
+};
+
+const normalizeEmail = (email: string) => {
+  return email.trim().toLocaleLowerCase();
+};
+
+const computePinHash = (pin: string) => {
+  return md5(pin + appConfig.salt);
 };
 
 export const userManager = {
