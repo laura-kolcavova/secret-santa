@@ -8,6 +8,8 @@ import { Department } from '~/models/Department';
 import { HobbiesInput } from '../shared/HobbiesInput';
 import { createStore, produce } from 'solid-js/store';
 import { HobbyTag } from '../shared/HobbyTag';
+import { FieldValidations } from '~/models/FieldValidations';
+import { FeedbackError } from '../shared/FeedbackError';
 
 export const NewProfile: Component = () => {
   const navigate = useNavigate();
@@ -22,16 +24,36 @@ export const NewProfile: Component = () => {
   const [getDepartment, setDepartment] = createSignal<string>('');
   const [hobbies, setHobbies] = createStore<string[]>([]);
 
+  const [fieldValidations, setFieldValidations] = createStore<FieldValidations>({});
+
   createEffect(() => {
     if (getIsSuccess()) {
       navigate(pages.MyProfile.paths[0]);
     }
   });
 
+  const validate = (): boolean => {
+    let newFieldvalidations: FieldValidations = {};
+    let isValid = true;
+
+    if (getPinValue() !== getPinConfirm()) {
+      newFieldvalidations['pin-confirm'] = {
+        isValid: false,
+        errorMessage: 'Pin pro potvrzení se liší',
+      };
+
+      isValid = false;
+    }
+
+    setFieldValidations(newFieldvalidations);
+
+    return isValid;
+  };
+
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
 
-    if (getPinValue() !== getPinConfirm()) {
+    if (!validate()) {
       return;
     }
 
@@ -61,7 +83,58 @@ export const NewProfile: Component = () => {
 
       <div class="flex flex-col items-center">
         <form onSubmit={handleSubmit} class="mb-12 w-full max-w-3xl grid grid-cols-2">
-          <div class="mb-0 col-1 row-1 mr-6">
+          <div class="mb-6 col-1 row-1 mr-6">
+            <label class="block mb-2 text-sm font-bold text-pallete-4" for="first-name">
+              Jméno
+            </label>
+
+            <input
+              id="first-name"
+              name="first-name"
+              type="text"
+              autocomplete="given-name"
+              required
+              class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
+              placeholder="Zadejte jméno"
+              onInput={(e) => setFirstName(e.currentTarget.value)}
+            />
+          </div>
+
+          <div class="mb-6 col-1 row-2 mr-6">
+            <label class="block mb-2 text-sm font-bold text-pallete-4" for="last-name">
+              Příjmení
+            </label>
+
+            <input
+              id="last-name"
+              name="last-name"
+              type="text"
+              autocomplete="family-name"
+              required
+              class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
+              placeholder="Zadejte příjmení"
+              onInput={(e) => setLastName(e.currentTarget.value)}
+            />
+          </div>
+
+          <div class="mb-6 col-1 row-3 mr-6">
+            <label class="block mb-2 text-sm font-bold text-pallete-4" for="department">
+              Oddělení
+            </label>
+
+            <select
+              id="department"
+              name="department"
+              required
+              class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100 cursor-pointer"
+              onSelect={(e) => setDepartment(e.currentTarget.value)}>
+              <For each={Object.values(Department)}>
+                {(department) => <option value={department}>{department}</option>}
+              </For>
+            </select>
+          </div>
+
+          <div class="mb-0 col-2 row-1">
             <label class="block mb-2 text-sm font-bold text-pallete-4" for="email">
               E-mail
             </label>
@@ -78,7 +151,7 @@ export const NewProfile: Component = () => {
             />
           </div>
 
-          <div class="mb-6 col-1 row-2 mr-6">
+          <div class="mb-6 col-2 row-2">
             <label class="block mb-2 text-sm font-bold text-pallete-4" for="pin">
               Pin (4 čísla)
             </label>
@@ -98,7 +171,7 @@ export const NewProfile: Component = () => {
             />
           </div>
 
-          <div class="mb-6 col-1 row-3 mr-6">
+          <div class="mb-6 col-2 row-3">
             <label class="block mb-2 text-sm font-bold text-pallete-4" for="pin-confirm">
               Pin (znovu)
             </label>
@@ -116,57 +189,11 @@ export const NewProfile: Component = () => {
               placeholder="Zadejte stejný pin pro ověření"
               onInput={(e) => setPinConfirmValue(e.currentTarget.value)}
             />
-          </div>
 
-          <div class="mb-6 col-2 row-1">
-            <label class="block mb-2 text-sm font-bold text-pallete-4" for="first-name">
-              Jméno
-            </label>
-
-            <input
-              id="first-name"
-              name="first-name"
-              type="text"
-              autocomplete="given-name"
-              required
-              class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
-              placeholder="Zadejte jméno"
-              onInput={(e) => setFirstName(e.currentTarget.value)}
-            />
-          </div>
-
-          <div class="mb-6 col-2 row-2">
-            <label class="block mb-2 text-sm font-bold text-pallete-4" for="last-name">
-              Příjmení
-            </label>
-
-            <input
-              id="last-name"
-              name="last-name"
-              type="text"
-              autocomplete="family-name"
-              required
-              class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
-              placeholder="Zadejte příjmení"
-              onInput={(e) => setLastName(e.currentTarget.value)}
-            />
-          </div>
-
-          <div class="mb-6 col-2 row-3">
-            <label class="block mb-2 text-sm font-bold text-pallete-4" for="department">
-              Oddělení
-            </label>
-
-            <select
-              id="department"
-              name="department"
-              required
-              class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100 cursor-pointer"
-              onSelect={(e) => setDepartment(e.currentTarget.value)}>
-              <For each={Object.values(Department)}>
-                {(department) => <option value={department}>{department}</option>}
-              </For>
-            </select>
+            <Show
+              when={fieldValidations['pin-confirm'] && !fieldValidations['pin-confirm'].isValid}>
+              <FeedbackError errorMessage={fieldValidations['pin-confirm'].errorMessage!} />
+            </Show>
           </div>
 
           <div class="mb-4 col-1 row-4">
