@@ -8,8 +8,10 @@ import { Department } from '~/models/Department';
 import { HobbiesInput } from '../shared/HobbiesInput';
 import { createStore, produce } from 'solid-js/store';
 import { HobbyTag } from '../shared/HobbyTag';
-import { FieldValidations } from '~/models/FieldValidations';
+import { FieldValidations } from '~/forms/FieldValidations';
 import { FeedbackError } from '../shared/FeedbackError';
+import { FormattedMessage } from '~/translation/FormattedMessage';
+import { messages } from './messages';
 
 export const NewProfile: Component = () => {
   const navigate = useNavigate();
@@ -85,7 +87,7 @@ export const NewProfile: Component = () => {
         <form onSubmit={handleSubmit} class="mb-12 w-full max-w-3xl grid grid-cols-2">
           <div class="mb-6 col-1 row-1 mr-6">
             <label class="block mb-2 text-sm font-bold text-pallete-4" for="first-name">
-              Jméno
+              <FormattedMessage message={messages.firstName} />
             </label>
 
             <input
@@ -102,7 +104,7 @@ export const NewProfile: Component = () => {
 
           <div class="mb-6 col-1 row-2 mr-6">
             <label class="block mb-2 text-sm font-bold text-pallete-4" for="last-name">
-              Příjmení
+              <FormattedMessage message={messages.lastName} />
             </label>
 
             <input
@@ -119,7 +121,7 @@ export const NewProfile: Component = () => {
 
           <div class="mb-6 col-1 row-3 mr-6">
             <label class="block mb-2 text-sm font-bold text-pallete-4" for="department">
-              Oddělení
+              <FormattedMessage message={messages.department} />
             </label>
 
             <select
@@ -136,7 +138,7 @@ export const NewProfile: Component = () => {
 
           <div class="mb-0 col-2 row-1">
             <label class="block mb-2 text-sm font-bold text-pallete-4" for="email">
-              E-mail
+              <FormattedMessage message={messages.email} />
             </label>
 
             <input
@@ -153,7 +155,7 @@ export const NewProfile: Component = () => {
 
           <div class="mb-6 col-2 row-2">
             <label class="block mb-2 text-sm font-bold text-pallete-4" for="pin">
-              Pin (4 čísla)
+              <FormattedMessage message={messages.pin} />
             </label>
 
             <input
@@ -173,7 +175,7 @@ export const NewProfile: Component = () => {
 
           <div class="mb-6 col-2 row-3">
             <label class="block mb-2 text-sm font-bold text-pallete-4" for="pin-confirm">
-              Pin (znovu)
+              <FormattedMessage message={messages.pinConfirm} />
             </label>
 
             <input
@@ -196,9 +198,9 @@ export const NewProfile: Component = () => {
             </Show>
           </div>
 
-          <div class="mb-4 col-1 row-4">
+          <div class="mb-4 col-1 row-4 mr-6">
             <label class="block mb-2 text-sm font-bold text-pallete-4" for="hobbies">
-              Záliby
+              <FormattedMessage message={messages.hobbies} />
             </label>
 
             <HobbiesInput id="hobbies" hobbies={hobbies} onAdd={addHobby} onRemove={removeHobby} />
@@ -224,7 +226,9 @@ export const NewProfile: Component = () => {
               </Show>
 
               <Show when={!getIsPending()}>
-                <span>Vytvořit</span>
+                <span>
+                  <FormattedMessage message={messages.create} />
+                </span>
               </Show>
             </button>
           </div>
@@ -232,9 +236,9 @@ export const NewProfile: Component = () => {
 
         <div>
           <span>
-            Máte již profil?{' '}
+            <FormattedMessage message={messages.alreadyHaveProfile} />{' '}
             <A href={pages.LogIn.paths[0]} class="text-pallete-2 font-bold hover:underline">
-              Přihlásit se
+              <FormattedMessage message={messages.logIn} />
             </A>
           </span>
         </div>

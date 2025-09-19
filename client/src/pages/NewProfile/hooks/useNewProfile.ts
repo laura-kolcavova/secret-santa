@@ -1,22 +1,11 @@
-import { AxiosError } from 'axios';
 import { batch, createSignal } from 'solid-js';
 import { NewProfileRequestDto } from '~/api/user/dto/NewProfileRequestDto';
 import { userClient } from '~/api/user/userClient';
-
-const handleErrorMessage = (error: unknown): string => {
-  if (error instanceof AxiosError && error.response?.data.code) {
-    const code = error.response.data.code;
-
-    switch (code) {
-      case 'User.EmailAlreadyExists':
-        return 'Uživatel s tímto e-mailem již existuje';
-    }
-  }
-
-  return 'Něco se pokazilo';
-};
+import { useLoginErrorHandler } from './useLoginErrorHandler';
 
 export const useNewProfile = () => {
+  const { handleError } = useLoginErrorHandler();
+
   const [getIsPending, setIsPending] = createSignal<boolean>(false);
   const [getIsError, setIsError] = createSignal<boolean>(false);
   const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
@@ -40,7 +29,7 @@ export const useNewProfile = () => {
     } catch (error) {
       batch(() => {
         setIsError(true);
-        setErrorMessage(handleErrorMessage(error));
+        setErrorMessage(handleError(error));
         setIsPending(false);
       });
     }
