@@ -1,10 +1,12 @@
 import { Router } from 'express';
-import { handleLogin } from './login/loginEndpoint';
-import { handleNewProfile } from './newProfile/newProfileEndpoint';
+import { LOGIN_PATH, handleLogin } from './login/loginEndpoint';
+import { NEW_PROFILE_PATH, handleNewProfile } from './newProfile/newProfileEndpoint';
+import { GET_USER_DETAIL_PATH, handleGetUserDetail } from './getUserDetail/getDetailEndpoint';
 
 const router = Router();
 
-router.post('/login', handleLogin);
-router.post('/new-profile', handleNewProfile);
+router.post(LOGIN_PATH, handleLogin);
+router.post(NEW_PROFILE_PATH, handleNewProfile);
+router.get(GET_USER_DETAIL_PATH, handleGetUserDetail);
 
 export default router;

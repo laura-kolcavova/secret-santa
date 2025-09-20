@@ -27,4 +27,12 @@ export const messages = {
     id: 'logIn.createNewProfile',
     defaultMessage: 'CREATE NEW PROFILE',
   },
+  enterEmail: {
+    id: 'logIn.enterEmail',
+    defaultMessage: 'ENTER EMAIL',
+  },
+  enterPin: {
+    id: 'logIn.enterPin',
+    defaultMessage: 'ENTER PIN',
+  },
 };

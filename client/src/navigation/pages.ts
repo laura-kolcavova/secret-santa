@@ -18,7 +18,7 @@ export const pages: PageDefinitions = {
     component: NewProfile,
   },
   [Page.MyProfile]: {
-    paths: ['/my-profile'],
+    paths: ['/users/:email'],
     component: MyProfile,
   },
 };

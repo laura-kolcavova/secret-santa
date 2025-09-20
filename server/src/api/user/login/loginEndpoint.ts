@@ -3,6 +3,8 @@ import { identityService } from '~/application/user/services/identityService';
 import { LoginRequestDto } from './LoginRequestDto';
 import { asProblemDetails } from '~/api/utils/validationErrorHelper';
 
+export const LOGIN_PATH = '/login';
+
 export const handleLogin = (req: Request, res: Response, next: NextFunction) => {
   try {
     const loginRequest = req.body as LoginRequestDto;
