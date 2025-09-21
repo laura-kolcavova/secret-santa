@@ -1,14 +1,17 @@
 import { Component, createSignal } from 'solid-js';
 import { PlusIcon } from './icons/PlusIcon';
+import { useLocalization } from '~/translation/useLocalization';
+import { messages } from '../NewProfile/messages';
 
 export type HobbiesInputProps = {
   hobbies: string[];
-  onAdd: (addedHobby: string) => void;
-  onRemove: (removedHobby: string) => void;
+  addHobby: (addedHobby: string) => void;
   id?: string;
 };
 
 export const HobbiesInput: Component<HobbiesInputProps> = (props) => {
+  const { formatMessage } = useLocalization();
+
   const [getInputValue, setInputValue] = createSignal<string>('');
 
   const getHobbyFromInput = () => {
@@ -19,7 +22,7 @@ export const HobbiesInput: Component<HobbiesInputProps> = (props) => {
     const hobby = getHobbyFromInput();
 
     if (hobby && !props.hobbies.includes(hobby)) {
-      props.onAdd(hobby);
+      props.addHobby(hobby);
     }
   };
 
@@ -40,7 +43,7 @@ export const HobbiesInput: Component<HobbiesInputProps> = (props) => {
             type="text"
             autocomplete="off"
             class='"block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100'
-            placeholder="Zádejte zálibu a stiskněte Enter..."
+            placeholder={formatMessage(messages.enterHobbyAndPressEnter)}
             value={getInputValue()}
             onInput={(e) => setInputValue(e.currentTarget.value)}
           />

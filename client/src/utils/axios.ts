@@ -13,7 +13,14 @@ const defaultAxiosConfig: AxiosRequestConfig = {
 };
 
 export const callAxios = (config: AxiosRequestConfig) => {
-  const newConfig: AxiosRequestConfig = { ...defaultAxiosConfig, ...config };
+  const newConfig: AxiosRequestConfig = {
+    ...defaultAxiosConfig,
+    ...config,
+    headers: {
+      ...defaultAxiosConfig.headers,
+      ...config.headers,
+    },
+  };
 
   return axios(newConfig);
 };

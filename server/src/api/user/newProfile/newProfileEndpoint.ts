@@ -3,6 +3,8 @@ import { NewProfileRequestDto } from './NewProfileRequestDto';
 import { identityService } from '~/application/user/services/identityService';
 import { asProblemDetails } from '~/api/utils/validationErrorHelper';
 
+export const NEW_PROFILE_PATH = '/new-profile';
+
 export const handleNewProfile = (req: Request, res: Response, next: NextFunction) => {
   try {
     const newProfileRequest = req.body as NewProfileRequestDto;

@@ -6,18 +6,23 @@ import { A, useNavigate } from '@solidjs/router';
 import { pages } from '~/navigation/pages';
 import { FormattedMessage } from '~/translation/FormattedMessage';
 import { messages } from './messages';
+import { useLocalization } from '~/translation/useLocalization';
 
 export const LogIn: Component = () => {
   const navigate = useNavigate();
 
+  const { formatMessage } = useLocalization();
+
   const { login, getIsPending, getIsSuccess, getIsError, getErrorMessage } = useLogin();
 
-  const [getEmailValue, setEmailValue] = createSignal<string>('');
-  const [getPinValue, setPinValue] = createSignal<string>('');
+  const [getEmail, setEmail] = createSignal<string>('');
+  const [getPin, setPin] = createSignal<string>('');
 
   createEffect(() => {
     if (getIsSuccess()) {
-      navigate(pages.MyProfile.paths[0]);
+      const path = pages.MyProfile.paths[0].replace(':email', getEmail());
+
+      navigate(path);
     }
   });
 
@@ -25,8 +30,8 @@ export const LogIn: Component = () => {
     e.preventDefault();
 
     login({
-      email: getEmailValue(),
-      pin: getPinValue(),
+      email: getEmail(),
+      pin: getPin(),
     });
   };
 
@@ -36,71 +41,69 @@ export const LogIn: Component = () => {
         <Alert color="danger">{getErrorMessage()}</Alert>
       </Show>
 
-      <div class="flex flex-col items-center">
-        <form onSubmit={handleSubmit} class="mb-12 w-full max-w-xs">
-          <div class="mb-6">
-            <label class="block mb-2 text-sm font-bold text-pallete-4" for="email">
-              <FormattedMessage message={messages.email} />
-            </label>
+      <form onSubmit={handleSubmit} class="mb-12 w-full max-w-xs mx-auto">
+        <div class="mb-6">
+          <label class="block mb-2 text-sm font-bold text-pallete-4" for="email">
+            <FormattedMessage message={messages.email} />
+          </label>
 
-            <input
-              id="email"
-              type="email"
-              name="email"
-              autocomplete="email"
-              required
-              class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
-              placeholder="Zadejte email"
-              onInput={(e) => setEmailValue(e.currentTarget.value)}
-            />
-          </div>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            autocomplete="email"
+            required
+            class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
+            placeholder={formatMessage(messages.enterEmail)}
+            onInput={(e) => setEmail(e.currentTarget.value)}
+          />
+        </div>
 
-          <div class="mb-12">
-            <label class="block mb-2 text-sm font-bold text-pallete-4" for="pin">
-              <FormattedMessage message={messages.pin} />
-            </label>
+        <div class="mb-12">
+          <label class="block mb-2 text-sm font-bold text-pallete-4" for="pin">
+            <FormattedMessage message={messages.pin} />
+          </label>
 
-            <input
-              id="pin"
-              type="password"
-              name="pin"
-              autocomplete="off"
-              required
-              maxlength={4}
-              inputmode="numeric"
-              pattern="\d{4}"
-              class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
-              placeholder="Zadejte pin"
-              onInput={(e) => setPinValue(e.currentTarget.value)}
-            />
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              class="w-full py-2 px-4 rounded text-white font-bold bg-blue-500 hover:bg-blue-600 focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-7"
-              disabled={getIsPending()}>
-              <Show when={getIsPending()}>
-                <SpinnerIcon class="animate-spin size-5 mr-2" />
-              </Show>
-
-              <Show when={!getIsPending()}>
-                <span>
-                  <FormattedMessage message={messages.logIn} />
-                </span>
-              </Show>
-            </button>
-          </div>
-        </form>
+          <input
+            id="pin"
+            type="password"
+            name="pin"
+            autocomplete="off"
+            required
+            maxlength={4}
+            inputmode="numeric"
+            pattern="\d{4}"
+            class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
+            placeholder={formatMessage(messages.enterPin)}
+            onInput={(e) => setPin(e.currentTarget.value)}
+          />
+        </div>
 
         <div>
-          <span>
-            <FormattedMessage message={messages.noProfileYet} />{' '}
-            <A href={pages.NewProfile.paths[0]} class="text-pallete-2 font-bold hover:underline">
-              <FormattedMessage message={messages.createNewProfile} />
-            </A>
-          </span>
+          <button
+            type="submit"
+            class="w-full py-2 px-4 rounded text-white font-bold bg-blue-500 hover:bg-blue-600 focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-7"
+            disabled={getIsPending()}>
+            <Show when={getIsPending()}>
+              <SpinnerIcon class="animate-spin size-5 mr-2" />
+            </Show>
+
+            <Show when={!getIsPending()}>
+              <span>
+                <FormattedMessage message={messages.logIn} />
+              </span>
+            </Show>
+          </button>
         </div>
+      </form>
+
+      <div class="flex justify-center">
+        <span>
+          <FormattedMessage message={messages.noProfileYet} />{' '}
+          <A href={pages.NewProfile.paths[0]} class="text-pallete-2 font-bold hover:underline">
+            <FormattedMessage message={messages.createNewProfile} />
+          </A>
+        </span>
       </div>
     </div>
   );
