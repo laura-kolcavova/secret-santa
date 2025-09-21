@@ -87,7 +87,7 @@ export const ProfileForm: Component<ProfileFormProps> = (props) => {
           required
           class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100 cursor-pointer"
           value={getDepartment()}
-          onSelect={(e) => setDepartment(e.currentTarget.value)}>
+          onChange={(e) => setDepartment(e.currentTarget.value)}>
           <For each={Object.values(Department)}>
             {(department) => <option value={department}>{department}</option>}
           </For>

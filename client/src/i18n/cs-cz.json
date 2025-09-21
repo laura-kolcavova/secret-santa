@@ -25,5 +25,13 @@
     "newProfile.enterEmail": "Zadejte e-mail",
     "newProfile.enterPin": "Zadejte pin",
     "newProfile.enterPinConfirm": "Zadejte stejný pin",
-    "newProfile.enterHobbyAndPressEnter": "Zadejte zálibu a stiskněte Enter"
+    "newProfile.enterHobbyAndPressEnter": "Zadejte zálibu a stiskněte Enter",
+    "myProfile.myProfile": "Můj profil",
+    "myProfile.profileNotFound": "Profil nebyl nalezen",
+    "myProfile.firstName": "Jméno",
+    "myProfile.lastName": "Příjmení",
+    "myProfile.department": "Oddělení",
+    "myProfile.email": "E-mail",
+    "myProfile.hobbies": "Záliby",
+    "myProfile.saveProfile": "Uložit profil"
 }

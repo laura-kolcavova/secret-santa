@@ -1,4 +1,12 @@
 export const messages = {
+  myProfile: {
+    id: 'myProfile.myProfile',
+    defaultMessage: 'MY PROFILE',
+  },
+  profileNotFound: {
+    id: 'myProfile.profileNotFound',
+    defaultMessage: 'PROFILE NOT FOUND',
+  },
   firstName: {
     id: 'myProfile.firstName',
     defaultMessage: 'FIRST NAME',
@@ -20,7 +28,7 @@ export const messages = {
     defaultMessage: 'HOBBIES',
   },
   saveProfile: {
-    id: 'newProfile.saveProfile',
+    id: 'myProfile.saveProfile',
     defaultMessage: 'SAVE PROFILE',
   },
 };

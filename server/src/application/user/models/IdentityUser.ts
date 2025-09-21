@@ -5,4 +5,5 @@ export type IdentityUser = {
   department: string;
   hobbies: string[];
   pinHash: string;
+  createdAt: Date;
 };

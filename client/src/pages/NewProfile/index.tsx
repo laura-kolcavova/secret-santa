@@ -76,7 +76,9 @@ export const NewProfile: Component = () => {
 
   createEffect(() => {
     if (getIsSuccess()) {
-      navigate(pages.MyProfile.paths[0]);
+      const path = pages.MyProfile.paths[0].replace(':email', getEmail());
+
+      navigate(path);
     }
   });
 
@@ -131,7 +133,7 @@ export const NewProfile: Component = () => {
             name="department"
             required
             class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100 cursor-pointer"
-            onSelect={(e) => setDepartment(e.currentTarget.value)}>
+            onChange={(e) => setDepartment(e.currentTarget.value)}>
             <For each={Object.values(Department)}>
               {(department) => <option value={department}>{department}</option>}
             </For>

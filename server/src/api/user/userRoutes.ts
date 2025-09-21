@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { LOGIN_PATH, handleLogin } from './login/loginEndpoint';
 import { NEW_PROFILE_PATH, handleNewProfile } from './newProfile/newProfileEndpoint';
-import { GET_USER_DETAIL_PATH, handleGetUserDetail } from './getUserDetail/getDetailEndpoint';
+import { GET_USER_DETAIL_PATH, handleGetUserDetail } from './getUserDetail/getUserDetailEndpoint';
 
 const router = Router();
 

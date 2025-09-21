@@ -36,6 +36,7 @@ const createUser = (
     lastName,
     department,
     hobbies,
+    createdAt: new Date(Date.now()),
   };
 
   mockIdentityUsers.push(user);
