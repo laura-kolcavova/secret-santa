@@ -33,5 +33,6 @@
     "myProfile.department": "Oddělení",
     "myProfile.email": "E-mail",
     "myProfile.hobbies": "Záliby",
-    "myProfile.saveProfile": "Uložit profil"
+    "myProfile.saveProfile": "Uložit profil",
+    "notFound.pageNotFound": "Stránka nebyla nalezena"
 }

@@ -1,8 +1,6 @@
-import { LogIn } from '~/pages/LogIn';
 import { Page } from './Page';
 import { PageDefinition } from './PageDefinition';
-import { NewProfile } from '~/pages/NewProfile';
-import { MyProfile } from '~/pages/MyProfile';
+import { lazy } from 'solid-js';
 
 type PageDefinitions = {
   [key in Page]: PageDefinition;
@@ -11,14 +9,24 @@ type PageDefinitions = {
 export const pages: PageDefinitions = {
   [Page.LogIn]: {
     paths: ['/login', '/'],
-    component: LogIn,
+    component: lazy(() => import('~/pages/LogIn').then((module) => ({ default: module.LogIn }))),
   },
   [Page.NewProfile]: {
     paths: ['/new-profile'],
-    component: NewProfile,
+    component: lazy(() =>
+      import('~/pages/NewProfile').then((module) => ({ default: module.NewProfile })),
+    ),
   },
   [Page.MyProfile]: {
     paths: ['/users/:email'],
-    component: MyProfile,
+    component: lazy(() =>
+      import('~/pages/MyProfile').then((module) => ({ default: module.MyProfile })),
+    ),
+  },
+  [Page.NotFound]: {
+    paths: ['*'],
+    component: lazy(() =>
+      import('~/pages/NotFound').then((module) => ({ default: module.NotFound })),
+    ),
   },
 };
