@@ -1,12 +1,14 @@
-import { Request, Response, NextFunction } from 'express';
-import { UserDetailDto } from './UserDetailDto';
+import { Request, Response, NextFunction, Router } from 'express';
 import { userManager } from '~/application/user/services/userManager';
-import { GetUserDetailParms } from './GetUserDetailParams';
+import { GetProfileParams } from './GetProfileParams';
+import { ProfileDto } from './ProfileDto';
 
-export const GET_USER_DETAIL_PATH = '/:email/detail';
+export const mapGetProfile = (router: Router) => {
+  router.get('/:email/profile', handleGetProfile);
+};
 
-export const handleGetUserDetail = async (
-  req: Request<GetUserDetailParms>,
+const handleGetProfile = async (
+  req: Request<GetProfileParams>,
   res: Response,
   next: NextFunction,
 ) => {
@@ -21,7 +23,7 @@ export const handleGetUserDetail = async (
       return;
     }
 
-    const userDetailDto: UserDetailDto = {
+    const myProfileDto: ProfileDto = {
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
@@ -29,7 +31,7 @@ export const handleGetUserDetail = async (
       hobbies: [...user.hobbies],
     };
 
-    res.status(200).json(userDetailDto);
+    res.status(200).json(myProfileDto);
 
     next();
   } catch (error) {

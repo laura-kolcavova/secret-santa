@@ -1,4 +1,8 @@
 export const messages = {
+  newProfile: {
+    id: 'newProfile.newProfile',
+    defaultMessage: 'NEW PROFILE',
+  },
   firstName: {
     id: 'newProfile.firstName',
     defaultMessage: 'FIRST NAME',

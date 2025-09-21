@@ -1,4 +1,4 @@
-export type UserDetailDto = {
+export type ProfileDto = {
   email: string;
   firstName: string;
   lastName: string;

@@ -3,18 +3,30 @@ import { appConfig } from '~/config/appConfig';
 import { mockIdentityUsers } from '../mockIdentityUsers';
 import { IdentityUser } from '../models/IdentityUser';
 
-const findByEmail = (email: string): IdentityUser | undefined => {
-  const normalizedEmail = normalizeEmail(email);
+const normalizeEmail = (email: string) => {
+  return email.trim().toLocaleLowerCase();
+};
 
-  const user = mockIdentityUsers.find((identityUser) => identityUser.email === normalizedEmail);
-
-  return user;
+const computePinHash = (pin: string) => {
+  return md5(pin + appConfig.salt);
 };
 
 const checkPin = (user: IdentityUser, pin: string): boolean => {
   const pinHash = computePinHash(pin);
 
   return user.pinHash === pinHash;
+};
+
+const findByEmail = (email: string): IdentityUser | undefined => {
+  const normalizedEmail = normalizeEmail(email);
+
+  const user = mockIdentityUsers.find((identityUser) => identityUser.email === normalizedEmail);
+
+  if (user === undefined) {
+    return undefined;
+  }
+
+  return { ...user };
 };
 
 const createUser = (
@@ -35,23 +47,29 @@ const createUser = (
     firstName,
     lastName,
     department,
-    hobbies,
+    hobbies: [...hobbies],
     createdAt: new Date(Date.now()),
   };
 
   mockIdentityUsers.push(user);
 };
 
-const normalizeEmail = (email: string) => {
-  return email.trim().toLocaleLowerCase();
-};
+const updateUserProfile = (userToUpdate: IdentityUser) => {
+  mockIdentityUsers.forEach((identityUser) => {
+    if (identityUser.email !== userToUpdate.email) {
+      return;
+    }
 
-const computePinHash = (pin: string) => {
-  return md5(pin + appConfig.salt);
+    identityUser.firstName = userToUpdate.firstName;
+    identityUser.lastName = userToUpdate.lastName;
+    identityUser.department = userToUpdate.department;
+    identityUser.hobbies = [...userToUpdate.hobbies];
+  });
 };
 
 export const userManager = {
-  findByEmail,
   checkPin,
+  findByEmail,
   createUser,
+  updateUserProfile,
 };

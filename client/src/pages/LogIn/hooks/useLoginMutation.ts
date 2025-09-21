@@ -3,7 +3,7 @@ import { LoginRequestDto } from '~/api/user/dto/LoginRequestDto';
 import { userClient } from '~/api/user/userClient';
 import { useLoginErrorHandler } from './useLoginErrorHandler';
 
-export const useLogin = () => {
+export const useLoginMutation = () => {
   const { handleError } = useLoginErrorHandler();
 
   const [getIsPending, setIsPending] = createSignal<boolean>(false);

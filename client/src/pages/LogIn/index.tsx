@@ -1,5 +1,5 @@
 import { Component, createEffect, createSignal, Show } from 'solid-js';
-import { useLogin } from './hooks/useLogin';
+import { useLoginMutation } from './hooks/useLoginMutation';
 import { SpinnerIcon } from '../shared/icons/SpinnerIcon';
 import { Alert } from '../shared/Alert';
 import { A, useNavigate } from '@solidjs/router';
@@ -13,10 +13,10 @@ export const LogIn: Component = () => {
 
   const { formatMessage } = useLocalization();
 
-  const { login, getIsPending, getIsSuccess, getIsError, getErrorMessage } = useLogin();
-
   const [getEmail, setEmail] = createSignal<string>('');
   const [getPin, setPin] = createSignal<string>('');
+
+  const { login, getIsPending, getIsSuccess, getIsError, getErrorMessage } = useLoginMutation();
 
   createEffect(() => {
     if (getIsSuccess()) {
@@ -84,14 +84,14 @@ export const LogIn: Component = () => {
             type="submit"
             class="w-full py-2 px-4 rounded text-white font-bold bg-blue-500 hover:bg-blue-600 focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-7"
             disabled={getIsPending()}>
-            <Show when={getIsPending()}>
-              <SpinnerIcon class="animate-spin size-5 mr-2" />
-            </Show>
-
-            <Show when={!getIsPending()}>
-              <span>
-                <FormattedMessage message={messages.logIn} />
-              </span>
+            <Show
+              when={getIsPending()}
+              fallback={
+                <span>
+                  <FormattedMessage message={messages.logIn} />
+                </span>
+              }>
+              <SpinnerIcon class="animate-spin size-5" />
             </Show>
           </button>
         </div>

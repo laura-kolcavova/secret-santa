@@ -1,17 +1,17 @@
 import { Component, Match, Switch } from 'solid-js';
 import { ProfileForm } from './ProfileForm';
-import { useUserDetailQuery } from './hooks/userUserDetailQuery';
 import { SpinnerIcon } from '../shared/icons/SpinnerIcon';
 import { Alert } from '../shared/Alert';
 import { FormattedMessage } from '~/translation/FormattedMessage';
 import { sharedMessages } from '../shared/sharedMessages';
 import { useParams } from '@solidjs/router';
 import { messages } from './messages';
+import { useProfileQuery } from './hooks/useProfileQuery';
 
 export const MyProfile: Component = () => {
   const params = useParams();
 
-  const [data] = useUserDetailQuery(params.email);
+  const [data] = useProfileQuery(params.email);
 
   return (
     <div class="container mx-auto py-12">

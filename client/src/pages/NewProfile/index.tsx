@@ -3,7 +3,7 @@ import { Alert } from '../shared/Alert';
 import { A, useNavigate } from '@solidjs/router';
 import { pages } from '~/navigation/pages';
 import { SpinnerIcon } from '../shared/icons/SpinnerIcon';
-import { useNewProfile } from './hooks/useNewProfile';
+import { useNewProfileMutation } from './hooks/useNewProfileMutation';
 import { Department } from '~/models/Department';
 import { HobbiesInput } from '../shared/HobbiesInput';
 import { createStore, produce } from 'solid-js/store';
@@ -19,15 +19,16 @@ export const NewProfile: Component = () => {
 
   const { formatMessage } = useLocalization();
 
-  const { newProfile, getIsPending, getIsSuccess, getIsError, getErrorMessage } = useNewProfile();
-
   const [getFirstName, setFirstName] = createSignal<string>('');
   const [getLastName, setLastName] = createSignal<string>('');
-  const [getDepartment, setDepartment] = createSignal<string>('');
+  const [getDepartment, setDepartment] = createSignal<string>(Object.values(Department)[0]);
   const [getEmail, setEmail] = createSignal<string>('');
   const [getPin, setPin] = createSignal<string>('');
   const [getPinConfirm, setPinConfirmValue] = createSignal<string>('');
   const [hobbies, setHobbies] = createStore<string[]>([]);
+
+  const { newProfile, getIsPending, getIsSuccess, getIsError, getErrorMessage } =
+    useNewProfileMutation();
 
   const [fieldValidations, setFieldValidations] = createStore<FieldValidations>({});
 
@@ -84,6 +85,10 @@ export const NewProfile: Component = () => {
 
   return (
     <div class="container mx-auto py-12">
+      <h1 class="text-2xl font-bold mb-8">
+        <FormattedMessage message={messages.newProfile} />
+      </h1>
+
       <Show when={getIsError()}>
         <Alert color="danger">{getErrorMessage()}</Alert>
       </Show>
@@ -133,7 +138,10 @@ export const NewProfile: Component = () => {
             name="department"
             required
             class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100 cursor-pointer"
-            onChange={(e) => setDepartment(e.currentTarget.value)}>
+            onChange={(e) => {
+              console.log(e);
+              setDepartment(e.currentTarget.value);
+            }}>
             <For each={Object.values(Department)}>
               {(department) => <option value={department}>{department}</option>}
             </For>
@@ -218,14 +226,14 @@ export const NewProfile: Component = () => {
             type="submit"
             class="w-1/2 py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-7"
             disabled={getIsPending()}>
-            <Show when={getIsPending()}>
-              <SpinnerIcon class="animate-spin size-5 mr-2" />
-            </Show>
-
-            <Show when={!getIsPending()}>
-              <span>
-                <FormattedMessage message={messages.create} />
-              </span>
+            <Show
+              when={getIsPending()}
+              fallback={
+                <span>
+                  <FormattedMessage message={messages.create} />
+                </span>
+              }>
+              <SpinnerIcon class="animate-spin size-5" />
             </Show>
           </button>
         </div>

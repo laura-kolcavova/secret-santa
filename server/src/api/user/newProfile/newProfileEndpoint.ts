@@ -1,22 +1,24 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, Router } from 'express';
 import { NewProfileRequestDto } from './NewProfileRequestDto';
-import { identityService } from '~/application/user/services/identityService';
 import { asProblemDetails } from '~/api/utils/validationErrorHelper';
+import { userService } from '~/application/user/services/userService';
 
-export const NEW_PROFILE_PATH = '/new-profile';
+export const mapNewProfile = (router: Router) => {
+  router.post('/new-profile', handleNewProfile);
+};
 
-export const handleNewProfile = (req: Request, res: Response, next: NextFunction) => {
+const handleNewProfile = (req: Request, res: Response, next: NextFunction) => {
   try {
     const newProfileRequest = req.body as NewProfileRequestDto;
 
-    const registerResult = identityService.register(
-      newProfileRequest.email,
-      newProfileRequest.pin,
-      newProfileRequest.firstName,
-      newProfileRequest.lastName,
-      newProfileRequest.department,
-      newProfileRequest.hobbies,
-    );
+    const registerResult = userService.newProfile({
+      email: newProfileRequest.email,
+      pin: newProfileRequest.pin,
+      firstName: newProfileRequest.firstName,
+      lastName: newProfileRequest.lastName,
+      department: newProfileRequest.department,
+      hobbies: newProfileRequest.hobbies,
+    });
 
     if (!registerResult.isSuccess) {
       const problemDetails = asProblemDetails(registerResult.error!, req);
