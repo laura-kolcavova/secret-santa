@@ -2,7 +2,8 @@ import { AxiosPromise, GenericAbortSignal } from 'axios';
 import { LoginRequestDto } from './dto/LoginRequestDto';
 import { callAxios } from '~/utils/axios';
 import { NewProfileRequestDto } from './dto/NewProfileRequestDto';
-import { UserDetailDto } from './dto/UserDetailDto';
+import { ProfileDto } from './dto/ProfileDto';
+import { EditProfileRequestDto } from './dto/EditProfileRequestDto';
 
 const login = (loginRequest: LoginRequestDto, signal?: GenericAbortSignal): AxiosPromise<void> => {
   return callAxios({
@@ -25,10 +26,23 @@ const newProfile = (
   });
 };
 
-const getUserDetail = (email: string, signal?: GenericAbortSignal): AxiosPromise<UserDetailDto> => {
+const getProfile = (email: string, signal?: GenericAbortSignal): AxiosPromise<ProfileDto> => {
   return callAxios({
-    url: `/api/user/${email}/detail`,
+    url: `/api/user/${email}/profile`,
     method: 'GET',
+    signal: signal,
+  });
+};
+
+const editProfile = (
+  email: string,
+  editProfileRequest: EditProfileRequestDto,
+  signal?: GenericAbortSignal,
+): AxiosPromise<void> => {
+  return callAxios({
+    url: `/api/user/${email}/profile`,
+    method: 'PUT',
+    data: editProfileRequest,
     signal: signal,
   });
 };
@@ -36,5 +50,6 @@ const getUserDetail = (email: string, signal?: GenericAbortSignal): AxiosPromise
 export const userClient = {
   login,
   newProfile,
-  getUserDetail,
+  getProfile,
+  editProfile,
 };

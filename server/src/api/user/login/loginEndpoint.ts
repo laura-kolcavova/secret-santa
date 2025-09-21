@@ -1,15 +1,17 @@
-import { Request, Response, NextFunction } from 'express';
-import { identityService } from '~/application/user/services/identityService';
+import { Request, Response, NextFunction, Router } from 'express';
+import { userService } from '~/application/user/services/userService';
 import { LoginRequestDto } from './LoginRequestDto';
 import { asProblemDetails } from '~/api/utils/validationErrorHelper';
 
-export const LOGIN_PATH = '/login';
+export const mapLogin = (router: Router) => {
+  router.post('/login', handleLogin);
+};
 
-export const handleLogin = (req: Request, res: Response, next: NextFunction) => {
+const handleLogin = (req: Request, res: Response, next: NextFunction) => {
   try {
     const loginRequest = req.body as LoginRequestDto;
 
-    const loginResult = identityService.login(loginRequest.email, loginRequest.pin);
+    const loginResult = userService.login(loginRequest.email, loginRequest.pin);
 
     if (!loginResult.isSuccess) {
       const problemDetails = asProblemDetails(loginResult.error!, req);

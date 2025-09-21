@@ -19,10 +19,6 @@ export const messages = {
     id: 'myProfile.department',
     defaultMessage: 'DEPARTMENT',
   },
-  email: {
-    id: 'myProfile.email',
-    defaultMessage: 'E-MAIL',
-  },
   hobbies: {
     id: 'newProfile.hobbies',
     defaultMessage: 'HOBBIES',

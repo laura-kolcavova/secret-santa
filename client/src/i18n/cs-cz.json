@@ -9,6 +9,7 @@
     "logIn.createNewProfile": "Vytvořit nový profil",
     "logIn.enterEmail": "Zadejte e-mail",
     "logIn.enterPin": "Zadejte pin",
+    "newProfile.newProfile": "Nový profil",
     "newProfile.firstName": "Jméno",
     "newProfile.lastName": "Příjmení",
     "newProfile.department": "Oddělení",
@@ -31,7 +32,6 @@
     "myProfile.firstName": "Jméno",
     "myProfile.lastName": "Příjmení",
     "myProfile.department": "Oddělení",
-    "myProfile.email": "E-mail",
     "myProfile.hobbies": "Záliby",
     "myProfile.saveProfile": "Uložit profil",
     "notFound.pageNotFound": "Stránka nebyla nalezena"
