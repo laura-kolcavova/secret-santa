@@ -2,6 +2,8 @@ import { useLocation } from '@solidjs/router';
 import { Component, JSX } from 'solid-js';
 import { pages } from '~/navigation/pages';
 import { SidebarNavItem } from './SidebarNavItem';
+import { FormattedMessage } from '~/translation/FormattedMessage';
+import { messages } from './messages';
 
 export type UserLayoutProps = {
   children: JSX.Element;
@@ -28,13 +30,13 @@ export const UserLayout: Component<UserLayoutProps> = (props) => {
           <nav>
             <ul class="list-none">
               <SidebarNavItem
-                label={'Prehled'}
+                label={<FormattedMessage message={messages.overview} />}
                 path={overviewPath}
                 isActive={location.pathname === overviewPath}
               />
 
               <SidebarNavItem
-                label={'Muj profil'}
+                label={<FormattedMessage message={messages.myProfile} />}
                 path={myProfilePath}
                 isActive={location.pathname === myProfilePath}
               />

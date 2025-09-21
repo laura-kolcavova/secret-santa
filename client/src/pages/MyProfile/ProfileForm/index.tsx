@@ -49,7 +49,9 @@ export const ProfileForm: Component<ProfileFormProps> = (props) => {
       </Show>
 
       <Show when={getIsSuccess()}>
-        <Alert color="success">Profil uspesne ulozen</Alert>
+        <Alert color="success">
+          <FormattedMessage message={messages.profileWasSaved} />
+        </Alert>
       </Show>
 
       <form onSubmit={handleSubmit} class="mb-12 w-full max-w-xl">
