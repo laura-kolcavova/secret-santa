@@ -77,14 +77,14 @@ export const NewProfile: Component = () => {
 
   createEffect(() => {
     if (getIsSuccess()) {
-      const path = pages.MyProfile.paths[0].replace(':email', getEmail());
+      const path = pages.Overview.paths[0].replace(':email', getEmail());
 
       navigate(path);
     }
   });
 
   return (
-    <div class="container mx-auto py-12">
+    <div class="container mx-auto py-6">
       <h1 class="text-2xl font-bold mb-8">
         <FormattedMessage message={messages.newProfile} />
       </h1>
@@ -224,7 +224,7 @@ export const NewProfile: Component = () => {
         <div class="col-span-2 row-6 flex justify-center">
           <button
             type="submit"
-            class="w-1/2 py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-7"
+            class="w-1/2 py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
             disabled={getIsPending()}>
             <Show
               when={getIsPending()}

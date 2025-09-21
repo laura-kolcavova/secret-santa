@@ -1,4 +1,4 @@
-import { Component, createSignal, For, Show } from 'solid-js';
+import { Component, createEffect, createSignal, For, Show } from 'solid-js';
 import { createStore, produce } from 'solid-js/store';
 import { ProfileDto } from '~/api/user/dto/ProfileDto';
 import { FormattedMessage } from '~/translation/FormattedMessage';
@@ -20,7 +20,8 @@ export const ProfileForm: Component<ProfileFormProps> = (props) => {
   const [getDepartment, setDepartment] = createSignal<string>(props.profile.department);
   const [hobbies, setHobbies] = createStore<string[]>(props.profile.hobbies);
 
-  const { editProfile, getIsPending, getIsError, getErrorMessage } = useEditProfileMutation();
+  const { editProfile, getIsPending, getIsSuccess, getIsError, getErrorMessage } =
+    useEditProfileMutation();
 
   const addHobby = (newHobby: string) => {
     setHobbies(produce((hobbies) => hobbies.push(newHobby)));
@@ -47,7 +48,11 @@ export const ProfileForm: Component<ProfileFormProps> = (props) => {
         <Alert color="danger">{getErrorMessage()}</Alert>
       </Show>
 
-      <form onSubmit={handleSubmit} class="mb-12 w-full max-w-xl mx-auto">
+      <Show when={getIsSuccess()}>
+        <Alert color="success">Profil uspesne ulozen</Alert>
+      </Show>
+
+      <form onSubmit={handleSubmit} class="mb-12 w-full max-w-xl">
         <div class="mb-6">
           <label class="block mb-2 text-sm font-bold text-pallete-4" for="first-name">
             <FormattedMessage message={messages.firstName} />
@@ -115,7 +120,7 @@ export const ProfileForm: Component<ProfileFormProps> = (props) => {
         <div class="flex justify-center">
           <button
             type="submit"
-            class="w-1/2 py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-7"
+            class="w-1/2 py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
             disabled={getIsPending()}>
             <Show
               when={getIsPending()}

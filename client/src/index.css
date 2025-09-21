@@ -7,7 +7,9 @@
   --pallete-4: #177049;
   --pallete-5: #29a067;
   --pallete-6: #00492f;
-  --pallete-7: #fefcfa;
+  --pallete-7: #006640;
+  --pallete-8: #fefcfa;
+  --pallete-9: #a1f9c9;
 }
 
 @theme {
@@ -17,7 +19,9 @@
   --color-pallete-4: #177049;
   --color-pallete-5: #29a067;
   --color-pallete-6: #00492f;
-  --color-pallete-7: #fefcfa;
+  --color-pallete-7: #006640;
+  --color-pallete-8: #fefcfa;
+  --color-pallete-9: #a1f9c9;
 }
 
 html,
