@@ -27,12 +27,14 @@
     "newProfile.enterPin": "Zadejte pin",
     "newProfile.enterPinConfirm": "Zadejte stejný pin",
     "newProfile.enterHobbyAndPressEnter": "Zadejte zálibu a stiskněte Enter",
-    "myProfile.myProfile": "Můj profil",
+    "userLayout.overview": "Přehled",
+    "userLayout.myProfile": "Můj profil",
     "myProfile.profileNotFound": "Profil nebyl nalezen",
     "myProfile.firstName": "Jméno",
     "myProfile.lastName": "Příjmení",
     "myProfile.department": "Oddělení",
     "myProfile.hobbies": "Záliby",
     "myProfile.saveProfile": "Uložit profil",
+    "myProfile.profileWasSaved": "Profil byl uložen",
     "notFound.pageNotFound": "Stránka nebyla nalezena"
 }

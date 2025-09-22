@@ -49,7 +49,7 @@ export const HobbiesInput: Component<HobbiesInputProps> = (props) => {
           />
 
           <button
-            class="px-3 py-2 rounded-md text-base font-normal cursor-pointer bg-pallete-4 hover:bg-pallete-5 text-pallete-7"
+            class="px-3 py-2 rounded-md text-base font-normal cursor-pointer bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
             onClick={addHobby}
             disabled={!getHobbyFromInput()}>
             <PlusIcon class="size-5" />

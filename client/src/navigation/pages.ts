@@ -17,8 +17,14 @@ export const pages: PageDefinitions = {
       import('~/pages/NewProfile').then((module) => ({ default: module.NewProfile })),
     ),
   },
-  [Page.MyProfile]: {
+  [Page.Overview]: {
     paths: ['/users/:email'],
+    component: lazy(() =>
+      import('~/pages/Overview').then((module) => ({ default: module.Overview })),
+    ),
+  },
+  [Page.MyProfile]: {
+    paths: ['/users/:email/my-profile'],
     component: lazy(() =>
       import('~/pages/MyProfile').then((module) => ({ default: module.MyProfile })),
     ),

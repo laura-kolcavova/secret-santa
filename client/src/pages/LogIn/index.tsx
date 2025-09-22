@@ -20,7 +20,7 @@ export const LogIn: Component = () => {
 
   createEffect(() => {
     if (getIsSuccess()) {
-      const path = pages.MyProfile.paths[0].replace(':email', getEmail());
+      const path = pages.Overview.paths[0].replace(':email', getEmail());
 
       navigate(path);
     }
@@ -36,7 +36,7 @@ export const LogIn: Component = () => {
   };
 
   return (
-    <div class="container mx-auto py-12">
+    <div class="container mx-auto py-6">
       <Show when={getIsError()}>
         <Alert color="danger">{getErrorMessage()}</Alert>
       </Show>
@@ -82,7 +82,7 @@ export const LogIn: Component = () => {
         <div>
           <button
             type="submit"
-            class="w-full py-2 px-4 rounded text-white font-bold bg-blue-500 hover:bg-blue-600 focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-7"
+            class="w-full py-2 px-4 rounded text-white font-bold bg-blue-500 hover:bg-blue-600 focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
             disabled={getIsPending()}>
             <Show
               when={getIsPending()}

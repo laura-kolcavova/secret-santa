@@ -7,6 +7,7 @@ import { sharedMessages } from '../shared/sharedMessages';
 import { useParams } from '@solidjs/router';
 import { messages } from './messages';
 import { useProfileQuery } from './hooks/useProfileQuery';
+import { UserLayout } from '../shared/UserLayout';
 
 export const MyProfile: Component = () => {
   const params = useParams();
@@ -14,10 +15,10 @@ export const MyProfile: Component = () => {
   const [data] = useProfileQuery(params.email);
 
   return (
-    <div class="container mx-auto py-12">
-      <h1 class="text-2xl font-bold mb-8">
+    <UserLayout>
+      {/* <h1 class="text-2xl font-bold mb-8">
         <FormattedMessage message={messages.myProfile} />
-      </h1>
+      </h1> */}
 
       <Switch
         fallback={
@@ -39,6 +40,6 @@ export const MyProfile: Component = () => {
           <ProfileForm profile={data()!} />
         </Match>
       </Switch>
-    </div>
+    </UserLayout>
   );
 };
