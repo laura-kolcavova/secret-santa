@@ -1,4 +1,4 @@
-import { ValidationError } from '~/application/shared/ValidationError';
+import { ValidationError } from '~/application/shared/models/ValidationError';
 
 export type UnitResult = {
   isSuccess: boolean;

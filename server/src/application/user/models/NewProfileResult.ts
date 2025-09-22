@@ -1,15 +1,15 @@
 import { ValidationError } from '~/application/shared/models/ValidationError';
 
-export type LoginResult = {
+export type NewProfileResult = {
   isSuccess: boolean;
   error?: ValidationError;
 };
 
-export const loginResultSuccess = (): LoginResult => ({
+export const registerResultSuccess = (): NewProfileResult => ({
   isSuccess: true,
 });
 
-export const loginResultError = (error: ValidationError): LoginResult => ({
+export const registerResultError = (error: ValidationError): NewProfileResult => ({
   isSuccess: false,
   error: error,
 });

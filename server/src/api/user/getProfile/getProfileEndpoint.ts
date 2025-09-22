@@ -2,9 +2,10 @@ import { Request, Response, NextFunction, Router } from 'express';
 import { userManager } from '~/application/user/services/userManager';
 import { GetProfileParams } from './GetProfileParams';
 import { ProfileDto } from './ProfileDto';
+import { getProfileValidationHandler } from './getProfileValidationHandler';
 
 export const mapGetProfile = (router: Router) => {
-  router.get('/:email/profile', handleGetProfile);
+  router.get('/:email/profile', getProfileValidationHandler, handleGetProfile);
 };
 
 const handleGetProfile = async (
@@ -17,8 +18,6 @@ const handleGetProfile = async (
 
     if (!user) {
       res.status(204).send();
-
-      next();
 
       return;
     }
