@@ -1,18 +1,19 @@
 import { Request, Response, NextFunction, Router } from 'express';
-import { asProblemDetails } from '~/api/utils/validationErrorHelper';
 import { EditProfileRequestDto } from './EditProfileRequestDto';
 import { EditProfileParams } from './EditProfileParams';
-import { userService } from '~/application/user/services/userService';
+import { editProfileService } from '~/application/user/services/editProfileService';
+import { createProblemDetails } from '~/api/utils/validationErrorHelper';
+import { editProfileValidationHandler } from './editProfileValidationHandler';
 
 export const mapEditProfile = (router: Router) => {
-  router.put('/:email/profile', handleEditProfile);
+  router.put('/:email/profile', editProfileValidationHandler, handleEditProfile);
 };
 
 const handleEditProfile = (req: Request<EditProfileParams>, res: Response, next: NextFunction) => {
   try {
     const editProfileRequest = req.body as EditProfileRequestDto;
 
-    const loginResult = userService.editProfile({
+    const loginResult = editProfileService.editProfile({
       email: req.params.email,
       firstName: editProfileRequest.firstName,
       lastName: editProfileRequest.lastName,
@@ -21,18 +22,14 @@ const handleEditProfile = (req: Request<EditProfileParams>, res: Response, next:
     });
 
     if (!loginResult.isSuccess) {
-      const problemDetails = asProblemDetails(loginResult.error!, req);
+      const problemDetails = createProblemDetails(loginResult.error!, req);
 
       res.status(400).json(problemDetails);
-
-      next();
 
       return;
     }
 
     res.status(204).send();
-
-    next();
   } catch (error) {
     next(error);
   }

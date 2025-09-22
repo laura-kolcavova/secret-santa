@@ -1,31 +1,28 @@
 import { Request, Response, NextFunction, Router } from 'express';
-import { userService } from '~/application/user/services/userService';
 import { LoginRequestDto } from './LoginRequestDto';
-import { asProblemDetails } from '~/api/utils/validationErrorHelper';
+import { loginService } from '~/application/user/services/loginService';
+import { createProblemDetails } from '~/api/utils/validationErrorHelper';
+import { loginValidationHandler } from './loginValidationHandler';
 
 export const mapLogin = (router: Router) => {
-  router.post('/login', handleLogin);
+  router.post('/login', loginValidationHandler, handleLogin);
 };
 
 const handleLogin = (req: Request, res: Response, next: NextFunction) => {
   try {
     const loginRequest = req.body as LoginRequestDto;
 
-    const loginResult = userService.login(loginRequest.email, loginRequest.pin);
+    const loginResult = loginService.login(loginRequest.email, loginRequest.pin);
 
     if (!loginResult.isSuccess) {
-      const problemDetails = asProblemDetails(loginResult.error!, req);
+      const problemDetails = createProblemDetails(loginResult.error!, req);
 
       res.status(400).json(problemDetails);
-
-      next();
 
       return;
     }
 
     res.status(204).send();
-
-    next();
   } catch (error) {
     next(error);
   }

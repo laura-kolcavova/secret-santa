@@ -1,4 +1,4 @@
-import { ValidationError } from '../shared/ValidationError';
+import { ValidationError } from '../shared/models/ValidationError';
 
 const notFound = (): ValidationError => ({
   code: 'User.NotFound',

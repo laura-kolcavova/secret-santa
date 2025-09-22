@@ -1,15 +1,7 @@
-import md5 from 'md5';
-import { appConfig } from '~/config/appConfig';
+import { normalizeEmail } from '~/application/shared/emailHelper';
 import { mockIdentityUsers } from '../mockIdentityUsers';
 import { IdentityUser } from '../models/IdentityUser';
-
-const normalizeEmail = (email: string) => {
-  return email.trim().toLocaleLowerCase();
-};
-
-const computePinHash = (pin: string) => {
-  return md5(pin + appConfig.salt);
-};
+import { computePinHash } from '~/application/shared/pinHelper';
 
 const checkPin = (user: IdentityUser, pin: string): boolean => {
   const pinHash = computePinHash(pin);
