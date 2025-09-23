@@ -20,7 +20,7 @@ const editProfile = (editProfileModel: {
   user.department = editProfileModel.department;
   user.hobbies = [...editProfileModel.hobbies];
 
-  userManager.updateUserProfile(user);
+  userManager.updateProfile(user);
 
   return unitResultSuccess();
 };

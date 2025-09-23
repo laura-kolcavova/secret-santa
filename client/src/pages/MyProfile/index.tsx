@@ -16,10 +16,6 @@ export const MyProfile: Component = () => {
 
   return (
     <UserLayout>
-      {/* <h1 class="text-2xl font-bold mb-8">
-        <FormattedMessage message={messages.myProfile} />
-      </h1> */}
-
       <Switch
         fallback={
           <Alert color="warning" isDismissible={false}>

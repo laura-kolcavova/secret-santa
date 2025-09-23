@@ -46,7 +46,7 @@ const createUser = (
   mockIdentityUsers.push(user);
 };
 
-const updateUserProfile = (userToUpdate: IdentityUser) => {
+const updateProfile = (userToUpdate: IdentityUser) => {
   mockIdentityUsers.forEach((identityUser) => {
     if (identityUser.email !== userToUpdate.email) {
       return;
@@ -59,9 +59,19 @@ const updateUserProfile = (userToUpdate: IdentityUser) => {
   });
 };
 
+const updatePin = (userToUpdate: IdentityUser) => {
+  mockIdentityUsers.forEach((identityUser) => {
+    if (identityUser.email !== userToUpdate.email) {
+      return;
+    }
+
+    identityUser.pinHash = userToUpdate.pinHash;
+  });
+};
 export const userManager = {
   checkPin,
   findByEmail,
   createUser,
-  updateUserProfile,
+  updateProfile,
+  updatePin,
 };

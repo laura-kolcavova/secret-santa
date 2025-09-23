@@ -54,7 +54,7 @@ export const ProfileForm: Component<ProfileFormProps> = (props) => {
         </Alert>
       </Show>
 
-      <form onSubmit={handleSubmit} class="mb-12 w-full max-w-xl">
+      <form onSubmit={handleSubmit} class="w-full max-w-xl">
         <div class="mb-6">
           <label class="block mb-2 text-sm font-bold text-pallete-4" for="first-name">
             <FormattedMessage message={messages.firstName} />
@@ -66,6 +66,7 @@ export const ProfileForm: Component<ProfileFormProps> = (props) => {
             type="text"
             autocomplete="given-name"
             required
+            maxLength="256"
             class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
             value={getFirstName()}
             onInput={(e) => setFirstName(e.currentTarget.value)}
@@ -83,6 +84,7 @@ export const ProfileForm: Component<ProfileFormProps> = (props) => {
             type="text"
             autocomplete="family-name"
             required
+            maxLength="256"
             class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
             value={getLastName()}
             onInput={(e) => setLastName(e.currentTarget.value)}

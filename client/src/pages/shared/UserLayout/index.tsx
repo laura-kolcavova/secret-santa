@@ -15,6 +15,7 @@ export const UserLayout: Component<UserLayoutProps> = (props) => {
   const email = 'laura.kolcavova@email.cz';
   const overviewPath = pages.Overview.paths[0].replace(':email', email);
   const myProfilePath = pages.MyProfile.paths[0].replace(':email', email);
+  const changePinPath = pages.ChangePin.paths[0].replace(':email', email);
 
   return (
     <div class="container mx-auto py-6">
@@ -39,6 +40,12 @@ export const UserLayout: Component<UserLayoutProps> = (props) => {
                 label={<FormattedMessage message={messages.myProfile} />}
                 path={myProfilePath}
                 isActive={location.pathname === myProfilePath}
+              />
+
+              <SidebarNavItem
+                label={<FormattedMessage message={messages.changePin} />}
+                path={changePinPath}
+                isActive={location.pathname === changePinPath}
               />
             </ul>
           </nav>

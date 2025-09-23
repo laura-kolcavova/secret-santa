@@ -27,10 +27,10 @@ export const NewProfile: Component = () => {
   const [getPinConfirm, setPinConfirmValue] = createSignal<string>('');
   const [hobbies, setHobbies] = createStore<string[]>([]);
 
+  const [getFieldValidations, setFieldValidations] = createSignal<FieldValidations>({});
+
   const { newProfile, getIsPending, getIsSuccess, getIsError, getErrorMessage } =
     useNewProfileMutation();
-
-  const [fieldValidations, setFieldValidations] = createStore<FieldValidations>({});
 
   const addHobby = (newHobby: string) => {
     setHobbies(produce((hobbies) => hobbies.push(newHobby)));
@@ -105,6 +105,7 @@ export const NewProfile: Component = () => {
             type="text"
             autocomplete="given-name"
             required
+            maxLength="256"
             class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
             placeholder={formatMessage(messages.enterFirstName)}
             onInput={(e) => setFirstName(e.currentTarget.value)}
@@ -122,6 +123,7 @@ export const NewProfile: Component = () => {
             type="text"
             autocomplete="family-name"
             required
+            maxLength="256"
             class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
             placeholder={formatMessage(messages.enterLastName)}
             onInput={(e) => setLastName(e.currentTarget.value)}
@@ -159,6 +161,7 @@ export const NewProfile: Component = () => {
             type="email"
             autocomplete="email"
             required
+            maxLength="256"
             class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
             placeholder={formatMessage(messages.enterEmail)}
             onInput={(e) => setEmail(e.currentTarget.value)}
@@ -204,8 +207,11 @@ export const NewProfile: Component = () => {
             onInput={(e) => setPinConfirmValue(e.currentTarget.value)}
           />
 
-          <Show when={fieldValidations['pin-confirm'] && !fieldValidations['pin-confirm'].isValid}>
-            <FeedbackError errorMessage={fieldValidations['pin-confirm'].errorMessage!} />
+          <Show
+            when={
+              getFieldValidations()['pin-confirm'] && !getFieldValidations()['pin-confirm'].isValid
+            }>
+            <FeedbackError errorMessage={getFieldValidations()['pin-confirm'].errorMessage!} />
           </Show>
         </div>
 

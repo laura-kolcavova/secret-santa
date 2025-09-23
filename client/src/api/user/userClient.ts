@@ -4,6 +4,7 @@ import { callAxios } from '~/utils/axios';
 import { NewProfileRequestDto } from './dto/NewProfileRequestDto';
 import { ProfileDto } from './dto/ProfileDto';
 import { EditProfileRequestDto } from './dto/EditProfileRequestDto';
+import { ChangePinRequestDto } from './dto/ChangePinRequestDto';
 
 const login = (loginRequest: LoginRequestDto, signal?: GenericAbortSignal): AxiosPromise<void> => {
   return callAxios({
@@ -47,9 +48,23 @@ const editProfile = (
   });
 };
 
+const changePin = (
+  email: string,
+  changePinRequest: ChangePinRequestDto,
+  signal?: GenericAbortSignal,
+): AxiosPromise<void> => {
+  return callAxios({
+    url: `/api/user/${email}/change-pin`,
+    method: 'PUT',
+    data: changePinRequest,
+    signal,
+  });
+};
+
 export const userClient = {
   login,
   newProfile,
   getProfile,
   editProfile,
+  changePin,
 };

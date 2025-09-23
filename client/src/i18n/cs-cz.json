@@ -29,6 +29,7 @@
     "newProfile.enterHobbyAndPressEnter": "Zadejte zálibu a stiskněte Enter",
     "userLayout.overview": "Přehled",
     "userLayout.myProfile": "Můj profil",
+    "userLayout.changePin": "Změnit pin",
     "myProfile.profileNotFound": "Profil nebyl nalezen",
     "myProfile.firstName": "Jméno",
     "myProfile.lastName": "Příjmení",
@@ -36,5 +37,10 @@
     "myProfile.hobbies": "Záliby",
     "myProfile.saveProfile": "Uložit profil",
     "myProfile.profileWasSaved": "Profil byl uložen",
+    "changePin.currentPin": "Současný pin",
+    "changePin.newPin": "Nový pin (4 čísla)",
+    "changePin.newPinConfirm": "Nový pin znovu",
+    "changePin.changePin": "Změnit pin",
+    "changePin.pinWasChanged": "Pin byl změněn",
     "notFound.pageNotFound": "Stránka nebyla nalezena"
 }

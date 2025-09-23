@@ -7,4 +7,8 @@ export const messages = {
     id: 'userLayout.myProfile',
     defaultMessage: 'MY PROFILE',
   },
+  changePin: {
+    id: 'userLayout.changePin',
+    defaultMessage: 'CHANGE PIN',
+  },
 };

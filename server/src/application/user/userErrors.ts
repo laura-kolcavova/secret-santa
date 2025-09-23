@@ -15,8 +15,14 @@ const emailAlreadyExists = (): ValidationError => ({
   message: 'User with this email already exists',
 });
 
+const newPinMustDiffer = (): ValidationError => ({
+  code: 'User.NewPinMustDiffer',
+  message: 'The new PIN must be different from the current PIN',
+});
+
 export const userErrors = {
   notFound,
   pinDoesNotMatch,
   emailAlreadyExists,
+  newPinMustDiffer,
 };
