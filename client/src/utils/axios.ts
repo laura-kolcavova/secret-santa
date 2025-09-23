@@ -10,6 +10,7 @@ const defaultAxiosConfig: AxiosRequestConfig = {
     'Content-Type': 'application/json',
     Pragma: 'no-cache',
   },
+  withCredentials: true,
 };
 
 export const callAxios = (config: AxiosRequestConfig) => {

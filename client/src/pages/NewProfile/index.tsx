@@ -77,7 +77,7 @@ export const NewProfile: Component = () => {
 
   createEffect(() => {
     if (getIsSuccess()) {
-      const path = pages.Overview.paths[0].replace(':email', getEmail());
+      const path = pages.LogIn.paths[0];
 
       navigate(path);
     }

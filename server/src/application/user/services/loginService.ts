@@ -15,7 +15,7 @@ const login = (email: string, pin: string): LoginResult => {
     return loginResultError(userErrors.pinDoesNotMatch());
   }
 
-  return loginResultSuccess();
+  return loginResultSuccess(user);
 };
 
 export const loginService = {

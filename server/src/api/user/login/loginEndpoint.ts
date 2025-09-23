@@ -3,6 +3,7 @@ import { LoginRequestDto } from './LoginRequestDto';
 import { loginService } from '~/application/user/services/loginService';
 import { createProblemDetails } from '~/api/utils/validationErrorHelper';
 import { loginValidation } from './loginValidation';
+import { signInUser } from '~/api/utils/signInUserHelper';
 
 export const mapLogin = (router: Router) => {
   router.post('/login', loginValidation, handleLogin);
@@ -21,6 +22,8 @@ const handleLogin = (req: Request, res: Response, next: NextFunction) => {
 
       return;
     }
+
+    signInUser(res, loginResult.user!);
 
     res.status(204).send();
   } catch (error) {
