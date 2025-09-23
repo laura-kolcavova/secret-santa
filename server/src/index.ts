@@ -7,7 +7,10 @@ import { appConfig } from './config/appConfig';
 
 const app = express();
 
-app.use(cors());
+// app.use(cors());
+
+app.use(cors({ origin: 'http://localhost:3200', credentials: true }));
+
 app.use(json());
 
 app.use('/api/user', userRoutes);

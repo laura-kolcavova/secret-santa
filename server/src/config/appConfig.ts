@@ -24,10 +24,12 @@ const toNumber = (value: string): number => {
 
 export interface AppConfig {
   port: number;
-  salt: string;
+  pinSalt: string;
+  jwtSecret: string;
 }
 
 export const appConfig: AppConfig = {
   port: toNumber(required('PORT')),
-  salt: toString(required('SALT')),
+  pinSalt: toString(required('PIN_SALT')),
+  jwtSecret: toString(required('JWT_SECRET')),
 };
