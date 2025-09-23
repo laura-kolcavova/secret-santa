@@ -2,10 +2,10 @@ import { Request, Response, NextFunction, Router } from 'express';
 import { NewProfileRequestDto } from './NewProfileRequestDto';
 import { newProfileService } from '~/application/user/services/newProfileService';
 import { createProblemDetails } from '~/api/utils/validationErrorHelper';
-import { newProfileValidationHandler } from './newProfileValidationHandler';
+import { newProfileValidation } from './newProfileValidation';
 
 export const mapNewProfile = (router: Router) => {
-  router.post('/new-profile', newProfileValidationHandler, handleNewProfile);
+  router.post('/new-profile', newProfileValidation, handleNewProfile);
 };
 
 const handleNewProfile = (req: Request, res: Response, next: NextFunction) => {

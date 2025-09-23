@@ -3,10 +3,10 @@ import { EditProfileRequestDto } from './EditProfileRequestDto';
 import { EditProfileParams } from './EditProfileParams';
 import { editProfileService } from '~/application/user/services/editProfileService';
 import { createProblemDetails } from '~/api/utils/validationErrorHelper';
-import { editProfileValidationHandler } from './editProfileValidationHandler';
+import { editProfileValidation } from './editProfileValidation';
 
 export const mapEditProfile = (router: Router) => {
-  router.put('/:email/profile', editProfileValidationHandler, handleEditProfile);
+  router.put('/:email/profile', editProfileValidation, handleEditProfile);
 };
 
 const handleEditProfile = (req: Request<EditProfileParams>, res: Response, next: NextFunction) => {
