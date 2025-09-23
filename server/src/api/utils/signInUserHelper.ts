@@ -11,7 +11,7 @@ export const signInUser = (res: Response, user: IdentityUser) => {
   const authProperties: CookieOptions = {
     maxAge: oneDayInMs,
     httpOnly: true,
-    secure: true, // TODO true on prod
+    secure: true,
     sameSite: 'none',
   };
 
