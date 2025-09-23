@@ -1,13 +1,12 @@
 import { Request, Response, NextFunction, Router } from 'express';
-import { editProfileService } from '~/application/user/services/editProfileService';
 import { createProblemDetails } from '~/api/utils/validationErrorHelper';
-import { changePinValidationHandler } from './changePinValidationHandler';
 import { ChangePinParams } from './ChangePinParams';
 import { ChangePinRequestDto } from './ChangePinRequestDto';
 import { changePinService } from '~/application/user/services/changePinService';
+import { changePinValidation } from './changePinValidation';
 
 export const mapChangePin = (router: Router) => {
-  router.put('/:email/change-pin', changePinValidationHandler, handleEditProfile);
+  router.put('/:email/change-pin', changePinValidation, handleEditProfile);
 };
 
 const handleEditProfile = (req: Request<ChangePinParams>, res: Response, next: NextFunction) => {
