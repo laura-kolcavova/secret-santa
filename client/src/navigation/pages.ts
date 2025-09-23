@@ -29,6 +29,12 @@ export const pages: PageDefinitions = {
       import('~/pages/MyProfile').then((module) => ({ default: module.MyProfile })),
     ),
   },
+  [Page.ChangePin]: {
+    paths: ['/users/:email/change-profile'],
+    component: lazy(() =>
+      import('~/pages/ChangePin').then((module) => ({ default: module.ChangePin })),
+    ),
+  },
   [Page.NotFound]: {
     paths: ['*'],
     component: lazy(() =>

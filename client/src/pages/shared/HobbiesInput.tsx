@@ -42,6 +42,7 @@ export const HobbiesInput: Component<HobbiesInputProps> = (props) => {
             id={props.id}
             type="text"
             autocomplete="off"
+            maxLength="256"
             class='"block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100'
             placeholder={formatMessage(messages.enterHobbyAndPressEnter)}
             value={getInputValue()}

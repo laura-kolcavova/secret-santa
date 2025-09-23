@@ -3,5 +3,6 @@ export enum Page {
   NewProfile = 'NewProfile',
   Overview = 'Overview',
   MyProfile = 'MyProfile',
+  ChangePin = 'ChangePin',
   NotFound = 'NotFound',
 }
