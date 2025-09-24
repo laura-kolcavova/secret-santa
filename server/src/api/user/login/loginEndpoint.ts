@@ -3,7 +3,7 @@ import { LoginRequestDto } from './LoginRequestDto';
 import { loginService } from '~/application/user/services/loginService';
 import { createProblemDetails } from '~/api/utils/validationErrorHelper';
 import { loginValidation } from './loginValidation';
-import { signInUser } from '~/api/utils/signInUserHelper';
+import { signInUser } from '~/api/utils/userAuthenticationHelper';
 
 export const mapLogin = (router: Router) => {
   router.post('/login', loginValidation, handleLogin);

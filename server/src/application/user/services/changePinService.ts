@@ -1,5 +1,5 @@
 import { computePinHash } from '~/application/shared/pinHelper';
-import { UnitResult, unitResultError, unitResultSuccess } from '../models/UnitResult';
+import { UnitResult, unitResultError, unitResultSuccess } from '../../shared/models/UnitResult';
 import { userErrors } from '../userErrors';
 import { userManager } from './userManager';
 

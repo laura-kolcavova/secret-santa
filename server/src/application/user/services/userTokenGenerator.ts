@@ -2,12 +2,12 @@ import jwt from 'jsonwebtoken';
 
 import { appConfig } from '~/config/appConfig';
 import { IdentityUser } from '../models/IdentityUser';
-import { getUserClaims } from '../utils/authenticationHelper';
+import { createUserTokenPayload } from '../utils/authenticationHelper';
 
 const generateUserToken = (user: IdentityUser) => {
-  const payload = getUserClaims(user);
+  const userTokenPayload = createUserTokenPayload(user);
 
-  const userToken = jwt.sign(payload, appConfig.jwtSecret, {
+  const userToken = jwt.sign(userTokenPayload, appConfig.jwtSecret, {
     expiresIn: '1d',
   });
 

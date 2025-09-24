@@ -15,6 +15,13 @@ export const signInUser = (res: Response, user: IdentityUser) => {
     sameSite: 'none',
   };
 
-  console.log(userToken);
   res.cookie(COOKIE_USER_AUTHENTICATION_NAME, userToken, authProperties);
+};
+
+export const signOutUser = (res: Response) => {
+  res.clearCookie(COOKIE_USER_AUTHENTICATION_NAME, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'none',
+  });
 };

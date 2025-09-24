@@ -20,9 +20,7 @@ export const LogIn: Component = () => {
 
   createEffect(() => {
     if (getIsSuccess()) {
-      const path = pages.Overview.paths[0].replace(':email', getEmail());
-
-      navigate(path);
+      navigate(pages.Overview.paths[0]);
     }
   });
 
