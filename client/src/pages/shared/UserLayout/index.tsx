@@ -4,6 +4,7 @@ import { pages } from '~/navigation/pages';
 import { SidebarNavItem } from './SidebarNavItem';
 import { FormattedMessage } from '~/translation/FormattedMessage';
 import { messages } from './messages';
+import { useLoggedUserContext } from '~/authentication/LoggedUserProvider';
 
 export type UserLayoutProps = {
   children: JSX.Element;
@@ -12,17 +13,20 @@ export type UserLayoutProps = {
 export const UserLayout: Component<UserLayoutProps> = (props) => {
   const location = useLocation();
 
-  const email = 'laura.kolcavova@email.cz';
-  const overviewPath = pages.Overview.paths[0].replace(':email', email);
-  const myProfilePath = pages.MyProfile.paths[0].replace(':email', email);
-  const changePinPath = pages.ChangePin.paths[0].replace(':email', email);
+  const [loggedUserContextState] = useLoggedUserContext();
+
+  const overviewPath = pages.Overview.paths[0];
+  const myProfilePath = pages.MyProfile.paths[0];
+  const changePinPath = pages.ChangePin.paths[0];
 
   return (
     <div class="container mx-auto py-6">
       <div class="mb-4">
         <h1>
-          <span class="block text-2xl font-bold">Laura Kolcavova</span>
-          <span class="block text-xl font-light text-pallete-7">laura.kolcavova@email.cz</span>
+          <span class="block text-2xl font-bold">{loggedUserContextState.user.fullName}</span>
+          <span class="block text-xl font-light text-pallete-7">
+            {loggedUserContextState.user.email}
+          </span>
         </h1>
       </div>
 

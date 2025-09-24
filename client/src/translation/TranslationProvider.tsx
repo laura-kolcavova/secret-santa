@@ -43,7 +43,7 @@ export const TranslationProvider: ParentComponent = (props) => {
   );
 };
 
-export const useTranslation = () => {
+export const useTranslationContext = () => {
   const contextValue = useContext(TranslationContext);
 
   if (contextValue === null) {

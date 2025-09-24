@@ -1,8 +1,8 @@
 import { MessageDescriptor } from './MessageDescriptor';
-import { useTranslation } from './TranslationProvider';
+import { useTranslationContext } from './TranslationProvider';
 
 export const useLocalization = () => {
-  const { translate } = useTranslation();
+  const { translate } = useTranslationContext();
 
   const formatMessage = (message: MessageDescriptor) => {
     const translatedMessage = translate(message.id);

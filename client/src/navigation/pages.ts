@@ -18,19 +18,19 @@ export const pages: PageDefinitions = {
     ),
   },
   [Page.Overview]: {
-    paths: ['/users/:email'],
+    paths: ['/overview'],
     component: lazy(() =>
       import('~/pages/Overview').then((module) => ({ default: module.Overview })),
     ),
   },
   [Page.MyProfile]: {
-    paths: ['/users/:email/my-profile'],
+    paths: ['/my-profile'],
     component: lazy(() =>
       import('~/pages/MyProfile').then((module) => ({ default: module.MyProfile })),
     ),
   },
   [Page.ChangePin]: {
-    paths: ['/users/:email/change-profile'],
+    paths: ['/change-pin'],
     component: lazy(() =>
       import('~/pages/ChangePin').then((module) => ({ default: module.ChangePin })),
     ),

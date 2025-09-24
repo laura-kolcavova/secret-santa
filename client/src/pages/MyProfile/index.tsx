@@ -4,15 +4,15 @@ import { SpinnerIcon } from '../shared/icons/SpinnerIcon';
 import { Alert } from '../shared/Alert';
 import { FormattedMessage } from '~/translation/FormattedMessage';
 import { sharedMessages } from '../shared/sharedMessages';
-import { useParams } from '@solidjs/router';
 import { messages } from './messages';
 import { useProfileQuery } from './hooks/useProfileQuery';
 import { UserLayout } from '../shared/UserLayout';
+import { useLoggedUserContext } from '~/authentication/LoggedUserProvider';
 
 export const MyProfile: Component = () => {
-  const params = useParams();
+  const [loggedUserContextState] = useLoggedUserContext();
 
-  const [data] = useProfileQuery(params.email);
+  const [data] = useProfileQuery(loggedUserContextState.user.email);
 
   return (
     <UserLayout>
@@ -32,7 +32,7 @@ export const MyProfile: Component = () => {
             <FormattedMessage message={sharedMessages.somethingWentWrong} />
           </Alert>
         </Match>
-        <Match when={data() !== null}>
+        <Match when={data()}>
           <ProfileForm profile={data()!} />
         </Match>
       </Switch>

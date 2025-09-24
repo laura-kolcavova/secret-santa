@@ -5,12 +5,29 @@ import { NewProfileRequestDto } from './dto/NewProfileRequestDto';
 import { ProfileDto } from './dto/ProfileDto';
 import { EditProfileRequestDto } from './dto/EditProfileRequestDto';
 import { ChangePinRequestDto } from './dto/ChangePinRequestDto';
+import { LoggedUserDto } from './dto/LoggedUserDto';
 
 const login = (loginRequest: LoginRequestDto, signal?: GenericAbortSignal): AxiosPromise<void> => {
   return callAxios({
     url: '/api/user/login',
     method: 'POST',
     data: loginRequest,
+    signal: signal,
+  });
+};
+
+const logout = (signal?: GenericAbortSignal): AxiosPromise<void> => {
+  return callAxios({
+    url: '/api/user/logout',
+    method: 'POST',
+    signal: signal,
+  });
+};
+
+const getLoggedUser = (signal?: GenericAbortSignal): AxiosPromise<LoggedUserDto> => {
+  return callAxios({
+    url: '/api/user/logged',
+    method: 'GET',
     signal: signal,
   });
 };
@@ -63,6 +80,8 @@ const changePin = (
 
 export const userClient = {
   login,
+  logout,
+  getLoggedUser,
   newProfile,
   getProfile,
   editProfile,
