@@ -1,6 +1,6 @@
 import { Component, createEffect, createSignal, For, Show } from 'solid-js';
 import { Alert } from '../shared/Alert';
-import { A } from '@solidjs/router';
+import { A, useNavigate } from '@solidjs/router';
 import { pages } from '~/navigation/pages';
 import { SpinnerIcon } from '../shared/icons/SpinnerIcon';
 import { useNewProfileMutation } from './hooks/useNewProfileMutation';
@@ -14,8 +14,23 @@ import { messages } from './messages';
 import { useLocalization } from '~/translation/useLocalization';
 import { HobbyList } from '../shared/HobbyList';
 import { ProfileCreatedInfo } from './ProfileCreatedInfo';
+import { useLoggedUserContext } from '~/authentication/LoggedUserProvider';
 
 export const NewProfile: Component = () => {
+  const [loggedUserState] = useLoggedUserContext();
+
+  const navigate = useNavigate();
+
+  if (loggedUserState.isAuthenticated) {
+    navigate(pages.Overview.paths[0]);
+
+    return null;
+  }
+
+  return <NewProfileComponent />;
+};
+
+const NewProfileComponent: Component = () => {
   const { formatMessage } = useLocalization();
 
   const [getFirstName, setFirstName] = createSignal<string>('');
