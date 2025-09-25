@@ -12,11 +12,7 @@ export const useChangePinMutation = () => {
   const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
   const [getErrorMessage, setErrorMessage] = createSignal<string | null>(null);
 
-  const changePinAsync = async (
-    email: string,
-    changePinRequest: ChangePinRequestDto,
-    signal?: AbortSignal,
-  ) => {
+  const changePinAsync = async (changePinRequest: ChangePinRequestDto, signal?: AbortSignal) => {
     batch(() => {
       setIsPending(true);
       setIsError(false);
@@ -25,7 +21,7 @@ export const useChangePinMutation = () => {
     });
 
     try {
-      await userClient.changePin(email, changePinRequest, signal);
+      await userClient.changePin(changePinRequest, signal);
 
       batch(() => {
         setIsSuccess(true);
@@ -40,12 +36,8 @@ export const useChangePinMutation = () => {
     }
   };
 
-  const changePin = (
-    email: string,
-    changePinRequest: ChangePinRequestDto,
-    signal?: AbortSignal,
-  ) => {
-    changePinAsync(email, changePinRequest, signal);
+  const changePin = (changePinRequest: ChangePinRequestDto, signal?: AbortSignal) => {
+    changePinAsync(changePinRequest, signal);
   };
 
   return { changePin, getIsPending, getIsError, getIsSuccess, getErrorMessage };

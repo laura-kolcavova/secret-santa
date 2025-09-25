@@ -1,20 +1,17 @@
 import { Request, Response, NextFunction, Router } from 'express';
 import { userManager } from '~/application/user/services/userManager';
-import { GetProfileParams } from './GetProfileParams';
 import { ProfileDto } from './ProfileDto';
-import { getProfileValidation } from './getProfileValidation';
+import { userAuthorizationHandler } from '~/api/shared/middlewares/userAuthorizatoinHandler';
 
 export const mapGetProfile = (router: Router) => {
-  router.get('/:email/profile', getProfileValidation, handleGetProfile);
+  router.get('/profile', userAuthorizationHandler, handleGetProfile);
 };
 
-const handleGetProfile = async (
-  req: Request<GetProfileParams>,
-  res: Response,
-  next: NextFunction,
-) => {
+const handleGetProfile = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const user = userManager.findByEmail(req.params.email);
+    const email = req.user!.email;
+
+    const user = userManager.findByEmail(email);
 
     if (!user) {
       res.status(204).send();

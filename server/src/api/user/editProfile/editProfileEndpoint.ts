@@ -1,20 +1,22 @@
 import { Request, Response, NextFunction, Router } from 'express';
 import { EditProfileRequestDto } from './EditProfileRequestDto';
-import { EditProfileParams } from './EditProfileParams';
 import { editProfileService } from '~/application/user/services/editProfileService';
 import { createProblemDetails } from '~/api/utils/validationErrorHelper';
 import { editProfileValidation } from './editProfileValidation';
+import { userAuthorizationHandler } from '~/api/shared/middlewares/userAuthorizatoinHandler';
 
 export const mapEditProfile = (router: Router) => {
-  router.put('/:email/profile', editProfileValidation, handleEditProfile);
+  router.put('/profile', userAuthorizationHandler, editProfileValidation, handleEditProfile);
 };
 
-const handleEditProfile = (req: Request<EditProfileParams>, res: Response, next: NextFunction) => {
+const handleEditProfile = (req: Request, res: Response, next: NextFunction) => {
   try {
+    const email = req.user!.email;
+
     const editProfileRequest = req.body as EditProfileRequestDto;
 
     const loginResult = editProfileService.editProfile({
-      email: req.params.email,
+      email: email,
       firstName: editProfileRequest.firstName,
       lastName: editProfileRequest.lastName,
       department: editProfileRequest.department,

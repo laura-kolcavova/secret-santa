@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction, Router } from 'express';
+import { userAuthorizationHandler } from '~/api/shared/middlewares/userAuthorizatoinHandler';
 import { signOutUser } from '~/api/utils/userAuthenticationHelper';
 
 export const mapLogout = (router: Router) => {
-  router.post('/logout', handleLogout);
+  router.post('/logout', userAuthorizationHandler, handleLogout);
 };
 
 const handleLogout = (req: Request, res: Response, next: NextFunction) => {

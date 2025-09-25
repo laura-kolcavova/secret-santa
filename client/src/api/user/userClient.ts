@@ -44,21 +44,20 @@ const newProfile = (
   });
 };
 
-const getProfile = (email: string, signal?: GenericAbortSignal): AxiosPromise<ProfileDto> => {
+const getProfile = (signal?: GenericAbortSignal): AxiosPromise<ProfileDto> => {
   return callAxios({
-    url: `/api/user/${email}/profile`,
+    url: `/api/user/profile`,
     method: 'GET',
     signal: signal,
   });
 };
 
 const editProfile = (
-  email: string,
   editProfileRequest: EditProfileRequestDto,
   signal?: GenericAbortSignal,
 ): AxiosPromise<void> => {
   return callAxios({
-    url: `/api/user/${email}/profile`,
+    url: `/api/user/profile`,
     method: 'PUT',
     data: editProfileRequest,
     signal: signal,
@@ -66,12 +65,11 @@ const editProfile = (
 };
 
 const changePin = (
-  email: string,
   changePinRequest: ChangePinRequestDto,
   signal?: GenericAbortSignal,
 ): AxiosPromise<void> => {
   return callAxios({
-    url: `/api/user/${email}/change-pin`,
+    url: `/api/user/change-pin`,
     method: 'PUT',
     data: changePinRequest,
     signal,
