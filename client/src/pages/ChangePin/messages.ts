@@ -19,4 +19,16 @@ export const messages = {
     id: 'changePin.pinWasChanged',
     defaultMessage: 'PIN WAS CHANGED',
   },
+  invalidCurrentPin: {
+    id: 'changePin.invalidCurrentPin',
+    defaultMessage: 'THE CURRENT PIN IS INVALID',
+  },
+  newPinMustDiffer: {
+    id: 'changePin.newPinMustDiffer',
+    defaultMessage: 'THE NEW PIN MUST BE DIFFERENT FROM THE CURRENT PIN',
+  },
+  newPinConfirmMismatch: {
+    id: 'changePin.newPinConfirmMismatch',
+    defaultMessage: 'CONFIRMATION NEW PIN DOES NOT MATCH',
+  },
 };

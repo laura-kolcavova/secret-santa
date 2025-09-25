@@ -14,6 +14,10 @@ export const useChangePinErrorHandler = () => {
       switch (code) {
         case 'User.NotFound':
           return formatMessage(sharedMessages.somethingWentWrong);
+        case 'User.InvalidCurrentPin':
+          return formatMessage(messages.invalidCurrentPin);
+        case 'User.NewPinMustDiffer':
+          return formatMessage(messages.newPinMustDiffer);
       }
     }
 

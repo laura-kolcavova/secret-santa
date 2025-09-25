@@ -6,12 +6,7 @@ import { changePinValidation } from './changePinValidation';
 import { userAuthorizationHandler } from '~/api/shared/middlewares/userAuthorizatoinHandler';
 
 export const mapChangePin = (router: Router) => {
-  router.put(
-    '/:email/change-pin',
-    userAuthorizationHandler,
-    changePinValidation,
-    handleEditProfile,
-  );
+  router.put('/change-pin', userAuthorizationHandler, changePinValidation, handleEditProfile);
 };
 
 const handleEditProfile = (req: Request, res: Response, next: NextFunction) => {
@@ -20,7 +15,11 @@ const handleEditProfile = (req: Request, res: Response, next: NextFunction) => {
 
     const changePinRequest = req.body as ChangePinRequestDto;
 
-    const changePinResult = changePinService.changePin(email, changePinRequest.newPin);
+    const changePinResult = changePinService.changePin(
+      email,
+      changePinRequest.currentPin,
+      changePinRequest.newPin,
+    );
 
     if (!changePinResult.isSuccess) {
       const problemDetails = createProblemDetails(changePinResult.error!, req);

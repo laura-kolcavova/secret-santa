@@ -1,4 +1,4 @@
-import { Component, createSignal, Show } from 'solid-js';
+import { batch, Component, createEffect, createSignal, Show } from 'solid-js';
 import { UserLayout } from '../shared/UserLayout';
 import { FormattedMessage } from '~/translation/FormattedMessage';
 import { messages } from './messages';
@@ -7,8 +7,11 @@ import { FieldValidations } from '~/forms/FieldValidations';
 import { FeedbackError } from '../shared/FeedbackError';
 import { useChangePinMutation } from './hooks/useChangePinMutation';
 import { Alert } from '../shared/Alert';
+import { useLocalization } from '~/translation/useLocalization';
 
 export const ChangePin: Component = () => {
+  const { formatMessage } = useLocalization();
+
   const [getCurrentPin, setCurrentPin] = createSignal<string>('');
   const [getNewPin, setNewPin] = createSignal<string>('');
   const [getNewPinConfirm, setNewPinConfirm] = createSignal<string>('');
@@ -22,28 +25,10 @@ export const ChangePin: Component = () => {
     let newFieldvalidations: FieldValidations = {};
     let isValid = true;
 
-    if (getCurrentPin() !== '1111') {
-      newFieldvalidations['current-pin'] = {
-        isValid: false,
-        errorMessage: 'Zadaný pin není správný',
-      };
-
-      isValid = false;
-    }
-
     if (getNewPin() !== getNewPinConfirm()) {
       newFieldvalidations['new-pin-confirm'] = {
         isValid: false,
-        errorMessage: 'Pin pro potvrzení se liší',
-      };
-
-      isValid = false;
-    }
-
-    if (getNewPin() === '1111') {
-      newFieldvalidations['new-pin'] = {
-        isValid: false,
-        errorMessage: 'Nový pin se musí lišit od současného pinu',
+        errorMessage: formatMessage(messages.newPinConfirmMismatch),
       };
 
       isValid = false;
@@ -62,9 +47,20 @@ export const ChangePin: Component = () => {
     }
 
     changePin({
+      currentPin: getCurrentPin(),
       newPin: getNewPin(),
     });
   };
+
+  createEffect(() => {
+    if (getIsSuccess()) {
+      batch(() => {
+        setCurrentPin('');
+        setNewPin('');
+        setNewPinConfirm('');
+      });
+    }
+  });
 
   return (
     <UserLayout>
@@ -95,6 +91,7 @@ export const ChangePin: Component = () => {
             pattern="\d{4}"
             class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
             onInput={(e) => setCurrentPin(e.currentTarget.value)}
+            value={getCurrentPin()}
           />
 
           <Show
@@ -121,6 +118,7 @@ export const ChangePin: Component = () => {
             pattern="\d{4}"
             class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
             onInput={(e) => setNewPin(e.currentTarget.value)}
+            value={getNewPin()}
           />
 
           <Show
@@ -145,6 +143,7 @@ export const ChangePin: Component = () => {
             pattern="\d{4}"
             class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
             onInput={(e) => setNewPinConfirm(e.currentTarget.value)}
+            value={getNewPinConfirm()}
           />
 
           <Show
