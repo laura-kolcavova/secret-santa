@@ -1,19 +1,26 @@
 import { Request, Response, NextFunction, Router } from 'express';
 import { createProblemDetails } from '~/api/utils/validationErrorHelper';
-import { ChangePinParams } from './ChangePinParams';
 import { ChangePinRequestDto } from './ChangePinRequestDto';
 import { changePinService } from '~/application/user/services/changePinService';
 import { changePinValidation } from './changePinValidation';
+import { userAuthorizationHandler } from '~/api/shared/middlewares/userAuthorizatoinHandler';
 
 export const mapChangePin = (router: Router) => {
-  router.put('/:email/change-pin', changePinValidation, handleEditProfile);
+  router.put(
+    '/:email/change-pin',
+    userAuthorizationHandler,
+    changePinValidation,
+    handleEditProfile,
+  );
 };
 
-const handleEditProfile = (req: Request<ChangePinParams>, res: Response, next: NextFunction) => {
+const handleEditProfile = (req: Request, res: Response, next: NextFunction) => {
   try {
+    const email = req.user!.email;
+
     const changePinRequest = req.body as ChangePinRequestDto;
 
-    const changePinResult = changePinService.changePin(req.params.email, changePinRequest.newPin);
+    const changePinResult = changePinService.changePin(email, changePinRequest.newPin);
 
     if (!changePinResult.isSuccess) {
       const problemDetails = createProblemDetails(changePinResult.error!, req);

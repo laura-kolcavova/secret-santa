@@ -34,7 +34,7 @@ export const ProfileForm: Component<ProfileFormProps> = (props) => {
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
 
-    editProfile(props.profile.email, {
+    editProfile({
       firstName: getFirstName(),
       lastName: getLastName(),
       department: getDepartment(),

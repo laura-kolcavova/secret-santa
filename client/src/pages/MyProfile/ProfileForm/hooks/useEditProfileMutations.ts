@@ -12,7 +12,6 @@ export const useEditProfileMutation = () => {
   const [getErrorMessage, setErrorMessage] = createSignal<string | null>(null);
 
   const editProfileAsync = async (
-    email: string,
     editProfileRequest: EditProfileRequestDto,
     signal?: AbortSignal,
   ) => {
@@ -24,7 +23,7 @@ export const useEditProfileMutation = () => {
     });
 
     try {
-      await userClient.editProfile(email, editProfileRequest, signal);
+      await userClient.editProfile(editProfileRequest, signal);
 
       batch(() => {
         setIsSuccess(true);
@@ -39,12 +38,8 @@ export const useEditProfileMutation = () => {
     }
   };
 
-  const editProfile = (
-    email: string,
-    editProfileRequest: EditProfileRequestDto,
-    signal?: AbortSignal,
-  ) => {
-    editProfileAsync(email, editProfileRequest, signal);
+  const editProfile = (editProfileRequest: EditProfileRequestDto, signal?: AbortSignal) => {
+    editProfileAsync(editProfileRequest, signal);
   };
 
   return { editProfile, getIsPending, getIsError, getIsSuccess, getErrorMessage };

@@ -7,12 +7,9 @@ import { sharedMessages } from '../shared/sharedMessages';
 import { messages } from './messages';
 import { useProfileQuery } from './hooks/useProfileQuery';
 import { UserLayout } from '../shared/UserLayout';
-import { useLoggedUserContext } from '~/authentication/LoggedUserProvider';
 
 export const MyProfile: Component = () => {
-  const [loggedUserContextState] = useLoggedUserContext();
-
-  const [data] = useProfileQuery(loggedUserContextState.user.email);
+  const [data] = useProfileQuery();
 
   return (
     <UserLayout>

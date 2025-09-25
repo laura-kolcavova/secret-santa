@@ -61,7 +61,7 @@ export const ChangePin: Component = () => {
       return;
     }
 
-    changePin('laura.kolcavova@email.cz', {
+    changePin({
       newPin: getNewPin(),
     });
   };
