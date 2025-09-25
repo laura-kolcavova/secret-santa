@@ -24,7 +24,12 @@ export type LoggedUserContextState = {
   readonly user: LoggedUserDto;
 };
 
-export type LoggedUserContextValue = [state: LoggedUserContextState];
+export type LoggedUserContextValue = [
+  state: LoggedUserContextState,
+  actions: {
+    refreshLoggedUser: () => void;
+  },
+];
 
 const LoggedUserContext = createContext<LoggedUserContextValue | null>(null);
 
@@ -34,7 +39,7 @@ const initState: LoggedUserContextState = {
 };
 
 export const LoggedUserProvider: ParentComponent = (props) => {
-  const [data] = useLoggedUserQuery();
+  const [data, { refetch }] = useLoggedUserQuery();
 
   const [state, setState] = createStore<LoggedUserContextState>(initState);
 
@@ -47,8 +52,12 @@ export const LoggedUserProvider: ParentComponent = (props) => {
     }
   });
 
+  const refreshLoggedUser = () => {
+    refetch();
+  };
+
   return (
-    <LoggedUserContext.Provider value={[state]}>
+    <LoggedUserContext.Provider value={[state, { refreshLoggedUser }]}>
       <Switch
         fallback={
           <div class="flex flex-col justify-center items-center h-full">

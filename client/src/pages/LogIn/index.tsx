@@ -7,11 +7,28 @@ import { pages } from '~/navigation/pages';
 import { FormattedMessage } from '~/translation/FormattedMessage';
 import { messages } from './messages';
 import { useLocalization } from '~/translation/useLocalization';
+import { useLoggedUserContext } from '~/authentication/LoggedUserProvider';
 
 export const LogIn: Component = () => {
+  const [loggedUserState] = useLoggedUserContext();
+
   const navigate = useNavigate();
 
+  if (loggedUserState.isAuthenticated) {
+    navigate(pages.Overview.paths[0]);
+
+    return null;
+  }
+
+  return <LoginComponent />;
+};
+
+const LoginComponent: Component = () => {
   const { formatMessage } = useLocalization();
+
+  const navigate = useNavigate();
+
+  const [loggedUserState, { refreshLoggedUser }] = useLoggedUserContext();
 
   const [getEmail, setEmail] = createSignal<string>('');
   const [getPin, setPin] = createSignal<string>('');
@@ -20,6 +37,12 @@ export const LogIn: Component = () => {
 
   createEffect(() => {
     if (getIsSuccess()) {
+      refreshLoggedUser();
+    }
+  });
+
+  createEffect(() => {
+    if (loggedUserState.isAuthenticated) {
       navigate(pages.Overview.paths[0]);
     }
   });
