@@ -1,6 +1,6 @@
 import { Component, createEffect, createSignal, For, Show } from 'solid-js';
 import { Alert } from '../shared/Alert';
-import { A, useNavigate } from '@solidjs/router';
+import { A } from '@solidjs/router';
 import { pages } from '~/navigation/pages';
 import { SpinnerIcon } from '../shared/icons/SpinnerIcon';
 import { useNewProfileMutation } from './hooks/useNewProfileMutation';
@@ -13,10 +13,9 @@ import { FormattedMessage } from '~/translation/FormattedMessage';
 import { messages } from './messages';
 import { useLocalization } from '~/translation/useLocalization';
 import { HobbyList } from '../shared/HobbyList';
+import { ProfileCreatedInfo } from './ProfileCreatedInfo';
 
 export const NewProfile: Component = () => {
-  const navigate = useNavigate();
-
   const { formatMessage } = useLocalization();
 
   const [getFirstName, setFirstName] = createSignal<string>('');
@@ -28,6 +27,8 @@ export const NewProfile: Component = () => {
   const [hobbies, setHobbies] = createStore<string[]>([]);
 
   const [getFieldValidations, setFieldValidations] = createSignal<FieldValidations>({});
+
+  const [getProfileCreated, setProfileCreated] = createSignal<boolean>(false);
 
   const { newProfile, getIsPending, getIsSuccess, getIsError, getErrorMessage } =
     useNewProfileMutation();
@@ -47,7 +48,7 @@ export const NewProfile: Component = () => {
     if (getPin() !== getPinConfirm()) {
       newFieldvalidations['pin-confirm'] = {
         isValid: false,
-        errorMessage: 'Pin pro potvrzení se liší',
+        errorMessage: formatMessage(messages.pinConfirmMismatch),
       };
 
       isValid = false;
@@ -77,9 +78,7 @@ export const NewProfile: Component = () => {
 
   createEffect(() => {
     if (getIsSuccess()) {
-      const path = pages.LogIn.paths[0];
-
-      navigate(path);
+      setProfileCreated(true);
     }
   });
 
@@ -93,166 +92,169 @@ export const NewProfile: Component = () => {
         <Alert color="danger">{getErrorMessage()}</Alert>
       </Show>
 
-      <form onSubmit={handleSubmit} class="mb-12 w-full max-w-3xl grid grid-cols-2 mx-auto">
-        <div class="mb-6 col-1 row-1 mr-6">
-          <label class="block mb-2 text-sm font-bold text-pallete-4" for="first-name">
-            <FormattedMessage message={messages.firstName} />
-          </label>
+      <Show when={!getProfileCreated()} fallback={<ProfileCreatedInfo />}>
+        <form onSubmit={handleSubmit} class="mb-12 w-full max-w-3xl grid grid-cols-2 mx-auto">
+          <div class="mb-6 col-1 row-1 mr-6">
+            <label class="block mb-2 text-sm font-bold text-pallete-4" for="first-name">
+              <FormattedMessage message={messages.firstName} />
+            </label>
 
-          <input
-            id="first-name"
-            name="first-name"
-            type="text"
-            autocomplete="given-name"
-            required
-            maxLength="256"
-            class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
-            placeholder={formatMessage(messages.enterFirstName)}
-            onInput={(e) => setFirstName(e.currentTarget.value)}
-          />
-        </div>
+            <input
+              id="first-name"
+              name="first-name"
+              type="text"
+              autocomplete="given-name"
+              required
+              maxLength="256"
+              class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
+              placeholder={formatMessage(messages.enterFirstName)}
+              onInput={(e) => setFirstName(e.currentTarget.value)}
+            />
+          </div>
 
-        <div class="mb-6 col-1 row-2 mr-6">
-          <label class="block mb-2 text-sm font-bold text-pallete-4" for="last-name">
-            <FormattedMessage message={messages.lastName} />
-          </label>
+          <div class="mb-6 col-1 row-2 mr-6">
+            <label class="block mb-2 text-sm font-bold text-pallete-4" for="last-name">
+              <FormattedMessage message={messages.lastName} />
+            </label>
 
-          <input
-            id="last-name"
-            name="last-name"
-            type="text"
-            autocomplete="family-name"
-            required
-            maxLength="256"
-            class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
-            placeholder={formatMessage(messages.enterLastName)}
-            onInput={(e) => setLastName(e.currentTarget.value)}
-          />
-        </div>
+            <input
+              id="last-name"
+              name="last-name"
+              type="text"
+              autocomplete="family-name"
+              required
+              maxLength="256"
+              class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
+              placeholder={formatMessage(messages.enterLastName)}
+              onInput={(e) => setLastName(e.currentTarget.value)}
+            />
+          </div>
 
-        <div class="mb-6 col-1 row-3 mr-6">
-          <label class="block mb-2 text-sm font-bold text-pallete-4" for="department">
-            <FormattedMessage message={messages.department} />
-          </label>
+          <div class="mb-6 col-1 row-3 mr-6">
+            <label class="block mb-2 text-sm font-bold text-pallete-4" for="department">
+              <FormattedMessage message={messages.department} />
+            </label>
 
-          <select
-            id="department"
-            name="department"
-            required
-            class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100 cursor-pointer"
-            onChange={(e) => {
-              console.log(e);
-              setDepartment(e.currentTarget.value);
-            }}>
-            <For each={Object.values(Department)}>
-              {(department) => <option value={department}>{department}</option>}
-            </For>
-          </select>
-        </div>
+            <select
+              id="department"
+              name="department"
+              required
+              class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100 cursor-pointer"
+              onChange={(e) => {
+                console.log(e);
+                setDepartment(e.currentTarget.value);
+              }}>
+              <For each={Object.values(Department)}>
+                {(department) => <option value={department}>{department}</option>}
+              </For>
+            </select>
+          </div>
 
-        <div class="mb-6 col-2 row-1">
-          <label class="block mb-2 text-sm font-bold text-pallete-4" for="email">
-            <FormattedMessage message={messages.email} />
-          </label>
+          <div class="mb-6 col-2 row-1">
+            <label class="block mb-2 text-sm font-bold text-pallete-4" for="email">
+              <FormattedMessage message={messages.email} />
+            </label>
 
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autocomplete="email"
-            required
-            maxLength="256"
-            class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
-            placeholder={formatMessage(messages.enterEmail)}
-            onInput={(e) => setEmail(e.currentTarget.value)}
-          />
-        </div>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+              maxLength="256"
+              class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
+              placeholder={formatMessage(messages.enterEmail)}
+              onInput={(e) => setEmail(e.currentTarget.value)}
+            />
+          </div>
 
-        <div class="mb-6 col-2 row-2">
-          <label class="block mb-2 text-sm font-bold text-pallete-4" for="pin">
-            <FormattedMessage message={messages.pin} />
-          </label>
+          <div class="mb-6 col-2 row-2">
+            <label class="block mb-2 text-sm font-bold text-pallete-4" for="pin">
+              <FormattedMessage message={messages.pin} />
+            </label>
 
-          <input
-            id="pin"
-            name="pin"
-            type="password"
-            autocomplete="off"
-            required
-            maxlength={4}
-            inputmode="numeric"
-            pattern="\d{4}"
-            class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
-            placeholder={formatMessage(messages.enterPin)}
-            onInput={(e) => setPin(e.currentTarget.value)}
-          />
-        </div>
+            <input
+              id="pin"
+              name="pin"
+              type="password"
+              autocomplete="off"
+              required
+              maxlength={4}
+              inputmode="numeric"
+              pattern="\d{4}"
+              class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
+              placeholder={formatMessage(messages.enterPin)}
+              onInput={(e) => setPin(e.currentTarget.value)}
+            />
+          </div>
 
-        <div class="mb-6 col-2 row-3">
-          <label class="block mb-2 text-sm font-bold text-pallete-4" for="pin-confirm">
-            <FormattedMessage message={messages.pinConfirm} />
-          </label>
+          <div class="mb-6 col-2 row-3">
+            <label class="block mb-2 text-sm font-bold text-pallete-4" for="pin-confirm">
+              <FormattedMessage message={messages.pinConfirm} />
+            </label>
 
-          <input
-            id="pin-confirm"
-            name="pin-confirm"
-            type="password"
-            autocomplete="off"
-            required
-            maxlength={4}
-            inputmode="numeric"
-            pattern="\d{4}"
-            class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
-            placeholder={formatMessage(messages.enterPinConfirm)}
-            onInput={(e) => setPinConfirmValue(e.currentTarget.value)}
-          />
+            <input
+              id="pin-confirm"
+              name="pin-confirm"
+              type="password"
+              autocomplete="off"
+              required
+              maxlength={4}
+              inputmode="numeric"
+              pattern="\d{4}"
+              class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
+              placeholder={formatMessage(messages.enterPinConfirm)}
+              onInput={(e) => setPinConfirmValue(e.currentTarget.value)}
+            />
 
-          <Show
-            when={
-              getFieldValidations()['pin-confirm'] && !getFieldValidations()['pin-confirm'].isValid
-            }>
-            <FeedbackError errorMessage={getFieldValidations()['pin-confirm'].errorMessage!} />
-          </Show>
-        </div>
-
-        <div class="mb-4 col-1 row-4 mr-6">
-          <label class="block mb-2 text-sm font-bold text-pallete-4" for="hobbies">
-            <FormattedMessage message={messages.hobbies} />
-          </label>
-
-          <HobbiesInput id="hobbies" hobbies={hobbies} addHobby={addHobby} />
-        </div>
-
-        <div class="col-span-2 row-5 mb-12">
-          <HobbyList hobbies={hobbies} removeHobby={removeHobby} />
-        </div>
-
-        <div class="col-span-2 row-6 flex justify-center">
-          <button
-            type="submit"
-            class="w-1/2 py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
-            disabled={getIsPending()}>
             <Show
-              when={getIsPending()}
-              fallback={
-                <span>
-                  <FormattedMessage message={messages.create} />
-                </span>
+              when={
+                getFieldValidations()['pin-confirm'] &&
+                !getFieldValidations()['pin-confirm'].isValid
               }>
-              <SpinnerIcon class="animate-spin size-5" />
+              <FeedbackError errorMessage={getFieldValidations()['pin-confirm'].errorMessage!} />
             </Show>
-          </button>
-        </div>
-      </form>
+          </div>
 
-      <div class="flex justify-center">
-        <span>
-          <FormattedMessage message={messages.alreadyHaveProfile} />{' '}
-          <A href={pages.LogIn.paths[0]} class="text-pallete-2 font-bold hover:underline">
-            <FormattedMessage message={messages.logIn} />
-          </A>
-        </span>
-      </div>
+          <div class="mb-4 col-1 row-4 mr-6">
+            <label class="block mb-2 text-sm font-bold text-pallete-4" for="hobbies">
+              <FormattedMessage message={messages.hobbies} />
+            </label>
+
+            <HobbiesInput id="hobbies" hobbies={hobbies} addHobby={addHobby} />
+          </div>
+
+          <div class="col-span-2 row-5 mb-12">
+            <HobbyList hobbies={hobbies} removeHobby={removeHobby} />
+          </div>
+
+          <div class="col-span-2 row-6 flex justify-center">
+            <button
+              type="submit"
+              class="w-1/2 py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
+              disabled={getIsPending()}>
+              <Show
+                when={getIsPending()}
+                fallback={
+                  <span>
+                    <FormattedMessage message={messages.create} />
+                  </span>
+                }>
+                <SpinnerIcon class="animate-spin size-5" />
+              </Show>
+            </button>
+          </div>
+        </form>
+
+        <div class="flex justify-center">
+          <span>
+            <FormattedMessage message={messages.alreadyHaveProfile} />{' '}
+            <A href={pages.LogIn.paths[0]} class="text-pallete-2 font-bold hover:underline">
+              <FormattedMessage message={messages.logIn} />
+            </A>
+          </span>
+        </div>
+      </Show>
     </div>
   );
 };

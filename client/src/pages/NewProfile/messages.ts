@@ -43,10 +43,6 @@ export const messages = {
     id: 'newProfile.logIn',
     defaultMessage: 'LOG IN',
   },
-  emailAlreadyExists: {
-    id: 'newProfile.emailAlreadyExists',
-    defaultMessage: 'USER WITH THIS EMAIL ALREADY EXISTS',
-  },
   enterFirstName: {
     id: 'newProfile.enterFirstName',
     defaultMessage: 'ENTER FIRST NAME',
@@ -70,5 +66,17 @@ export const messages = {
   enterHobbyAndPressEnter: {
     id: 'newProfile.enterHobbyAndPressEnter',
     defaultMessage: 'ENTER HOBBY AND PRESS ENTER',
+  },
+  emailAlreadyExists: {
+    id: 'newProfile.emailAlreadyExists',
+    defaultMessage: 'USER WITH THIS EMAIL ALREADY EXISTS',
+  },
+  pinConfirmMismatch: {
+    id: 'newProfile.pinConfirmMismatch',
+    defaultMessage: 'CONFIRMATION PIN DOES NOT MATCH',
+  },
+  profileCreatedInfo: {
+    id: 'newProfile.profileCreatedInfo',
+    defaultMessage: 'PROFILE WAS SUCCESSFULLY CREATED. YOU CAN NOW LOG IN',
   },
 };
