@@ -160,14 +160,10 @@ export const ChangePin: Component = () => {
             type="submit"
             class="w-1/2 py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
             disabled={getIsPending()}>
-            <Show
-              when={getIsPending()}
-              fallback={
-                <span>
-                  <FormattedMessage message={messages.changePin} />
-                </span>
-              }>
-              <SpinnerIcon class="animate-spin size-5" />
+            <FormattedMessage message={messages.changePin} />
+
+            <Show when={getIsPending()}>
+              <SpinnerIcon class="animate-spin size-5 ml-2" />
             </Show>
           </button>
         </div>
