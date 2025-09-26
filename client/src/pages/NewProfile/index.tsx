@@ -99,15 +99,15 @@ const NewProfileComponent: Component = () => {
 
   return (
     <div class="container mx-auto py-6">
-      <h1 class="text-2xl font-bold mb-8">
-        <FormattedMessage message={messages.newProfile} />
-      </h1>
-
-      <Show when={getIsError()}>
-        <Alert color="danger">{getErrorMessage()}</Alert>
-      </Show>
-
       <Show when={!getProfileCreated()} fallback={<ProfileCreatedInfo />}>
+        <h1 class="text-2xl font-bold mb-8">
+          <FormattedMessage message={messages.newProfile} />
+        </h1>
+
+        <Show when={getIsError()}>
+          <Alert color="danger">{getErrorMessage()}</Alert>
+        </Show>
+
         <form onSubmit={handleSubmit} class="mb-12 w-full max-w-3xl grid grid-cols-2 mx-auto">
           <div class="mb-6 col-1 row-1 mr-6">
             <label class="block mb-2 text-sm font-bold text-pallete-4" for="first-name">
@@ -248,14 +248,9 @@ const NewProfileComponent: Component = () => {
               type="submit"
               class="w-1/2 py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
               disabled={getIsPending()}>
-              <Show
-                when={getIsPending()}
-                fallback={
-                  <span>
-                    <FormattedMessage message={messages.create} />
-                  </span>
-                }>
-                <SpinnerIcon class="animate-spin size-5" />
+              <FormattedMessage message={messages.create} />
+              <Show when={getIsPending()}>
+                <SpinnerIcon class="animate-spin size-5 ml-2" />
               </Show>
             </button>
           </div>
