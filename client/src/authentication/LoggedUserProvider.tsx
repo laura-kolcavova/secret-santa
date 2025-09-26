@@ -1,11 +1,7 @@
 import {
-  Accessor,
-  batch,
   createContext,
   createEffect,
-  createSignal,
   Match,
-  Show,
   Switch,
   useContext,
   type ParentComponent,
@@ -27,51 +23,56 @@ export type LoggedUserContextState = {
 export type LoggedUserContextValue = [
   state: LoggedUserContextState,
   actions: {
-    refreshLoggedUser: () => void;
+    refresh: () => void;
+    clear: () => void;
   },
 ];
 
 const LoggedUserContext = createContext<LoggedUserContextValue | null>(null);
 
-const initState: LoggedUserContextState = {
+const getInitState = (): LoggedUserContextState => ({
   isAuthenticated: false,
   user: undefined!,
-};
+});
 
 export const LoggedUserProvider: ParentComponent = (props) => {
-  const [data, { refetch }] = useLoggedUserQuery();
+  const [dataLoggedUser, { refetch: refetchLoggedUser }] = useLoggedUserQuery();
 
-  const [state, setState] = createStore<LoggedUserContextState>(initState);
+  const [state, setState] = createStore<LoggedUserContextState>(getInitState());
 
   createEffect(() => {
-    if (data()) {
+    if (dataLoggedUser()) {
       setState({
         isAuthenticated: true,
-        user: data()!,
+        user: dataLoggedUser()!,
       });
     }
   });
 
-  const refreshLoggedUser = () => {
-    refetch();
+  const refresh = () => {
+    refetchLoggedUser();
+  };
+
+  const clear = () => {
+    setState(getInitState());
   };
 
   return (
-    <LoggedUserContext.Provider value={[state, { refreshLoggedUser }]}>
+    <LoggedUserContext.Provider value={[state, { refresh, clear }]}>
       <Switch
         fallback={
           <div class="flex flex-col justify-center items-center h-full">
             <SpinnerIcon class="animate-spin size-5 mx-auto" />
           </div>
         }>
-        <Match when={data.error}>
+        <Match when={dataLoggedUser.error}>
           <div class="flex flex-col justify-center items-center h-full">
             <span class="text-xl font-bold text-red-700">
               <FormattedMessage message={sharedMessages.somethingWentWrong} />
             </span>
           </div>
         </Match>
-        <Match when={!data.loading}>{props.children}</Match>
+        <Match when={!dataLoggedUser.loading}>{props.children}</Match>
       </Switch>
     </LoggedUserContext.Provider>
   );

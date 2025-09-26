@@ -1,16 +1,10 @@
 import { Component } from 'solid-js';
 import { useLoggedUserContext } from '~/authentication/LoggedUserProvider';
-import { FormattedMessage } from '~/translation/FormattedMessage';
-import { messages } from './messages';
+
+import { LogOutButton } from './LogOutButton';
 
 export const Header: Component = () => {
   const [loggedUserState] = useLoggedUserContext();
-
-  if (loggedUserState.isAuthenticated) {
-    //
-  }
-
-  const logOut = () => {};
 
   return (
     <header class="border-b border-solid border-gray-300 bg-gray-50">
@@ -22,13 +16,7 @@ export const Header: Component = () => {
         </div>
 
         <div class="flex-1 flex items-center justify-end">
-          {loggedUserState.isAuthenticated && (
-            <button
-              class="font-bold text-pallete-2 hover:underline cursor-pointer"
-              onClick={logOut}>
-              <FormattedMessage message={messages.logOut} />
-            </button>
-          )}
+          {loggedUserState.isAuthenticated && <LogOutButton />}
         </div>
       </div>
     </header>

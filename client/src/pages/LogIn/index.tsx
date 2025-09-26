@@ -28,29 +28,35 @@ const LoginComponent: Component = () => {
 
   const navigate = useNavigate();
 
-  const [loggedUserState, { refreshLoggedUser }] = useLoggedUserContext();
+  const [loggedUserState, { refresh }] = useLoggedUserContext();
 
   const [getEmail, setEmail] = createSignal<string>('');
   const [getPin, setPin] = createSignal<string>('');
 
-  const { login, getIsPending, getIsSuccess, getIsError, getErrorMessage } = useLoginMutation();
+  const {
+    mutate: mutateLogin,
+    getIsPending: getIsPendingLogin,
+    getIsSuccess: getIsSuccessLogin,
+    getIsError: getIsErrorLogin,
+    getErrorMessage: getErrorMessageLogin,
+  } = useLoginMutation();
 
   createEffect(() => {
-    if (getIsSuccess()) {
-      refreshLoggedUser();
+    if (getIsSuccessLogin()) {
+      refresh();
     }
   });
 
   createEffect(() => {
     if (loggedUserState.isAuthenticated) {
-      navigate(pages.Overview.paths[0]);
+      navigate(pages.Overview.paths[0], { replace: true });
     }
   });
 
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
 
-    login({
+    mutateLogin({
       email: getEmail(),
       pin: getPin(),
     });
@@ -58,8 +64,8 @@ const LoginComponent: Component = () => {
 
   return (
     <div class="container mx-auto py-6">
-      <Show when={getIsError()}>
-        <Alert color="danger">{getErrorMessage()}</Alert>
+      <Show when={getIsErrorLogin()}>
+        <Alert color="danger">{getErrorMessageLogin()}</Alert>
       </Show>
 
       <form onSubmit={handleSubmit} class="mb-12 w-full max-w-xs mx-auto">
@@ -105,15 +111,11 @@ const LoginComponent: Component = () => {
           <button
             type="submit"
             class="w-full py-2 px-4 rounded text-white font-bold bg-blue-500 hover:bg-blue-600 focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
-            disabled={getIsPending()}>
-            <Show
-              when={getIsPending()}
-              fallback={
-                <span>
-                  <FormattedMessage message={messages.logIn} />
-                </span>
-              }>
-              <SpinnerIcon class="animate-spin size-5" />
+            disabled={getIsPendingLogin()}>
+            <FormattedMessage message={messages.logIn} />
+
+            <Show when={getIsPendingLogin()}>
+              <SpinnerIcon class="animate-spin size-5 ml-2" />
             </Show>
           </button>
         </div>

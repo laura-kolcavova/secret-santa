@@ -11,7 +11,7 @@ export const useLoginMutation = () => {
   const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
   const [getErrorMessage, setErrorMessage] = createSignal<string | null>(null);
 
-  const loginAsync = async (loginRequest: LoginRequestDto, signal?: AbortSignal) => {
+  const mutateAsync = async (loginRequest: LoginRequestDto, signal?: AbortSignal) => {
     batch(() => {
       setIsPending(true);
       setIsError(false);
@@ -35,9 +35,9 @@ export const useLoginMutation = () => {
     }
   };
 
-  const login = (loginRequest: LoginRequestDto, signal?: AbortSignal) => {
-    loginAsync(loginRequest, signal);
+  const mutate = (loginRequest: LoginRequestDto, signal?: AbortSignal) => {
+    mutateAsync(loginRequest, signal);
   };
 
-  return { login, getIsPending, getIsError, getIsSuccess, getErrorMessage };
+  return { mutate, getIsPending, getIsError, getIsSuccess, getErrorMessage };
 };

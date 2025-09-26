@@ -7,10 +7,8 @@ export const mapGetLoggedUser = (router: Router) => {
   router.get('/logged', userAuthenticationHandler, handleGetLoggedUser);
 };
 
-const handleGetLoggedUser = async (req: Request, res: Response, next: NextFunction) => {
+const handleGetLoggedUser = (req: Request, res: Response, next: NextFunction) => {
   try {
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-
     if (!req.user) {
       res.status(204).send();
 
