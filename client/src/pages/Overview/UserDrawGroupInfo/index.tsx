@@ -21,10 +21,12 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
       return false;
     }
 
-    const nowLocal = new Date();
-    const drawStartLocal = new Date(drawStartUtc);
+    return true;
 
-    return nowLocal < drawStartLocal;
+    // const nowLocal = new Date();
+    // const drawStartLocal = new Date(drawStartUtc);
+
+    // return nowLocal < drawStartLocal;
   };
 
   const canDraw = (): boolean => {
@@ -52,53 +54,53 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
       <div class="mb-2 text-lg font-bold text-center text-pallete-6">{name}</div>
 
       <div class="px-4 mb-10 flex items-center justify-between">
-        <div class="text-gray-600 text-md flex items-center">
+        <div class="text-gray-600 text-base flex items-center">
           <UserSolidIcon class="size-4 mr-1.5" />
           {participantsCount} <FormattedMessage message={messages.participants} />
         </div>
 
-        <div class="text-gray-600 text-md flex items-center">
+        <div class="text-gray-600 text-base flex items-center">
           <CalendarSolidIcon class="size-4 mr-1.5" />
           {formatDate(drawStartUtc)}
         </div>
       </div>
 
-      <Show
-        when={didUserJoined}
-        fallback={
-          <Show
-            when={canJoin()}
-            fallback={
-              <div class="text-center text-red-600 font-medium mb-4">
-                You can't join because the draw has already begun.
-              </div>
-            }>
-            <div class="flex justify-center">
+      <div class="flex justify-center">
+        <Show
+          when={didUserJoined}
+          fallback={
+            <Show
+              when={canJoin()}
+              fallback={
+                <div class="text-base font-medium text-red-600">
+                  You can't join because the draw has already begun.
+                </div>
+              }>
               <button
                 class="w-1/2 py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
                 onClick={joinDrawGroup}>
                 <FormattedMessage message={messages.joinDraw} />
               </button>
-            </div>
-          </Show>
-        }>
-        <Show
-          when={drawnUser}
-          fallback={
-            <Show when={canDraw()} fallback={<div>You are in! Wait for the draw to begin</div>}>
-              <button
-                class="w-1/2 py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
-                onClick={draw}>
-                <FormattedMessage message={messages.draw} />
-              </button>
             </Show>
           }>
-          <div class="mt-2 p-2 bg-green-50 rounded border border-green-200">
-            <div class="font-medium text-green-700">You have drawn:</div>
-            <div class="text-green-800">{drawnUser!.fullName}</div>
-          </div>
+          <Show
+            when={drawnUser}
+            fallback={
+              <Show when={canDraw()} fallback={<div>You are in! Wait for the draw to begin</div>}>
+                <button
+                  class="w-1/2 py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
+                  onClick={draw}>
+                  <FormattedMessage message={messages.draw} />
+                </button>
+              </Show>
+            }>
+            <div class="mt-2 p-2 bg-green-50 rounded border border-green-200">
+              <div class="font-medium text-green-700">You have drawn:</div>
+              <div class="text-green-800">{drawnUser!.fullName}</div>
+            </div>
+          </Show>
         </Show>
-      </Show>
+      </div>
     </div>
   );
 };

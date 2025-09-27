@@ -26,9 +26,9 @@ export const Overview: Component = () => {
           </Alert>
         </Match>
         <Match when={!data()}>
-          <div class="py-24">
+          <Alert color="warning" isDismissible={false}>
             <FormattedMessage message={messages.drawInThisYearNotStartedYet} />
-          </div>
+          </Alert>
         </Match>
         <Match when={data()}>
           <UserDrawGroupInfo userDrawGroup={data()!} />

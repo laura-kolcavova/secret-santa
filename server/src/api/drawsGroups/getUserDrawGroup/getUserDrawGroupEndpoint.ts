@@ -7,7 +7,7 @@ export const mapGetUserDrawGroup = (router: Router) => {
   router.get('/user', userAuthorizationHandler, handleGetUserDrawGroup);
 };
 
-const handleGetUserDrawGroup = async (req: Request, res: Response, next: NextFunction) => {
+const handleGetUserDrawGroup = (req: Request, res: Response, next: NextFunction) => {
   try {
     const currentYear = new Date().getFullYear();
 
