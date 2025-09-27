@@ -1,18 +1,18 @@
 import { normalizeEmail } from '~/application/shared/emailHelper';
-import { mockIdentityUsers } from '../mockIdentityUsers';
-import { IdentityUser } from '../models/IdentityUser';
 import { computePinHash } from '~/application/shared/pinHelper';
+import { User } from '../models/User';
+import { mockUsers } from '../mockUsers';
 
-const checkPin = (user: IdentityUser, pin: string): boolean => {
+const checkPin = (user: User, pin: string): boolean => {
   const pinHash = computePinHash(pin);
 
   return user.pinHash === pinHash;
 };
 
-const findByEmail = (email: string): IdentityUser | undefined => {
+const findByEmail = (email: string): User | undefined => {
   const normalizedEmail = normalizeEmail(email);
 
-  const user = mockIdentityUsers.find((identityUser) => identityUser.email === normalizedEmail);
+  const user = mockUsers.find((user) => user.email === normalizedEmail);
 
   if (user === undefined) {
     return undefined;
@@ -28,12 +28,12 @@ const createUser = (
   lastName: string,
   department: string,
   hobbies: string[],
-) => {
+): User => {
   const normalizedEmail = normalizeEmail(email);
 
   const pinHash = computePinHash(pin);
 
-  const user: IdentityUser = {
+  const user: User = {
     email: normalizedEmail,
     pinHash,
     firstName,
@@ -43,29 +43,31 @@ const createUser = (
     createdAt: new Date(Date.now()),
   };
 
-  mockIdentityUsers.push(user);
+  mockUsers.push(user);
+
+  return user;
 };
 
-const updateProfile = (userToUpdate: IdentityUser) => {
-  mockIdentityUsers.forEach((identityUser) => {
-    if (identityUser.email !== userToUpdate.email) {
+const updateProfile = (userToUpdate: User): void => {
+  mockUsers.forEach((user) => {
+    if (user.email !== userToUpdate.email) {
       return;
     }
 
-    identityUser.firstName = userToUpdate.firstName;
-    identityUser.lastName = userToUpdate.lastName;
-    identityUser.department = userToUpdate.department;
-    identityUser.hobbies = [...userToUpdate.hobbies];
+    user.firstName = userToUpdate.firstName;
+    user.lastName = userToUpdate.lastName;
+    user.department = userToUpdate.department;
+    user.hobbies = [...userToUpdate.hobbies];
   });
 };
 
-const updatePin = (userToUpdate: IdentityUser) => {
-  mockIdentityUsers.forEach((identityUser) => {
-    if (identityUser.email !== userToUpdate.email) {
+const updatePin = (userToUpdate: User): void => {
+  mockUsers.forEach((user) => {
+    if (user.email !== userToUpdate.email) {
       return;
     }
 
-    identityUser.pinHash = userToUpdate.pinHash;
+    user.pinHash = userToUpdate.pinHash;
   });
 };
 export const userManager = {

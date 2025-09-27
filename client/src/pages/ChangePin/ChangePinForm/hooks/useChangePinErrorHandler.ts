@@ -2,7 +2,7 @@ import { AxiosError } from 'axios';
 import { useLocalization } from '~/translation/useLocalization';
 
 import { sharedMessages } from '~/pages/shared/sharedMessages';
-import { messages } from '../messages';
+import { messages } from '../../messages';
 
 export const useChangePinErrorHandler = () => {
   const { formatMessage } = useLocalization();

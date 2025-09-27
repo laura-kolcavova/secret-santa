@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Application, Router } from 'express';
 import { mapLogin } from './login/loginEndpoint';
 import { mapNewProfile } from './newProfile/newProfileEndpoint';
 import { mapGetProfile } from './getProfile/getProfileEndpoint';
@@ -7,14 +7,16 @@ import { mapChangePin } from './changePin/changePinEndpoint';
 import { mapLogout } from './logout/logoutEndpoint';
 import { mapGetLoggedUser } from './getLoggedUser/getLoggedUserEndpoint';
 
-const router = Router();
+export const mapUsersEndpoints = (app: Application) => {
+  const router = Router();
 
-mapLogin(router);
-mapLogout(router);
-mapGetLoggedUser(router);
-mapNewProfile(router);
-mapGetProfile(router);
-mapEditProfile(router);
-mapChangePin(router);
+  mapLogin(router);
+  mapLogout(router);
+  mapGetLoggedUser(router);
+  mapNewProfile(router);
+  mapGetProfile(router);
+  mapEditProfile(router);
+  mapChangePin(router);
 
-export default router;
+  app.use('/api/users', router);
+};
