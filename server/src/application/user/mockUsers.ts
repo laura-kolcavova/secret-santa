@@ -1,6 +1,6 @@
-import { IdentityUser } from '~/application/user/models/IdentityUser';
+import { User } from '~/application/user/models/User';
 
-export const mockIdentityUsers: IdentityUser[] = [
+export const mockUsers: User[] = [
   {
     email: 'user@fake.com',
     firstName: 'FAKEDATA',

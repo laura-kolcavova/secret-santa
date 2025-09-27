@@ -1,13 +1,13 @@
 import { ValidationError } from '~/application/shared/models/ValidationError';
-import { IdentityUser } from './IdentityUser';
+import { User } from './User';
 
 export type LoginResult = {
   isSuccess: boolean;
-  user?: IdentityUser;
+  user?: User;
   error?: ValidationError;
 };
 
-export const loginResultSuccess = (user: IdentityUser): LoginResult => ({
+export const loginResultSuccess = (user: User): LoginResult => ({
   isSuccess: true,
   user: user,
 });

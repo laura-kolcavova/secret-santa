@@ -12,7 +12,7 @@ export const Header: Component = () => {
         <div class="flex-1"></div>
 
         <div class="flex-1 flex items-center justify-center">
-          <span class="text-3xl font-bold text-pallete-6">Santa Los</span>
+          <span class="text-3xl font-bold text-pallete-6">Secret Santa</span>
         </div>
 
         <div class="flex-1 flex items-center justify-end">

@@ -1,4 +1,4 @@
-import { IdentityUser } from '../models/IdentityUser';
+import { IdentityUser } from '../models/User';
 import { UserTokenPayload } from '../models/UserTokenPayload';
 
 export const createUserTokenPayload = (user: IdentityUser): UserTokenPayload => {

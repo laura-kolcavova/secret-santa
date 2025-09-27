@@ -7,6 +7,7 @@ import { createEffect, Show } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
 import { pages } from '~/navigation/pages';
 import { SpinnerIcon } from '~/pages/shared/icons/SpinnerIcon';
+import { ExitIcon } from '~/pages/shared/icons/ExitIcon';
 
 export const LogOutButton = () => {
   const [_loggedUserState, { clear }] = useLoggedUserContext();
@@ -28,9 +29,11 @@ export const LogOutButton = () => {
 
   return (
     <button
-      class="font-bold text-pallete-2 hover:underline cursor-pointer"
+      class="font-bold text-pallete-2 hover:underline cursor-pointer flex items-center justify-center"
       onClick={handleClick}
       disabled={getIsPending()}>
+      <ExitIcon class="size-5 mr-2" />
+
       <FormattedMessage message={messages.logOut} />
 
       <Show when={getIsPending()}>

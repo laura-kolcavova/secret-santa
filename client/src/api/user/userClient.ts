@@ -7,9 +7,11 @@ import { EditProfileRequestDto } from './dto/EditProfileRequestDto';
 import { ChangePinRequestDto } from './dto/ChangePinRequestDto';
 import { LoggedUserDto } from './dto/LoggedUserDto';
 
+const baseUrl = '/api/users';
+
 const login = (loginRequest: LoginRequestDto, signal?: GenericAbortSignal): AxiosPromise<void> => {
   return callAxios({
-    url: '/api/user/login',
+    url: `${baseUrl}/login`,
     method: 'POST',
     data: loginRequest,
     signal: signal,
@@ -18,7 +20,7 @@ const login = (loginRequest: LoginRequestDto, signal?: GenericAbortSignal): Axio
 
 const logout = (signal?: GenericAbortSignal): AxiosPromise<void> => {
   return callAxios({
-    url: '/api/user/logout',
+    url: `${baseUrl}/logout`,
     method: 'POST',
     signal: signal,
   });
@@ -26,7 +28,7 @@ const logout = (signal?: GenericAbortSignal): AxiosPromise<void> => {
 
 const getLoggedUser = (signal?: GenericAbortSignal): AxiosPromise<LoggedUserDto> => {
   return callAxios({
-    url: '/api/user/logged',
+    url: `${baseUrl}/logged`,
     method: 'GET',
     signal: signal,
   });
@@ -37,7 +39,7 @@ const newProfile = (
   signal?: GenericAbortSignal,
 ): AxiosPromise<void> => {
   return callAxios({
-    url: '/api/user/new-profile',
+    url: `${baseUrl}/new-profile`,
     method: 'POST',
     data: newProfileRequest,
     signal: signal,
@@ -46,7 +48,7 @@ const newProfile = (
 
 const getProfile = (signal?: GenericAbortSignal): AxiosPromise<ProfileDto> => {
   return callAxios({
-    url: `/api/user/profile`,
+    url: `${baseUrl}/profile`,
     method: 'GET',
     signal: signal,
   });
@@ -57,7 +59,7 @@ const editProfile = (
   signal?: GenericAbortSignal,
 ): AxiosPromise<void> => {
   return callAxios({
-    url: `/api/user/profile`,
+    url: `${baseUrl}/profile`,
     method: 'PUT',
     data: editProfileRequest,
     signal: signal,
@@ -69,7 +71,7 @@ const changePin = (
   signal?: GenericAbortSignal,
 ): AxiosPromise<void> => {
   return callAxios({
-    url: `/api/user/change-pin`,
+    url: `${baseUrl}/change-pin`,
     method: 'PUT',
     data: changePinRequest,
     signal,

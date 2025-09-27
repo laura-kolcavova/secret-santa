@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
 
 import { appConfig } from '~/config/appConfig';
-import { IdentityUser } from '../models/IdentityUser';
 import { createUserTokenPayload } from '../utils/authenticationHelper';
+import { User } from '../models/User';
 
-const generateUserToken = (user: IdentityUser) => {
+const generateUserToken = (user: User) => {
   const userTokenPayload = createUserTokenPayload(user);
 
   const userToken = jwt.sign(userTokenPayload, appConfig.jwtSecret, {

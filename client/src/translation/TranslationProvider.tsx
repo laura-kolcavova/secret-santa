@@ -1,4 +1,5 @@
 import {
+  Accessor,
   createContext,
   createResource,
   createSignal,
@@ -22,6 +23,7 @@ const fetchDictionary = async (locale: Locale): Promise<RawDictionary> => {
 };
 
 export type TranslationContextValue = {
+  getLocale: Accessor<string>;
   translate: (messageId: string) => string | undefined;
 };
 
@@ -37,7 +39,7 @@ export const TranslationProvider: ParentComponent = (props) => {
   };
 
   return (
-    <TranslationContext.Provider value={{ translate }}>
+    <TranslationContext.Provider value={{ getLocale, translate }}>
       <Show when={!data.loading}>{props.children}</Show>
     </TranslationContext.Provider>
   );
