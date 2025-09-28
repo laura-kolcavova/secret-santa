@@ -1,7 +1,7 @@
 import { normalizeEmail } from '~/application/shared/emailHelper';
 import { computePinHash } from '~/application/shared/pinHelper';
 import { User } from '../models/User';
-import { mockUsers } from '../mockUsers';
+import { mockUsers } from '../../../persistence/users/mockUsers';
 
 const checkPin = (user: User, pin: string): boolean => {
   const pinHash = computePinHash(pin);

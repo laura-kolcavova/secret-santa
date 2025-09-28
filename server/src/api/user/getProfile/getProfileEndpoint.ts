@@ -4,10 +4,10 @@ import { ProfileDto } from './ProfileDto';
 import { userAuthorizationHandler } from '~/api/shared/middlewares/userAuthorizatoinHandler';
 
 export const mapGetProfile = (router: Router) => {
-  router.get('/profile', userAuthorizationHandler, handleGetProfile);
+  router.get('/profile', userAuthorizationHandler, handle);
 };
 
-const handleGetProfile = async (req: Request, res: Response, next: NextFunction) => {
+const handle = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const email = req.user!.email;
 

@@ -5,12 +5,24 @@ const notFound = (): ValidationError => ({
   message: 'Draw group was not found',
 });
 
-const participantAlreadyJoined = (): ValidationError => ({
-  code: 'DrawGroup.ParticipantAlreadyJoined',
-  message: 'The participant has already joined this draw group.',
+const userAlreadyJoined = (): ValidationError => ({
+  code: 'DrawGroup.UserAlreadyJoined',
+  message: 'The user already joined this draw group',
+});
+
+const userNotJoined = (): ValidationError => ({
+  code: 'DrawGroup.UserNotJoined',
+  message: 'The user has not joined this draw group',
+});
+
+const noParticipantsToDraw = (): ValidationError => ({
+  code: 'DrawGroup.NoParticipantsToDraw',
+  message: 'There are no participants to draw.',
 });
 
 export const drawGroupErrors = {
   notFound,
-  participantAlreadyJoined,
+  userAlreadyJoined,
+  userNotJoined,
+  noParticipantsToDraw,
 };

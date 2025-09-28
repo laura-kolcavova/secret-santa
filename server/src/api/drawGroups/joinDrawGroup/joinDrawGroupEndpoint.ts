@@ -6,19 +6,10 @@ import { joinDrawGroupService } from '~/application/drawGroups/services/joinDraw
 import { createProblemDetails } from '~/api/utils/validationErrorHelper';
 
 export const mapJoinDrawGroup = (router: Router) => {
-  router.post(
-    '/:drawGroupGuid/join',
-    userAuthorizationHandler,
-    joinDrawGroupValidation,
-    handleJoinDrawGroup,
-  );
+  router.post('/:drawGroupGuid/join', userAuthorizationHandler, joinDrawGroupValidation, handle);
 };
 
-const handleJoinDrawGroup = (
-  req: Request<JoinDrawGroupParams>,
-  res: Response,
-  next: NextFunction,
-) => {
+const handle = (req: Request<JoinDrawGroupParams>, res: Response, next: NextFunction) => {
   try {
     const drawGroupGuid = req.params.drawGroupGuid;
     const participantEmail = req.user!.email;

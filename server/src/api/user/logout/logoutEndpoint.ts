@@ -3,10 +3,10 @@ import { userAuthorizationHandler } from '~/api/shared/middlewares/userAuthoriza
 import { signOutUser } from '~/api/utils/userAuthenticationHelper';
 
 export const mapLogout = (router: Router) => {
-  router.post('/logout', userAuthorizationHandler, handleLogout);
+  router.post('/logout', userAuthorizationHandler, handle);
 };
 
-const handleLogout = (req: Request, res: Response, next: NextFunction) => {
+const handle = (req: Request, res: Response, next: NextFunction) => {
   try {
     signOutUser(res);
 

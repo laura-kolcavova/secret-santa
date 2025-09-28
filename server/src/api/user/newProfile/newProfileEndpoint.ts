@@ -5,10 +5,10 @@ import { createProblemDetails } from '~/api/utils/validationErrorHelper';
 import { newProfileValidation } from './newProfileValidation';
 
 export const mapNewProfile = (router: Router) => {
-  router.post('/new-profile', newProfileValidation, handleNewProfile);
+  router.post('/new-profile', newProfileValidation, handle);
 };
 
-const handleNewProfile = (req: Request, res: Response, next: NextFunction) => {
+const handle = (req: Request, res: Response, next: NextFunction) => {
   try {
     const newProfileRequest = req.body as NewProfileRequestDto;
 

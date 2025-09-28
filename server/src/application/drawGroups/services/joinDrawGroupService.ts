@@ -5,7 +5,7 @@ import {
 } from '~/application/shared/models/UnitResult';
 import { drawGroupManager } from './drawGroupManager';
 import { drawGroupErrors } from '../drawGroupErrors';
-import { checkParticipantJoined } from '../utils/drawGroupHelpers';
+import { hasParticipantByEmail } from '../utils/drawGroupHelpers';
 
 const joinDrawGroup = (drawGroupGuid: string, participantEmail: string): UnitResult => {
   const drawGroup = drawGroupManager.findByGuid(drawGroupGuid);
@@ -14,8 +14,8 @@ const joinDrawGroup = (drawGroupGuid: string, participantEmail: string): UnitRes
     return unitResultError(drawGroupErrors.notFound());
   }
 
-  if (checkParticipantJoined(drawGroup, participantEmail)) {
-    return unitResultError(drawGroupErrors.participantAlreadyJoined());
+  if (hasParticipantByEmail(drawGroup, participantEmail)) {
+    return unitResultError(drawGroupErrors.userAlreadyJoined());
   }
 
   drawGroupManager.addParticipant(drawGroup, participantEmail);

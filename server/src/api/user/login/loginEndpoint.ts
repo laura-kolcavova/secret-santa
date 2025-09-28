@@ -6,10 +6,10 @@ import { loginValidation } from './loginValidation';
 import { signInUser } from '~/api/utils/userAuthenticationHelper';
 
 export const mapLogin = (router: Router) => {
-  router.post('/login', loginValidation, handleLogin);
+  router.post('/login', loginValidation, handle);
 };
 
-const handleLogin = (req: Request, res: Response, next: NextFunction) => {
+const handle = (req: Request, res: Response, next: NextFunction) => {
   try {
     const loginRequest = req.body as LoginRequestDto;
 
