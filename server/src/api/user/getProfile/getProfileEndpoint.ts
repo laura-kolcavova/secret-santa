@@ -28,8 +28,6 @@ const handleGetProfile = async (req: Request, res: Response, next: NextFunction)
     };
 
     res.status(200).json(myProfileDto);
-
-    next();
   } catch (error) {
     next(error);
   }

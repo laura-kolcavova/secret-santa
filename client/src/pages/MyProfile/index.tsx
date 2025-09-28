@@ -15,7 +15,7 @@ export const MyProfile: Component = () => {
     <UserLayout>
       <Switch
         fallback={
-          <Alert color="danger" isDismissible={false}>
+          <Alert color="warning" isDismissible={false}>
             <FormattedMessage message={messages.profileNotFound} />
           </Alert>
         }>

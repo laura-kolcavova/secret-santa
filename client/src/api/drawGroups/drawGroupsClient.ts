@@ -12,6 +12,18 @@ const getUserDrawGroup = (signal?: GenericAbortSignal): AxiosPromise<UserDrawGro
   });
 };
 
+const joinDrawGroup = (
+  drawGroupGuid: string,
+  signal?: GenericAbortSignal,
+): AxiosPromise<UserDrawGroupDto> => {
+  return callAxios({
+    url: `${baseUrl}/${drawGroupGuid}/join`,
+    method: 'POST',
+    signal: signal,
+  });
+};
+
 export const drawGroupsClient = {
   getUserDrawGroup,
+  joinDrawGroup,
 };

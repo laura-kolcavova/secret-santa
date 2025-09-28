@@ -1,4 +1,4 @@
-import { Component, createEffect, createSignal, For, Show } from 'solid-js';
+import { Component, createSignal, For, Show } from 'solid-js';
 import { createStore, produce } from 'solid-js/store';
 import { ProfileDto } from '~/api/user/dto/ProfileDto';
 import { FormattedMessage } from '~/translation/FormattedMessage';

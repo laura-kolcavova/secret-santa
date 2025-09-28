@@ -25,8 +25,6 @@ const handleGetLoggedUser = (req: Request, res: Response, next: NextFunction) =>
     };
 
     res.status(200).json(loggedUserDto);
-
-    next();
   } catch (error) {
     next(error);
   }

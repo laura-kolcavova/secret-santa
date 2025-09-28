@@ -22,9 +22,7 @@ const changePin = (email: string, currentPin: string, newPin: string): UnitResul
     return unitResultError(userErrors.newPinMustDiffer());
   }
 
-  user.pinHash = newPinHash;
-
-  userManager.updatePin(user);
+  userManager.updatePinHash(user, newPinHash);
 
   return unitResultSuccess();
 };

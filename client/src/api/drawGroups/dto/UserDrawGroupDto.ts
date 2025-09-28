@@ -1,4 +1,5 @@
 export type UserDrawGroupDto = {
+  guid: string;
   name: string;
   participantsCount: number;
   drawStartUtc: string;
