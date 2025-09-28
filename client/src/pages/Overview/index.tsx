@@ -35,7 +35,11 @@ export const Overview: Component = () => {
           </Alert>
         </Match>
         <Match when={data()}>
-          <UserDrawGroupInfo userDrawGroup={data()!} refetchDrawGroup={refetchDrawGroup} />
+          <UserDrawGroupInfo
+            drawGroup={data()!.drawGroup}
+            userStatus={data()!.userStatus}
+            refetchDrawGroup={refetchDrawGroup}
+          />
         </Match>
       </Switch>
     </UserLayout>

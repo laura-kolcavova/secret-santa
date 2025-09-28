@@ -16,7 +16,7 @@ export const useJoinDrawGroupErrorHandler = () => {
         case 'DrawGroup.NotFound':
           message = formatMessage(sharedMessages.somethingWentWrong);
           break;
-        case 'DrawGroup.ParticipantAlreadyJoined':
+        case 'DrawGroup.UserAlreadyJoined':
           message = formatMessage(sharedMessages.somethingWentWrong);
           break;
       }

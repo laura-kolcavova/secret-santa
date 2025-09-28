@@ -6,10 +6,10 @@ import { changePinValidation } from './changePinValidation';
 import { userAuthorizationHandler } from '~/api/shared/middlewares/userAuthorizatoinHandler';
 
 export const mapChangePin = (router: Router) => {
-  router.put('/change-pin', userAuthorizationHandler, changePinValidation, handleEditProfile);
+  router.put('/change-pin', userAuthorizationHandler, changePinValidation, handle);
 };
 
-const handleEditProfile = (req: Request, res: Response, next: NextFunction) => {
+const handle = (req: Request, res: Response, next: NextFunction) => {
   try {
     const email = req.user!.email;
 

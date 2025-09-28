@@ -6,10 +6,10 @@ import { editProfileValidation } from './editProfileValidation';
 import { userAuthorizationHandler } from '~/api/shared/middlewares/userAuthorizatoinHandler';
 
 export const mapEditProfile = (router: Router) => {
-  router.put('/profile', userAuthorizationHandler, editProfileValidation, handleEditProfile);
+  router.put('/profile', userAuthorizationHandler, editProfileValidation, handle);
 };
 
-const handleEditProfile = (req: Request, res: Response, next: NextFunction) => {
+const handle = (req: Request, res: Response, next: NextFunction) => {
   try {
     const email = req.user!.email;
 

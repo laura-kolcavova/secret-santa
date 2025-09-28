@@ -1,7 +1,7 @@
 import { computePinHash } from '~/application/shared/pinHelper';
 import { UnitResult, unitResultError, unitResultSuccess } from '../../shared/models/UnitResult';
-import { userErrors } from '../userErrors';
 import { userManager } from './userManager';
+import { userErrors } from '../userErrors';
 
 const changePin = (email: string, currentPin: string, newPin: string): UnitResult => {
   const user = userManager.findByEmail(email);

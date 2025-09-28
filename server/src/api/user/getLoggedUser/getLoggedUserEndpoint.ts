@@ -4,10 +4,10 @@ import { LoggedUserDto } from './LoggedUserDto';
 import { userAuthenticationHandler } from '~/api/shared/middlewares/userAuthenticationHandler';
 
 export const mapGetLoggedUser = (router: Router) => {
-  router.get('/logged', userAuthenticationHandler, handleGetLoggedUser);
+  router.get('/logged', userAuthenticationHandler, handle);
 };
 
-const handleGetLoggedUser = (req: Request, res: Response, next: NextFunction) => {
+const handle = (req: Request, res: Response, next: NextFunction) => {
   try {
     if (!req.user) {
       res.status(204).send();

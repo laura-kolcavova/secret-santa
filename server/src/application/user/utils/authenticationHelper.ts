@@ -1,10 +1,11 @@
-import { IdentityUser } from '../models/User';
+import { User } from '../models/User';
 import { UserTokenPayload } from '../models/UserTokenPayload';
+import { getFullName } from './userHelpers';
 
-export const createUserTokenPayload = (user: IdentityUser): UserTokenPayload => {
+export const createUserTokenPayload = (user: User): UserTokenPayload => {
   return {
     email: user.email,
-    fullName: `${user.firstName} ${user.lastName}`,
+    fullName: getFullName(user),
     firstName: user.firstName,
     lastName: user.lastName,
   };
