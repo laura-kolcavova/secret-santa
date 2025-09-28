@@ -2,12 +2,19 @@ import { Component, createSignal, onCleanup, onMount } from 'solid-js';
 import { FormattedMessage } from '~/translation/FormattedMessage';
 import { messages } from './messages';
 
+type TimeParts = {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+};
+
 export type CountdownProps = {
   targetDate: string;
 };
 
 export const Countdown: Component<CountdownProps> = (props) => {
-  const [timeLeft, setTimeLeft] = createSignal({
+  const [getTimeLeft, setTimeLeft] = createSignal<TimeParts>({
     days: 0,
     hours: 0,
     minutes: 0,
@@ -49,25 +56,25 @@ export const Countdown: Component<CountdownProps> = (props) => {
     <div class="p-4 text-center text-gray-600">
       <div class="flex justify-center gap-4">
         <div class="flex flex-col">
-          <span class="text-xl font-bold">{timeLeft().days}</span>
+          <span class="text-xl font-bold">{getTimeLeft().days}</span>
           <span class="text-xs">
             <FormattedMessage message={messages.days} />
           </span>
         </div>
         <div class="flex flex-col">
-          <span class="text-xl font-bold">{timeLeft().hours}</span>
+          <span class="text-xl font-bold">{getTimeLeft().hours}</span>
           <span class="text-xs">
             <FormattedMessage message={messages.hours} />
           </span>
         </div>
         <div class="flex flex-col">
-          <span class="text-xl font-bold">{timeLeft().minutes}</span>
+          <span class="text-xl font-bold">{getTimeLeft().minutes}</span>
           <span class="text-xs">
             <FormattedMessage message={messages.minutes} />
           </span>
         </div>
         <div class="flex flex-col">
-          <span class="text-xl font-bold">{timeLeft().seconds}</span>
+          <span class="text-xl font-bold">{getTimeLeft().seconds}</span>
           <span class="text-xs">
             <FormattedMessage message={messages.seconds} />
           </span>
