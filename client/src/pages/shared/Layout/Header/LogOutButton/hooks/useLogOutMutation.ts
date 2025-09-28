@@ -1,19 +1,16 @@
 import { batch, createSignal } from 'solid-js';
 import { userClient } from '~/api/user/userClient';
-import { useLogOutErrorHandler } from './useLogOutErrorHandler';
 
 export const useLogOutMutation = () => {
-  const { handleError } = useLogOutErrorHandler();
-
   const [getIsPending, setIsPending] = createSignal<boolean>(false);
-  const [getIsError, setIsError] = createSignal<boolean>(false);
   const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
+  const [getError, setError] = createSignal<unknown>(undefined);
 
   const muateAsync = async (signal?: AbortSignal) => {
     batch(() => {
       setIsPending(true);
-      setIsError(false);
       setIsSuccess(false);
+      setError(undefined);
     });
 
     try {
@@ -25,9 +22,8 @@ export const useLogOutMutation = () => {
       });
     } catch (error) {
       batch(() => {
-        setIsError(true);
         setIsPending(false);
-        handleError(error);
+        setError(error);
       });
     }
   };
@@ -36,5 +32,5 @@ export const useLogOutMutation = () => {
     muateAsync(signal);
   };
 
-  return { mutate, getIsPending, getIsError, getIsSuccess };
+  return { mutate, getIsPending, getIsSuccess, getError };
 };

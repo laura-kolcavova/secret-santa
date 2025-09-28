@@ -8,15 +8,18 @@ import { useNavigate } from '@solidjs/router';
 import { pages } from '~/navigation/pages';
 import { SpinnerIcon } from '~/pages/shared/icons/SpinnerIcon';
 import { ExitIcon } from '~/pages/shared/icons/ExitIcon';
+import { useLogOutErrorHandler } from './hooks/useLogOutErrorHandler';
 
 export const LogOutButton = () => {
   const [_loggedUserState, { clear }] = useLoggedUserContext();
 
   const navigate = useNavigate();
 
-  const { mutate, getIsSuccess, getIsPending } = useLogOutMutation();
+  const { handleError } = useLogOutErrorHandler();
 
-  const handleClick = () => {
+  const { mutate, getIsSuccess, getIsPending, getError } = useLogOutMutation();
+
+  const logOut = () => {
     mutate();
   };
 
@@ -27,10 +30,16 @@ export const LogOutButton = () => {
     }
   });
 
+  createEffect(() => {
+    if (getError()) {
+      handleError(getError());
+    }
+  });
+
   return (
     <button
       class="font-bold text-pallete-2 hover:underline cursor-pointer flex items-center justify-center"
-      onClick={handleClick}
+      onClick={logOut}
       disabled={getIsPending()}>
       <ExitIcon class="size-5 mr-2" />
 
