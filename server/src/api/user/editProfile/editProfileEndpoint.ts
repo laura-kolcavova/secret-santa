@@ -15,13 +15,13 @@ const handleEditProfile = (req: Request, res: Response, next: NextFunction) => {
 
     const editProfileRequest = req.body as EditProfileRequestDto;
 
-    const loginResult = editProfileService.editProfile({
-      email: email,
-      firstName: editProfileRequest.firstName,
-      lastName: editProfileRequest.lastName,
-      department: editProfileRequest.department,
-      hobbies: editProfileRequest.hobbies,
-    });
+    const loginResult = editProfileService.editProfile(
+      email,
+      editProfileRequest.firstName,
+      editProfileRequest.lastName,
+      editProfileRequest.department,
+      editProfileRequest.hobbies,
+    );
 
     if (!loginResult.isSuccess) {
       const problemDetails = createProblemDetails(loginResult.error!, req);

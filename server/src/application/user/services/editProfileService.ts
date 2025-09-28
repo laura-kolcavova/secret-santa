@@ -2,25 +2,20 @@ import { UnitResult, unitResultError, unitResultSuccess } from '../../shared/mod
 import { userErrors } from '../userErrors';
 import { userManager } from './userManager';
 
-const editProfile = (editProfileModel: {
-  email: string;
-  firstName: string;
-  lastName: string;
-  department: string;
-  hobbies: string[];
-}): UnitResult => {
-  const user = userManager.findByEmail(editProfileModel.email);
+const editProfile = (
+  email: string,
+  firstName: string,
+  lastName: string,
+  department: string,
+  hobbies: string[],
+): UnitResult => {
+  const user = userManager.findByEmail(email);
 
   if (!user) {
     return unitResultError(userErrors.notFound());
   }
 
-  user.firstName = editProfileModel.firstName;
-  user.lastName = editProfileModel.lastName;
-  user.department = editProfileModel.department;
-  user.hobbies = [...editProfileModel.hobbies];
-
-  userManager.updateProfile(user);
+  userManager.updateProfile(user, firstName, lastName, department, hobbies);
 
   return unitResultSuccess();
 };

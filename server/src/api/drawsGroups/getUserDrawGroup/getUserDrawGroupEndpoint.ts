@@ -2,6 +2,7 @@ import { Request, Response, NextFunction, Router } from 'express';
 import { userAuthorizationHandler } from '~/api/shared/middlewares/userAuthorizatoinHandler';
 import { drawGroupManager } from '~/application/drawGroups/services/drawGroupManager';
 import { UserDrawGroupDto } from './UserDrawGroupDto';
+import { checkParticipantJoined } from '~/application/drawGroups/utils/drawGroupHelpers';
 
 export const mapGetUserDrawGroup = (router: Router) => {
   router.get('/user', userAuthorizationHandler, handleGetUserDrawGroup);
@@ -11,7 +12,7 @@ const handleGetUserDrawGroup = (req: Request, res: Response, next: NextFunction)
   try {
     const currentYear = new Date().getFullYear();
 
-    const drawGroup = drawGroupManager.getDrawGroupByYear(currentYear);
+    const drawGroup = drawGroupManager.findByYear(currentYear);
 
     if (!drawGroup) {
       res.status(204).send();
@@ -21,11 +22,10 @@ const handleGetUserDrawGroup = (req: Request, res: Response, next: NextFunction)
 
     const email = req.user!.email;
 
-    const didUserJoined =
-      drawGroup.participants.length > 0 &&
-      drawGroup.participants.some((participant) => participant.email === email);
+    const didUserJoined = checkParticipantJoined(drawGroup, email);
 
     const userDrawGroupDto: UserDrawGroupDto = {
+      guid: drawGroup.guid,
       name: drawGroup.name,
       participantsCount: drawGroup.participants.length,
       drawStartUtc: drawGroup.drawStartUtc.toISOString(),
@@ -35,8 +35,6 @@ const handleGetUserDrawGroup = (req: Request, res: Response, next: NextFunction)
     };
 
     res.status(200).json(userDrawGroupDto);
-
-    next();
   } catch (error) {
     next(error);
   }

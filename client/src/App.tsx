@@ -5,14 +5,18 @@ import { Route, Router } from '@solidjs/router';
 import { pages } from './navigation/pages';
 import { ProtectedRoute } from './navigation/ProtectedRoute';
 import { Layout } from './pages/shared/Layout';
+import { Toaster } from 'solid-toast';
 
 export const App: Component = () => {
   return (
     <TranslationProvider>
       <LoggedUserProvider>
-        <Router root={Layout}>
-          <PagesRoutes />
-        </Router>
+        <>
+          <Toaster position="bottom-right" gutter={24} />
+          <Router root={Layout}>
+            <PagesRoutes />
+          </Router>
+        </>
       </LoggedUserProvider>
     </TranslationProvider>
   );

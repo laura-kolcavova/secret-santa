@@ -5,5 +5,5 @@ export type User = {
   department: string;
   hobbies: string[];
   pinHash: string;
-  createdAt: Date;
+  createdAtUtc: Date;
 };

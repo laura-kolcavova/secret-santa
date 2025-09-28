@@ -10,7 +10,11 @@ import { messages } from './messages';
 import { UserDrawGroupInfo } from './UserDrawGroupInfo';
 
 export const Overview: Component = () => {
-  const [data] = useUserDrawGroupQuery();
+  const [data, { refetch }] = useUserDrawGroupQuery();
+
+  const refetchDrawGroup = () => {
+    refetch();
+  };
 
   return (
     <UserLayout>
@@ -31,7 +35,7 @@ export const Overview: Component = () => {
           </Alert>
         </Match>
         <Match when={data()}>
-          <UserDrawGroupInfo userDrawGroup={data()!} />
+          <UserDrawGroupInfo userDrawGroup={data()!} refetchDrawGroup={refetchDrawGroup} />
         </Match>
       </Switch>
     </UserLayout>

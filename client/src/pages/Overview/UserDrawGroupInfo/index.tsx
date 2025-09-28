@@ -5,15 +5,17 @@ import { UserSolidIcon } from '~/pages/shared/icons/UserSolidIcon';
 import { CalendarSolidIcon } from '~/pages/shared/icons/CalendarSolidIcon';
 import { FormattedMessage } from '~/translation/FormattedMessage';
 import { messages } from '../messages';
+import { JoinDrawGroupButton } from './JoinDrawGroupButton';
 
 export type UserDrawGroupInfoProps = {
   userDrawGroup: UserDrawGroupDto;
+  refetchDrawGroup: () => void;
 };
 
 export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
   const { formatDate } = useLocalization();
 
-  const { name, participantsCount, drawStartUtc, drawEndUtc, didUserJoined, drawnUser } =
+  const { guid, name, participantsCount, drawStartUtc, drawEndUtc, didUserJoined, drawnUser } =
     props.userDrawGroup;
 
   const canJoin = (): boolean => {
@@ -45,8 +47,6 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
     return nowLocal >= drawStartLocal && nowLocal <= drawEndLocal;
   };
 
-  const joinDrawGroup = (): void => {};
-
   const draw = (): void => {};
 
   return (
@@ -54,12 +54,12 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
       <div class="mb-2 text-lg font-bold text-center text-pallete-6">{name}</div>
 
       <div class="px-4 mb-10 flex items-center justify-between">
-        <div class="text-gray-600 text-base flex items-center">
+        <div class="text-base font-normal flex items-center text-gray-600 ">
           <UserSolidIcon class="size-4 mr-1.5" />
           {participantsCount} <FormattedMessage message={messages.participants} />
         </div>
 
-        <div class="text-gray-600 text-base flex items-center">
+        <div class="text-base font-normal flex items-center text-gray-600 ">
           <CalendarSolidIcon class="size-4 mr-1.5" />
           {formatDate(drawStartUtc)}
         </div>
@@ -73,20 +73,22 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
               when={canJoin()}
               fallback={
                 <div class="text-base font-medium text-red-600">
-                  You can't join because the draw has already begun.
+                  <FormattedMessage message={messages.cantJoinDrawAlreadyBegan} />
                 </div>
               }>
-              <button
-                class="w-1/2 py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
-                onClick={joinDrawGroup}>
-                <FormattedMessage message={messages.joinDraw} />
-              </button>
+              <JoinDrawGroupButton drawGroupGuid={guid} refetchDrawGroup={props.refetchDrawGroup} />
             </Show>
           }>
           <Show
             when={drawnUser}
             fallback={
-              <Show when={canDraw()} fallback={<div>You are in! Wait for the draw to begin</div>}>
+              <Show
+                when={canDraw()}
+                fallback={
+                  <div class="text-base font-medium text-gray-600">
+                    <FormattedMessage message={messages.waitForDrawToBegin} />
+                  </div>
+                }>
                 <button
                   class="w-1/2 py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
                   onClick={draw}>

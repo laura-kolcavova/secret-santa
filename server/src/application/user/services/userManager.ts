@@ -40,7 +40,7 @@ const createUser = (
     lastName,
     department,
     hobbies: [...hobbies],
-    createdAt: new Date(Date.now()),
+    createdAtUtc: new Date(Date.now()),
   };
 
   mockUsers.push(user);
@@ -48,32 +48,46 @@ const createUser = (
   return user;
 };
 
-const updateProfile = (userToUpdate: User): void => {
-  mockUsers.forEach((user) => {
-    if (user.email !== userToUpdate.email) {
+const updateProfile = (
+  userToUpdate: User,
+  firstName: string,
+  lastName: string,
+  department: string,
+  hobbies: string[],
+): void => {
+  userToUpdate.firstName = firstName;
+  userToUpdate.lastName = lastName;
+  userToUpdate.department = department;
+  userToUpdate.hobbies = [...hobbies];
+
+  mockUsers.forEach((persistedUser) => {
+    if (persistedUser.email !== userToUpdate.email) {
       return;
     }
 
-    user.firstName = userToUpdate.firstName;
-    user.lastName = userToUpdate.lastName;
-    user.department = userToUpdate.department;
-    user.hobbies = [...userToUpdate.hobbies];
+    persistedUser.firstName = firstName;
+    persistedUser.lastName = lastName;
+    persistedUser.department = department;
+    persistedUser.hobbies = [...hobbies];
   });
 };
 
-const updatePin = (userToUpdate: User): void => {
-  mockUsers.forEach((user) => {
-    if (user.email !== userToUpdate.email) {
+const updatePinHash = (userToUpdate: User, pinHash: string): void => {
+  userToUpdate.pinHash = pinHash;
+
+  mockUsers.forEach((persistedUser) => {
+    if (persistedUser.email !== userToUpdate.email) {
       return;
     }
 
-    user.pinHash = userToUpdate.pinHash;
+    persistedUser.pinHash = pinHash;
   });
 };
+
 export const userManager = {
   checkPin,
   findByEmail,
   createUser,
   updateProfile,
-  updatePin,
+  updatePinHash,
 };
