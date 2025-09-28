@@ -6,6 +6,7 @@ import { CalendarSolidIcon } from '~/pages/shared/icons/CalendarSolidIcon';
 import { FormattedMessage } from '~/translation/FormattedMessage';
 import { messages } from '../messages';
 import { JoinDrawGroupButton } from './JoinDrawGroupButton';
+import { Countdown } from '~/pages/shared/Countdown';
 
 export type UserDrawGroupInfoProps = {
   drawGroup: DrawGroupDto;
@@ -65,7 +66,7 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
         </div>
       </div>
 
-      <div class="flex justify-center">
+      <div class="flex justify-center mb-2">
         <Show
           when={userStatus.isParticipant}
           fallback={
@@ -106,6 +107,8 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
           </Show>
         </Show>
       </div>
+
+      <Countdown targetDate={drawGroup.drawStartUtc} />
     </div>
   );
 };
