@@ -7,7 +7,7 @@ import { messages } from '../messages';
 export const useLoginErrorHandler = () => {
   const { formatMessage } = useLocalization();
 
-  const handleError = (error: unknown): void => {
+  const handleError = (error: unknown): string => {
     if (error instanceof AxiosError && error.response?.data.code) {
       const code = error.response.data.code;
 

@@ -3,8 +3,6 @@ import { drawGroupsClient } from '~/api/drawGroups/drawGroupsClient';
 import { useJoinDrawGroupErrorHandler } from './useJoinDrawGroupErrorHandler';
 
 export const useJoinDrawGroupMutation = () => {
-  const { handleError } = useJoinDrawGroupErrorHandler();
-
   const [getIsPending, setIsPending] = createSignal<boolean>(false);
   const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
   const [getError, setError] = createSignal<unknown>(undefined);
@@ -27,7 +25,6 @@ export const useJoinDrawGroupMutation = () => {
       batch(() => {
         setIsPending(false);
         setError(error);
-        handleError(error);
       });
     }
   };
