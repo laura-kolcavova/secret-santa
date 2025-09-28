@@ -1,8 +1,10 @@
 import { Component, createEffect, Show } from 'solid-js';
 import { messages } from '../../messages';
 import { FormattedMessage } from '~/translation/FormattedMessage';
-import { useJoinDrawGroupMutation } from '../hooks/useJoinDrawGroupMutation';
+import { useJoinDrawGroupMutation } from './hooks/useJoinDrawGroupMutation';
 import { SpinnerIcon } from '~/pages/shared/icons/SpinnerIcon';
+import { useJoinDrawGroupErrorHandler } from './hooks/useJoinDrawGroupErrorHandler';
+import { error } from 'console';
 
 export type JoinDrawGroupButtonProps = {
   drawGroupGuid: string;
@@ -10,7 +12,9 @@ export type JoinDrawGroupButtonProps = {
 };
 
 export const JoinDrawGroupButton: Component<JoinDrawGroupButtonProps> = (props) => {
-  const { mutate, getIsPending, getIsSuccess } = useJoinDrawGroupMutation();
+  const { handleError } = useJoinDrawGroupErrorHandler();
+
+  const { mutate, getIsPending, getIsSuccess, getError } = useJoinDrawGroupMutation();
 
   const joinDrawGroup = (): void => {
     mutate(props.drawGroupGuid);
@@ -19,6 +23,12 @@ export const JoinDrawGroupButton: Component<JoinDrawGroupButtonProps> = (props) 
   createEffect(() => {
     if (getIsSuccess()) {
       props.refetchDrawGroup();
+    }
+  });
+
+  createEffect(() => {
+    if (getError()) {
+      handleError(getError());
     }
   });
 

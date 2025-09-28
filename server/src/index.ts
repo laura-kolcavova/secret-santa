@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 import { mapUsersEndpoints } from './api/user/usersRoutes';
 import { exceptionHandler } from './api/shared/middlewares/exceptionHandler';
 import { appConfig } from './config/appConfig';
-import { mapDrawGroupsRoutes } from './api/drawsGroups/drawGroupsRoutes';
+import { mapDrawGroupsRoutes } from './api/drawGroups/drawGroupsRoutes';
 
 const app = express();
 
