@@ -7,6 +7,7 @@ import { FormattedMessage } from '~/translation/FormattedMessage';
 import { messages } from '../messages';
 import { JoinDrawGroupButton } from './JoinDrawGroupButton';
 import { Countdown } from '~/pages/shared/Countdown';
+import { DrawButton } from './DrawButton';
 
 export type UserDrawGroupInfoProps = {
   drawGroup: DrawGroupDto;
@@ -15,9 +16,9 @@ export type UserDrawGroupInfoProps = {
 };
 
 export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
-  const { formatDate } = useLocalization();
-
   const { drawGroup, userStatus, refetchDrawGroup } = props;
+
+  const { formatDate } = useLocalization();
 
   const canJoin = (): boolean => {
     if (userStatus.isParticipant) {
@@ -48,19 +49,17 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
     return nowLocal >= drawStartLocal && nowLocal <= drawEndLocal;
   };
 
-  const draw = (): void => {};
-
   return (
     <div class="p-4 bg-white rounded shadow-md max-w-md">
       <div class="mb-2 text-lg font-bold text-center text-pallete-6">{drawGroup.name}</div>
 
       <div class="px-4 mb-10 flex items-center justify-between">
-        <div class="text-base font-normal flex items-center text-gray-600 ">
+        <div class="text-base font-normal flex items-center text-gray-600">
           <UserSolidIcon class="size-4 mr-1.5" />
           {drawGroup.participantsCount} <FormattedMessage message={messages.participants} />
         </div>
 
-        <div class="text-base font-normal flex items-center text-gray-600 ">
+        <div class="text-base font-normal flex items-center text-gray-600">
           <CalendarSolidIcon class="size-4 mr-1.5" />
           {formatDate(drawGroup.drawStartUtc)}
         </div>
@@ -77,10 +76,7 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
                   <FormattedMessage message={messages.cantJoinDrawAlreadyBegan} />
                 </div>
               }>
-              <JoinDrawGroupButton
-                drawGroupGuid={drawGroup.guid}
-                refetchDrawGroup={refetchDrawGroup}
-              />
+              <JoinDrawGroupButton drawGroup={drawGroup} refetchDrawGroup={refetchDrawGroup} />
             </Show>
           }>
           <Show
@@ -93,11 +89,7 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
                     <FormattedMessage message={messages.waitForDrawToBegin} />
                   </div>
                 }>
-                <button
-                  class="w-1/2 py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
-                  onClick={draw}>
-                  <FormattedMessage message={messages.draw} />
-                </button>
+                <DrawButton drawGroup={drawGroup} refetchDrawGroup={refetchDrawGroup} />
               </Show>
             }>
             <div class="mt-2 p-2 bg-green-50 rounded border border-green-200">
