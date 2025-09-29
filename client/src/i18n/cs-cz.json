@@ -58,5 +58,10 @@
     "changePin.invalidCurrentPin": "Současný pin je neplatný",
     "changePin.newPinMustDiffer": "Nový pin musí být odlišný od současného pinu",
     "changePin.newPinConfirmMismatch": "Nový pin pro potvrzení se liší",
-    "notFound.pageNotFound": "Stránka nebyla nalezena"
+    "notFound.pageNotFound": "Stránka nebyla nalezena",
+    "drawModal.description": "Po kliknutí na tlačítko \"Vylosovat\" Vám bude přidělen náhodný příjemce dárku.",
+    "drawModal.close": "Zavřít",
+    "drawModal.draw": "Vylosovat",
+    "drawModal.drawingInProgress": "Losování probíhá...",
+    "drawModal.noParticipantsToDraw": "V této skupině není koho losovat"
 }

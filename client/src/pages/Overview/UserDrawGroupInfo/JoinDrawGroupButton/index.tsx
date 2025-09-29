@@ -4,10 +4,10 @@ import { FormattedMessage } from '~/translation/FormattedMessage';
 import { useJoinDrawGroupMutation } from './hooks/useJoinDrawGroupMutation';
 import { SpinnerIcon } from '~/pages/shared/icons/SpinnerIcon';
 import { useJoinDrawGroupErrorHandler } from './hooks/useJoinDrawGroupErrorHandler';
-import { error } from 'console';
+import { DrawGroupDto } from '~/api/drawGroups/dto/UserDrawGroupDto';
 
 export type JoinDrawGroupButtonProps = {
-  drawGroupGuid: string;
+  drawGroup: DrawGroupDto;
   refetchDrawGroup: () => void;
 };
 
@@ -17,7 +17,7 @@ export const JoinDrawGroupButton: Component<JoinDrawGroupButtonProps> = (props) 
   const { mutate, getIsPending, getIsSuccess, getError } = useJoinDrawGroupMutation();
 
   const joinDrawGroup = (): void => {
-    mutate(props.drawGroupGuid);
+    mutate(props.drawGroup.guid);
   };
 
   createEffect(() => {
