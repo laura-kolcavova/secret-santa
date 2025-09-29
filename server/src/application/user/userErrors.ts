@@ -2,17 +2,17 @@ import { ValidationError } from '../shared/models/ValidationError';
 
 const notFound = (): ValidationError => ({
   code: 'User.NotFound',
-  message: 'User was not found',
+  message: 'User was not found.',
 });
 
 const pinDoesNotMatch = (): ValidationError => ({
   code: 'User.PinDoesNotMatch',
-  message: 'Pin does not match',
+  message: 'Pin does not match.',
 });
 
 const emailAlreadyExists = (): ValidationError => ({
   code: 'User.EmailAlreadyExists',
-  message: 'User with this email already exists',
+  message: 'User with this email already exists.',
 });
 
 const invalidCurrentPin = (): ValidationError => ({
@@ -22,7 +22,7 @@ const invalidCurrentPin = (): ValidationError => ({
 
 const newPinMustDiffer = (): ValidationError => ({
   code: 'User.NewPinMustDiffer',
-  message: 'The new PIN must be different from the current PIN',
+  message: 'The new PIN must be different from the current PIN.',
 });
 
 export const userErrors = {

@@ -23,7 +23,19 @@ const joinDrawGroup = (
   });
 };
 
+const drawParticipant = (
+  drawGroupGuid: string,
+  signal?: GenericAbortSignal,
+): AxiosPromise<UserDrawGroupDto> => {
+  return callAxios({
+    url: `${baseUrl}/${drawGroupGuid}/draw`,
+    method: 'POST',
+    signal: signal,
+  });
+};
+
 export const drawGroupsClient = {
   getUserDrawGroup,
   joinDrawGroup,
+  drawParticipant,
 };

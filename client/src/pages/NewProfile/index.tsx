@@ -100,7 +100,7 @@ const NewProfileComponent: Component = () => {
   return (
     <div class="container mx-auto py-6">
       <Show when={!getProfileCreated()} fallback={<ProfileCreatedInfo />}>
-        <h1 class="text-2xl font-bold mb-8">
+        <h1 class="text-2xl font-bold mb-8 text-center">
           <FormattedMessage message={messages.newProfile} />
         </h1>
 

@@ -1,7 +1,7 @@
 import { batch, createSignal } from 'solid-js';
 import { drawGroupsClient } from '~/api/drawGroups/drawGroupsClient';
 
-export const useJoinDrawGroupMutation = () => {
+export const useDrawParticipantMutation = () => {
   const [getIsPending, setIsPending] = createSignal<boolean>(false);
   const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
   const [getError, setError] = createSignal<unknown>(undefined);
@@ -14,7 +14,7 @@ export const useJoinDrawGroupMutation = () => {
     });
 
     try {
-      await drawGroupsClient.joinDrawGroup(drawGroupGuid, signal);
+      await drawGroupsClient.drawParticipant(drawGroupGuid, signal);
 
       batch(() => {
         setIsSuccess(true);

@@ -61,5 +61,7 @@
     "notFound.pageNotFound": "Stránka nebyla nalezena",
     "drawModal.description": "Po kliknutí na tlačítko \"Vylosovat\" Vám bude přidělen náhodný příjemce dárku.",
     "drawModal.close": "Zavřít",
-    "drawModal.draw": "Vylosovat"
+    "drawModal.draw": "Vylosovat",
+    "drawModal.drawingInProgress": "Losování probíhá...",
+    "drawModal.noParticipantsToDraw": "V této skupině není koho losovat"
 }

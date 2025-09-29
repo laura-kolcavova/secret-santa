@@ -20,6 +20,10 @@ const drawParticipant = (
     return resultError(drawGroupErrors.userNotJoined());
   }
 
+  if (participant.hasDrawn) {
+    return resultError(drawGroupErrors.userAlreadyDrawn());
+  }
+
   const participantsToDraw = getParticipantsToDraw(drawGroup, participantEmail);
 
   if (participantsToDraw.length === 0) {

@@ -12,4 +12,12 @@ export const messages = {
     id: 'drawModal.draw',
     defaultMessage: 'DRAW',
   },
+  drawingInProgress: {
+    id: 'drawModal.drawingInProgress',
+    defaultMessage: 'DRAWING IN PROGRESS...',
+  },
+  noParticipantsToDraw: {
+    id: 'drawModal.noParticipantsToDraw',
+    defaultMessage: 'THERE ARE NO PARTICIPANTS TO DRAW IN THIS GROUP',
+  },
 };
