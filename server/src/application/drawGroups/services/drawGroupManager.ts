@@ -3,6 +3,7 @@ import { DrawGroup } from '../models/DrawGroup';
 import { DrawGroupParticipant } from '../models/DrawGroupParticipant';
 import { mockDrawGroups } from '~/persistence/drawGroups/mockDrawGroups';
 import { DrawnParticipant } from '../models/DrawnParticipant';
+import { DrawnByParticipant } from '../models/DrawnByParticipant';
 
 const findByYear = (year: number): DrawGroup | undefined => {
   const drawGroup = mockDrawGroups.find((persistedDrawGroup) => persistedDrawGroup.year === year);
@@ -32,6 +33,7 @@ const addParticipant = (drawGroup: DrawGroup, participantEmail: string): DrawGro
   const newDrawGroupParticipant: DrawGroupParticipant = {
     email: normalizedParticipantEmail,
     hasDrawn: false,
+    isDrawn: false,
   };
 
   drawGroup.participants.push(newDrawGroupParticipant);
@@ -56,8 +58,15 @@ const addDrawnParticipant = (
     email: drawnParticipant.email,
   };
 
+  const newDrawnByParticipant: DrawnByParticipant = {
+    email: participant.email,
+  };
+
   participant.hasDrawn = true;
   participant.drawnParticipant = newDrawnParticipant;
+
+  drawnParticipant.isDrawn = true;
+  drawnParticipant.drawnByParticipant = newDrawnByParticipant;
 
   mockDrawGroups.forEach((persistedDrawGroup) => {
     if (persistedDrawGroup.guid !== drawGroup.guid) {
@@ -70,7 +79,22 @@ const addDrawnParticipant = (
       }
 
       persitedDrawGroupParticipant.hasDrawn = true;
-      persitedDrawGroupParticipant.drawnParticipant = newDrawnParticipant;
+      persitedDrawGroupParticipant.drawnParticipant = { ...newDrawnParticipant };
+    });
+  });
+
+  mockDrawGroups.forEach((persistedDrawGroup) => {
+    if (persistedDrawGroup.guid !== drawGroup.guid) {
+      return;
+    }
+
+    persistedDrawGroup.participants.forEach((persitedDrawGroupParticipant) => {
+      if (persitedDrawGroupParticipant.email !== drawnParticipant.email) {
+        return;
+      }
+
+      persitedDrawGroupParticipant.isDrawn = true;
+      persitedDrawGroupParticipant.drawnParticipant = { ...newDrawnByParticipant };
     });
   });
 

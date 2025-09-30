@@ -1,6 +1,7 @@
 import { AxiosPromise, GenericAbortSignal } from 'axios';
 import { UserDrawGroupDto } from './dto/UserDrawGroupDto';
 import { callAxios } from '~/utils/axios';
+import { DrawParticipantResponseDto } from './dto/DrawParticipantResponseDto';
 
 const baseUrl = '/api/draw-groups';
 
@@ -12,10 +13,7 @@ const getUserDrawGroup = (signal?: GenericAbortSignal): AxiosPromise<UserDrawGro
   });
 };
 
-const joinDrawGroup = (
-  drawGroupGuid: string,
-  signal?: GenericAbortSignal,
-): AxiosPromise<UserDrawGroupDto> => {
+const joinDrawGroup = (drawGroupGuid: string, signal?: GenericAbortSignal): AxiosPromise<void> => {
   return callAxios({
     url: `${baseUrl}/${drawGroupGuid}/join`,
     method: 'POST',
@@ -26,7 +24,7 @@ const joinDrawGroup = (
 const drawParticipant = (
   drawGroupGuid: string,
   signal?: GenericAbortSignal,
-): AxiosPromise<UserDrawGroupDto> => {
+): AxiosPromise<DrawParticipantResponseDto> => {
   return callAxios({
     url: `${baseUrl}/${drawGroupGuid}/draw`,
     method: 'POST',

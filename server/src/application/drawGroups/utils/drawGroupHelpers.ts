@@ -31,6 +31,7 @@ export const getParticipantsToDraw = (
   const participantNormalizedEmail = normalizeEmail(participantEmail);
 
   return drawGroup.participants.filter(
-    (drawGroupParticipant) => drawGroupParticipant.email !== participantNormalizedEmail,
+    (drawGroupParticipant) =>
+      drawGroupParticipant.email !== participantNormalizedEmail && !drawGroupParticipant.isDrawn,
   );
 };
