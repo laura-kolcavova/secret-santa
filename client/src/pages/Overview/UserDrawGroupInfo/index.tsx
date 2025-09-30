@@ -8,6 +8,8 @@ import { messages } from '../messages';
 import { JoinDrawGroupButton } from './JoinDrawGroupButton';
 import { Countdown } from '~/pages/shared/Countdown';
 import { DrawButton } from './DrawButton';
+import { ExitIcon } from '~/pages/shared/icons/ExitIcon';
+import { DrawnParticipantButton } from './DrawnParticipantButton';
 
 export type UserDrawGroupInfoProps = {
   drawGroup: DrawGroupDto;
@@ -50,10 +52,10 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
   };
 
   return (
-    <div class="p-4 bg-white rounded shadow-md max-w-md">
+    <div class="p-4 rounded shadow-md max-w-md min-h-70 flex flex-col bg-white ">
       <div class="mb-2 text-lg font-bold text-center text-pallete-6">{drawGroup.name}</div>
 
-      <div class="px-4 mb-10 flex items-center justify-between">
+      <div class="px-4 mb-8 flex items-center justify-between">
         <div class="text-base font-normal flex items-center text-gray-600">
           <UserSolidIcon class="size-4 mr-1.5" />
           {drawGroup.participantsCount} <FormattedMessage message={messages.participants} />
@@ -65,7 +67,7 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
         </div>
       </div>
 
-      <div class="flex justify-center mb-2">
+      <div class="flex-1 flex flex-col justify-center items-center mb-2">
         <Show
           when={userStatus.isParticipant}
           fallback={
@@ -92,10 +94,11 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
                 <DrawButton drawGroup={drawGroup} refetchDrawGroup={refetchDrawGroup} />
               </Show>
             }>
-            <div class="mt-2 p-2 bg-green-50 rounded border border-green-200">
-              <div class="font-medium text-green-700">You have drawn:</div>
-              <div class="text-green-800">{userStatus.drawnParticipant!.fullName}</div>
+            <div class="mb-4 text-base font-medium text-gray-600">
+              <FormattedMessage message={messages.youHaveDrawn} />
             </div>
+
+            <DrawnParticipantButton drawnParticipant={userStatus.drawnParticipant!} />
           </Show>
         </Show>
       </div>

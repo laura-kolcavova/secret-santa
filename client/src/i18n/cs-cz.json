@@ -1,5 +1,6 @@
 {
     "shared.somethingWentWrong": "Něco se pokazilo",
+    "shared.close": "Zavřít",
     "header.logOut": "Odhlásit se",
     "userLayout.overview": "Přehled",
     "userLayout.myProfile": "Můj profil",
@@ -43,6 +44,7 @@
     "overview.cantJoinDrawAlreadyBegan": "Nemůžete se zůčastnit, protože losování již začalo",
     "overview.waitForDrawToBegin": "Počkejte, až začne losování",
     "overview.draw": "Losovat",
+    "overview.youHaveDrawn": "Vylosovali jste:",
     "myProfile.profileNotFound": "Profil nebyl nalezen",
     "myProfile.firstName": "Jméno",
     "myProfile.lastName": "Příjmení",
@@ -60,8 +62,10 @@
     "changePin.newPinConfirmMismatch": "Nový pin pro potvrzení se liší",
     "notFound.pageNotFound": "Stránka nebyla nalezena",
     "drawModal.description": "Po kliknutí na tlačítko \"Vylosovat\" Vám bude přidělen náhodný příjemce dárku.",
-    "drawModal.close": "Zavřít",
     "drawModal.draw": "Vylosovat",
     "drawModal.drawingInProgress": "Losování probíhá...",
-    "drawModal.noParticipantsToDraw": "V této skupině není koho losovat"
+    "drawModal.noParticipantsToDraw": "V této skupině není koho losovat",
+    "drawModal.youHaveDrawn": "Vylosovali jste:",
+    "drawnParticipantModal.label": "Váš obdarovaný",
+    "drawnParticipantModal.hobbies": "Záliby:"
 }

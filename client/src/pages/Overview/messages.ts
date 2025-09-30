@@ -15,12 +15,16 @@ export const messages = {
     id: 'overview.cantJoinDrawAlreadyBegan',
     defaultMessage: "YOU CAN'T JOIN BECAUSE THE DRAW HAS ALREADY BEGUN",
   },
+  waitForDrawToBegin: {
+    id: 'overview.waitForDrawToBegin',
+    defaultMessage: 'WAIT FOR THE DRAW TO BEGIN',
+  },
   draw: {
     id: 'overview.draw',
     defaultMessage: 'DRAW',
   },
-  waitForDrawToBegin: {
-    id: 'overview.waitForDrawToBegin',
-    defaultMessage: 'WAIT FOR THE DRAW TO BEGIN',
+  youHaveDrawn: {
+    id: 'overview.youHaveDrawn',
+    defaultMessage: 'YOU HAVE DRAWN:',
   },
 };

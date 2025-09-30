@@ -3,4 +3,8 @@ export const sharedMessages = {
     id: 'shared.somethingWentWrong',
     defaultMessage: 'SOMETHING WENT WRONG',
   },
+  close: {
+    id: 'shared.close',
+    defaultMessage: 'CLOSE',
+  },
 };

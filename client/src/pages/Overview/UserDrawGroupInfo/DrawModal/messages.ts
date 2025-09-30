@@ -4,10 +4,6 @@ export const messages = {
     defaultMessage:
       'AFTER CLICKING THE "DRAW" BUTTON, YOU WILL BE ASSIGNED A RANDOM GIFT RECIPIENT.',
   },
-  close: {
-    id: 'drawModal.close',
-    defaultMessage: 'CLOSE',
-  },
   draw: {
     id: 'drawModal.draw',
     defaultMessage: 'DRAW',
@@ -19,5 +15,9 @@ export const messages = {
   noParticipantsToDraw: {
     id: 'drawModal.noParticipantsToDraw',
     defaultMessage: 'THERE ARE NO PARTICIPANTS TO DRAW IN THIS GROUP',
+  },
+  youHaveDrawn: {
+    id: 'drawModal.youHaveDrawn',
+    defaultMessage: 'YOU HAVE DRAWN:',
   },
 };

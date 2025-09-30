@@ -3,7 +3,7 @@ import { HobbyTag } from './HobbyTag';
 
 export type HobbyListProps = {
   hobbies: string[];
-  removeHobby: (removedHobby: string) => void;
+  removeHobby?: (removedHobby: string) => void;
 };
 
 export const HobbyList: Component<HobbyListProps> = (props) => {

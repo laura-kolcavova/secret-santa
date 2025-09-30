@@ -10,11 +10,11 @@ export type DrawButtonProps = {
   refetchDrawGroup: () => void;
 };
 
-export const DrawButton: Component<DrawButtonProps> = (props) => {
+export const DrawButton: Component<DrawButtonProps> = ({ drawGroup, refetchDrawGroup }) => {
   const { openModal } = useModalContext();
 
   const draw = () => {
-    openModal(() => <DrawModal drawGroup={props.drawGroup} />);
+    openModal(() => <DrawModal drawGroup={drawGroup} refetchDrawGroup={refetchDrawGroup} />);
   };
 
   return (
