@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction, Router } from 'express';
-import { createProblemDetails } from '~/api/utils/validationErrorHelper';
 import { ChangePinRequestDto } from './ChangePinRequestDto';
 import { changePinService } from '~/application/user/services/changePinService';
 import { changePinValidation } from './changePinValidation';
 import { userAuthorizationHandler } from '~/api/shared/middlewares/userAuthorizatoinHandler';
+import { createProblemDetails } from '~/api/shared/utils/validationErrorHelper';
 
 export const mapChangePin = (router: Router) => {
   router.put('/change-pin', userAuthorizationHandler, changePinValidation, handle);

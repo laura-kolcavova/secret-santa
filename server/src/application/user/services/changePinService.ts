@@ -1,4 +1,4 @@
-import { computePinHash } from '~/application/shared/pinHelper';
+import { computePinHash } from '~/application/shared/utils/pinHelper';
 import { UnitResult, unitResultError, unitResultSuccess } from '../../shared/models/UnitResult';
 import { userManager } from './userManager';
 import { userErrors } from '../userErrors';

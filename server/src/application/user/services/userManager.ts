@@ -1,12 +1,10 @@
-import { normalizeEmail } from '~/application/shared/emailHelper';
-import { computePinHash } from '~/application/shared/pinHelper';
+import { normalizeEmail } from '~/application/shared/utils/emailHelper';
+import { validatePin, computePinHash } from '~/application/shared/utils/pinHelper';
 import { User } from '../models/User';
 import { mockUsers } from '../../../persistence/users/mockUsers';
 
 const checkPin = (user: User, pin: string): boolean => {
-  const pinHash = computePinHash(pin);
-
-  return user.pinHash === pinHash;
+  return validatePin(pin, user.pinHash);
 };
 
 const findByEmail = (email: string): User | undefined => {

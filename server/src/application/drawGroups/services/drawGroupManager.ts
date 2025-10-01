@@ -1,4 +1,4 @@
-import { normalizeEmail } from '~/application/shared/emailHelper';
+import { normalizeEmail } from '~/application/shared/utils/emailHelper';
 import { DrawGroup } from '../models/DrawGroup';
 import { DrawGroupParticipant } from '../models/DrawGroupParticipant';
 import { mockDrawGroups } from '~/persistence/drawGroups/mockDrawGroups';

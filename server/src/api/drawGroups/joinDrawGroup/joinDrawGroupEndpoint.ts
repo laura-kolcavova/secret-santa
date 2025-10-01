@@ -3,7 +3,7 @@ import { userAuthorizationHandler } from '~/api/shared/middlewares/userAuthoriza
 import { joinDrawGroupValidation } from './joinDrawGroupValidation';
 import { JoinDrawGroupParams } from './JoinDrawGroupParams';
 import { joinDrawGroupService } from '~/application/drawGroups/services/joinDrawGroupService';
-import { createProblemDetails } from '~/api/utils/validationErrorHelper';
+import { createProblemDetails } from '~/api/shared/utils/validationErrorHelper';
 
 export const mapJoinDrawGroup = (router: Router) => {
   router.post('/:drawGroupGuid/join', userAuthorizationHandler, joinDrawGroupValidation, handle);

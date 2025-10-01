@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction, Router } from 'express';
 import { EditProfileRequestDto } from './EditProfileRequestDto';
 import { editProfileService } from '~/application/user/services/editProfileService';
-import { createProblemDetails } from '~/api/utils/validationErrorHelper';
 import { editProfileValidation } from './editProfileValidation';
 import { userAuthorizationHandler } from '~/api/shared/middlewares/userAuthorizatoinHandler';
+import { createProblemDetails } from '~/api/shared/utils/validationErrorHelper';
 
 export const mapEditProfile = (router: Router) => {
   router.put('/profile', userAuthorizationHandler, editProfileValidation, handle);
