@@ -1,6 +1,7 @@
 {
     "shared.somethingWentWrong": "Něco se pokazilo",
     "shared.close": "Zavřít",
+    "errorFallback.unexpectedError": "Aplikace narazila na neočekávanou chybu.",
     "header.logOut": "Odhlásit se",
     "userLayout.overview": "Přehled",
     "userLayout.myProfile": "Můj profil",
