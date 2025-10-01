@@ -5,8 +5,8 @@ import { DrawnParticipantDto, UserDrawGroupDto } from './UserDrawGroupDto';
 import { findParticipantByEmail } from '~/application/drawGroups/utils/drawGroupHelpers';
 import { userManager } from '~/application/user/services/userManager';
 import { getFullName } from '~/application/user/utils/userHelpers';
-import { createProblemDetails } from '~/api/utils/validationErrorHelper';
 import { userErrors } from '~/application/user/userErrors';
+import { createProblemDetails } from '~/api/shared/utils/validationErrorHelper';
 
 export const mapGetUserDrawGroup = (router: Router) => {
   router.get('/user', userAuthorizationHandler, handle);

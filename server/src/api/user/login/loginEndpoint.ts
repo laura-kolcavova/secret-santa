@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction, Router } from 'express';
 import { LoginRequestDto } from './LoginRequestDto';
 import { loginService } from '~/application/user/services/loginService';
-import { createProblemDetails } from '~/api/utils/validationErrorHelper';
 import { loginValidation } from './loginValidation';
-import { signInUser } from '~/api/utils/userAuthenticationHelper';
+import { createProblemDetails } from '~/api/shared/utils/validationErrorHelper';
+import { signInUser } from '~/api/shared/utils/userAuthenticationHelper';
 
 export const mapLogin = (router: Router) => {
   router.post('/login', loginValidation, handle);

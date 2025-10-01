@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
-import { createExpressValidatorProblemDetails } from '~/api/utils/expressValidatorHelper';
+import { createExpressValidatorProblemDetails } from '../utils/expressValidatorHelper';
 
 export const validationHandler = (req: Request, res: Response, next: NextFunction) => {
   try {

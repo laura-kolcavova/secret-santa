@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction, Router } from 'express';
 import { userAuthorizationHandler } from '~/api/shared/middlewares/userAuthorizatoinHandler';
-import { createProblemDetails } from '~/api/utils/validationErrorHelper';
 import { drawParticipantService } from '~/application/drawGroups/services/drawParticipantService';
 import { drawParticipantValidation } from './drawParticipantValidation';
 import { DrawParticipantParams } from './DrawParticipantParams';
@@ -8,6 +7,7 @@ import { DrawParticipantResponseDto } from './DrawParticipantResponseDto';
 import { userManager } from '~/application/user/services/userManager';
 import { userErrors } from '~/application/user/userErrors';
 import { getFullName } from '~/application/user/utils/userHelpers';
+import { createProblemDetails } from '~/api/shared/utils/validationErrorHelper';
 
 export const mapDrawParticipant = (router: Router) => {
   router.post('/:drawGroupGuid/draw', userAuthorizationHandler, drawParticipantValidation, handle);
