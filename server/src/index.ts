@@ -1,21 +1,28 @@
 import express, { json } from 'express';
-import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
 import { mapUsersEndpoints } from './api/user/usersRoutes';
 import { exceptionHandler } from './api/shared/middlewares/exceptionHandler';
 import { appConfig } from './config/appConfig';
 import { mapDrawGroupsRoutes } from './api/drawGroups/drawGroupsRoutes';
+import path from 'path';
+import { mapProxyToSpaDevelopmentServer, mapSpaStaticFiles } from './api/shared/spa/spaRoutes';
 
 const app = express();
-
-app.use(cors({ origin: 'http://localhost:3200', credentials: true }));
 
 app.use(json());
 app.use(cookieParser());
 
 mapUsersEndpoints(app);
 mapDrawGroupsRoutes(app);
+
+if (appConfig.useProxyToSpaDevelopmentServer) {
+  mapProxyToSpaDevelopmentServer(app, appConfig.proxyToSpaDevelopmentServerUrl);
+} else {
+  const spaStaticFilesRootPath = path.join(__dirname, appConfig.spaStaticFilesRootPath);
+
+  mapSpaStaticFiles(app, spaStaticFilesRootPath);
+}
 
 app.use(exceptionHandler);
 
