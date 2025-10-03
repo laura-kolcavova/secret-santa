@@ -2,22 +2,19 @@ import { batch, createSignal } from 'solid-js';
 
 import { userClient } from '~/api/user/userClient';
 import { ChangePinRequestDto } from '~/api/user/dto/ChangePinRequestDto';
-import { useChangePinErrorHandler } from './useChangePinErrorHandler';
 
 export const useChangePinMutation = () => {
-  const { handleError } = useChangePinErrorHandler();
-
   const [getIsPending, setIsPending] = createSignal<boolean>(false);
   const [getIsError, setIsError] = createSignal<boolean>(false);
   const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
-  const [getErrorMessage, setErrorMessage] = createSignal<string | null>(null);
+  const [getError, setError] = createSignal<unknown>(undefined);
 
   const changePinAsync = async (changePinRequest: ChangePinRequestDto, signal?: AbortSignal) => {
     batch(() => {
       setIsPending(true);
-      setIsError(false);
       setIsSuccess(false);
-      setErrorMessage('');
+      setIsError(false);
+      setError(undefined);
     });
 
     try {
@@ -29,9 +26,9 @@ export const useChangePinMutation = () => {
       });
     } catch (error) {
       batch(() => {
-        setIsError(true);
-        setErrorMessage(handleError(error));
         setIsPending(false);
+        setIsError(true);
+        setError(error);
       });
     }
   };
@@ -40,5 +37,5 @@ export const useChangePinMutation = () => {
     changePinAsync(changePinRequest, signal);
   };
 
-  return { changePin, getIsPending, getIsError, getIsSuccess, getErrorMessage };
+  return { changePin, getIsPending, getIsSuccess, getIsError, getError };
 };

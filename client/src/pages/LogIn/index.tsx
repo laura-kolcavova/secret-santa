@@ -8,6 +8,7 @@ import { FormattedMessage } from '~/translation/FormattedMessage';
 import { messages } from './messages';
 import { useLocalization } from '~/translation/useLocalization';
 import { useLoggedUserContext } from '~/authentication/LoggedUserProvider';
+import { useLoginErrorHandler } from './hooks/useLoginErrorHandler';
 
 export const LogIn: Component = () => {
   const [loggedUserState] = useLoggedUserContext();
@@ -38,8 +39,10 @@ const LoginComponent: Component = () => {
     getIsPending: getIsPendingLogin,
     getIsSuccess: getIsSuccessLogin,
     getIsError: getIsErrorLogin,
-    getErrorMessage: getErrorMessageLogin,
+    getError: getErrorLogin,
   } = useLoginMutation();
+
+  const { handleError: handleErrorLogin } = useLoginErrorHandler();
 
   createEffect(() => {
     if (getIsSuccessLogin()) {
@@ -50,6 +53,12 @@ const LoginComponent: Component = () => {
   createEffect(() => {
     if (loggedUserState.isAuthenticated) {
       navigate(pages.Overview.paths[0], { replace: true });
+    }
+  });
+
+  createEffect(() => {
+    if (getIsErrorLogin()) {
+      setPin('');
     }
   });
 
@@ -65,7 +74,7 @@ const LoginComponent: Component = () => {
   return (
     <div class="container mx-auto py-6">
       <Show when={getIsErrorLogin()}>
-        <Alert color="danger">{getErrorMessageLogin()}</Alert>
+        <Alert color="danger">{handleErrorLogin(getErrorLogin())}</Alert>
       </Show>
 
       <form onSubmit={handleSubmit} class="mb-12 w-full max-w-xs mx-auto">
@@ -104,6 +113,7 @@ const LoginComponent: Component = () => {
             class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
             placeholder={formatMessage(messages.enterPin)}
             onInput={(e) => setPin(e.currentTarget.value)}
+            value={getPin()}
           />
         </div>
 

@@ -7,6 +7,7 @@ import { FeedbackError } from '../../shared/FeedbackError';
 import { useChangePinMutation } from './hooks/useChangePinMutation';
 import { Alert } from '../../shared/Alert';
 import { useLocalization } from '~/translation/useLocalization';
+import { useChangePinErrorHandler } from './hooks/useChangePinErrorHandler';
 
 export const ChangePinForm: Component = () => {
   const { formatMessage } = useLocalization();
@@ -17,8 +18,9 @@ export const ChangePinForm: Component = () => {
 
   const [getFieldValidations, setFieldValidations] = createSignal<FieldValidations>({});
 
-  const { changePin, getIsPending, getIsSuccess, getIsError, getErrorMessage } =
-    useChangePinMutation();
+  const { changePin, getIsPending, getIsSuccess, getIsError, getError } = useChangePinMutation();
+
+  const { handleError } = useChangePinErrorHandler();
 
   const validate = (): boolean => {
     let newFieldvalidations: FieldValidations = {};
@@ -64,7 +66,7 @@ export const ChangePinForm: Component = () => {
   return (
     <>
       <Show when={getIsError()}>
-        <Alert color="danger">{getErrorMessage()}</Alert>
+        <Alert color="danger">{handleError(getError())}</Alert>
       </Show>
 
       <Show when={getIsSuccess()}>

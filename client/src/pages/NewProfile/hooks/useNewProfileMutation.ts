@@ -1,22 +1,19 @@
 import { batch, createSignal } from 'solid-js';
 import { NewProfileRequestDto } from '~/api/user/dto/NewProfileRequestDto';
 import { userClient } from '~/api/user/userClient';
-import { useLoginErrorHandler } from './useLoginErrorHandler';
 
 export const useNewProfileMutation = () => {
-  const { handleError } = useLoginErrorHandler();
-
   const [getIsPending, setIsPending] = createSignal<boolean>(false);
-  const [getIsError, setIsError] = createSignal<boolean>(false);
   const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
-  const [getErrorMessage, setErrorMessage] = createSignal<string | null>(null);
+  const [getIsError, setIsError] = createSignal<boolean>(false);
+  const [getError, setError] = createSignal<unknown>(undefined);
 
   const newProfileAsync = async (newProfileRequest: NewProfileRequestDto, signal?: AbortSignal) => {
     batch(() => {
       setIsPending(true);
-      setIsError(false);
       setIsSuccess(false);
-      setErrorMessage('');
+      setIsError(false);
+      setError(undefined);
     });
 
     try {
@@ -28,9 +25,9 @@ export const useNewProfileMutation = () => {
       });
     } catch (error) {
       batch(() => {
-        setIsError(true);
-        setErrorMessage(handleError(error));
         setIsPending(false);
+        setIsError(true);
+        setError(error);
       });
     }
   };
@@ -39,5 +36,5 @@ export const useNewProfileMutation = () => {
     newProfileAsync(newProfileRequest, signal);
   };
 
-  return { newProfile, getIsPending, getIsError, getIsSuccess, getErrorMessage };
+  return { newProfile, getIsPending, getIsSuccess, getIsError, getError };
 };

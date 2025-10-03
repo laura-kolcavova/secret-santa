@@ -6,6 +6,6 @@ export const computePinHash = (pin: string): string => {
   return bcrypt.hashSync(pin, salt);
 };
 
-export const validatePin = (pin: string, pinHash: string): boolean => {
+export const comparePin = (pin: string, pinHash: string): boolean => {
   return bcrypt.compareSync(pin, pinHash);
 };

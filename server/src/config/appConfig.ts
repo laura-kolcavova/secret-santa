@@ -42,6 +42,7 @@ export interface AppConfig {
   spaStaticFilesRootPath: string;
   useProxyToSpaDevelopmentServer: boolean;
   proxyToSpaDevelopmentServerUrl: string;
+  sqliteDbFilePath: string;
 }
 
 export const appConfig: AppConfig = {
@@ -50,4 +51,5 @@ export const appConfig: AppConfig = {
   spaStaticFilesRootPath: toString(required('SPA_STATIC_FILES_ROOT_PATH')),
   useProxyToSpaDevelopmentServer: toBool(required('USE_PROXY_TO_SPA_DEVELOPMENT_SERVER')),
   proxyToSpaDevelopmentServerUrl: toString(required('PROXY_TO_SPA_DEVELOPMENT_SERVER_URL')),
+  sqliteDbFilePath: toString(required('SQLITE_DB_FILE_PATH')),
 };

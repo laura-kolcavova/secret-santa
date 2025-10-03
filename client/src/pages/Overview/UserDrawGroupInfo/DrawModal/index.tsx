@@ -1,6 +1,6 @@
 import Dialog from '@corvu/dialog';
 import { batch, createEffect, createSignal, Show, VoidComponent } from 'solid-js';
-import { DrawGroupDto, DrawnParticipantDto } from '~/api/drawGroups/dto/UserDrawGroupDto';
+import { DrawGroupDto } from '~/api/drawGroups/dto/UserDrawGroupDto';
 import { useModalContext } from '~/modals/ModalProvider';
 import { FormattedMessage } from '~/translation/FormattedMessage';
 import { messages } from './messages';
