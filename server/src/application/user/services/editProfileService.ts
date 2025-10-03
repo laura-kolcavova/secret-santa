@@ -15,7 +15,7 @@ const editProfile = (
     return unitResultError(userErrors.notFound());
   }
 
-  userManager.updateProfile(user, firstName, lastName, department, hobbies);
+  userManager.changeProfile(user, firstName, lastName, department, hobbies);
 
   return unitResultSuccess();
 };

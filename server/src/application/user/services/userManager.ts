@@ -1,22 +1,23 @@
 import { normalizeEmail } from '~/application/shared/utils/emailHelper';
-import { validatePin, computePinHash } from '~/application/shared/utils/pinHelper';
+import { comparePin, computePinHash } from '~/application/shared/utils/pinHelper';
 import { User } from '../models/User';
-import { mockUsers } from '../../../persistence/users/mockUsers';
+import { usersCommands } from '~/persistence/users/usersCommands';
+import { usersQueries } from '~/persistence/users/usersQueries';
 
 const checkPin = (user: User, pin: string): boolean => {
-  return validatePin(pin, user.pinHash);
+  return comparePin(pin, user.pinHash);
 };
 
 const findByEmail = (email: string): User | undefined => {
   const normalizedEmail = normalizeEmail(email);
 
-  const user = mockUsers.find((user) => user.email === normalizedEmail);
+  const user = usersQueries.findByEmail(normalizedEmail);
 
   if (user === undefined) {
     return undefined;
   }
 
-  return { ...user };
+  return user;
 };
 
 const createUser = (
@@ -41,51 +42,38 @@ const createUser = (
     createdAtUtc: new Date(Date.now()),
   };
 
-  mockUsers.push(user);
+  usersCommands.addUser(user);
 
   return user;
 };
 
-const updateProfile = (
-  userToUpdate: User,
+const changeProfile = (
+  user: User,
   firstName: string,
   lastName: string,
   department: string,
   hobbies: string[],
 ): void => {
-  userToUpdate.firstName = firstName;
-  userToUpdate.lastName = lastName;
-  userToUpdate.department = department;
-  userToUpdate.hobbies = [...hobbies];
+  user.firstName = firstName;
+  user.lastName = lastName;
+  user.department = department;
+  user.hobbies = [...hobbies];
 
-  mockUsers.forEach((persistedUser) => {
-    if (persistedUser.email !== userToUpdate.email) {
-      return;
-    }
-
-    persistedUser.firstName = firstName;
-    persistedUser.lastName = lastName;
-    persistedUser.department = department;
-    persistedUser.hobbies = [...hobbies];
-  });
+  usersCommands.updateProfile(user);
 };
 
-const updatePinHash = (userToUpdate: User, pinHash: string): void => {
-  userToUpdate.pinHash = pinHash;
+const changePin = (user: User, pin: string): void => {
+  const pinHash = computePinHash(pin);
 
-  mockUsers.forEach((persistedUser) => {
-    if (persistedUser.email !== userToUpdate.email) {
-      return;
-    }
+  user.pinHash = pinHash;
 
-    persistedUser.pinHash = pinHash;
-  });
+  usersCommands.updatePinHash(user);
 };
 
 export const userManager = {
   checkPin,
   findByEmail,
   createUser,
-  updateProfile,
-  updatePinHash,
+  changeProfile,
+  changePin,
 };

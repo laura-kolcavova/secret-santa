@@ -1,4 +1,4 @@
-import { Component, createEffect, createSignal, For, Show } from 'solid-js';
+import { batch, Component, createEffect, createSignal, For, Show } from 'solid-js';
 import { Alert } from '../shared/Alert';
 import { A, useNavigate } from '@solidjs/router';
 import { pages } from '~/navigation/pages';
@@ -15,6 +15,7 @@ import { useLocalization } from '~/translation/useLocalization';
 import { HobbyList } from '../shared/HobbyList';
 import { ProfileCreatedInfo } from './ProfileCreatedInfo';
 import { useLoggedUserContext } from '~/authentication/LoggedUserProvider';
+import { useNewProfileErrorHandler } from './hooks/useNewProfileErrorHandler';
 
 export const NewProfile: Component = () => {
   const [loggedUserState] = useLoggedUserContext();
@@ -38,15 +39,16 @@ const NewProfileComponent: Component = () => {
   const [getDepartment, setDepartment] = createSignal<string>(Object.values(Department)[0]);
   const [getEmail, setEmail] = createSignal<string>('');
   const [getPin, setPin] = createSignal<string>('');
-  const [getPinConfirm, setPinConfirmValue] = createSignal<string>('');
+  const [getPinConfirm, setPinConfirm] = createSignal<string>('');
   const [hobbies, setHobbies] = createStore<string[]>([]);
 
   const [getFieldValidations, setFieldValidations] = createSignal<FieldValidations>({});
 
   const [getProfileCreated, setProfileCreated] = createSignal<boolean>(false);
 
-  const { newProfile, getIsPending, getIsSuccess, getIsError, getErrorMessage } =
-    useNewProfileMutation();
+  const { newProfile, getIsPending, getIsSuccess, getIsError, getError } = useNewProfileMutation();
+
+  const { handleError } = useNewProfileErrorHandler();
 
   const addHobby = (newHobby: string) => {
     setHobbies(produce((hobbies) => hobbies.push(newHobby)));
@@ -97,6 +99,15 @@ const NewProfileComponent: Component = () => {
     }
   });
 
+  createEffect(() => {
+    if (getIsError()) {
+      batch(() => {
+        setPin('');
+        setPinConfirm('');
+      });
+    }
+  });
+
   return (
     <div class="container mx-auto py-6">
       <Show when={!getProfileCreated()} fallback={<ProfileCreatedInfo />}>
@@ -105,7 +116,7 @@ const NewProfileComponent: Component = () => {
         </h1>
 
         <Show when={getIsError()}>
-          <Alert color="danger">{getErrorMessage()}</Alert>
+          <Alert color="danger">{handleError(getError())}</Alert>
         </Show>
 
         <form onSubmit={handleSubmit} class="mb-12 w-full max-w-3xl grid grid-cols-2 mx-auto">
@@ -200,6 +211,7 @@ const NewProfileComponent: Component = () => {
               class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
               placeholder={formatMessage(messages.enterPin)}
               onInput={(e) => setPin(e.currentTarget.value)}
+              value={getPin()}
             />
           </div>
 
@@ -219,7 +231,8 @@ const NewProfileComponent: Component = () => {
               pattern="\d{4}"
               class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
               placeholder={formatMessage(messages.enterPinConfirm)}
-              onInput={(e) => setPinConfirmValue(e.currentTarget.value)}
+              onInput={(e) => setPinConfirm(e.currentTarget.value)}
+              value={getPinConfirm()}
             />
 
             <Show

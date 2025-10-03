@@ -6,9 +6,10 @@ import { messages } from '../messages';
 import { Department } from '~/models/Department';
 import { HobbiesInput } from '~/pages/shared/HobbiesInput';
 import { HobbyList } from '~/pages/shared/HobbyList';
-import { useEditProfileMutation } from './hooks/useEditProfileMutations';
+import { useEditProfileMutation } from './hooks/useEditProfileMutation';
 import { SpinnerIcon } from '~/pages/shared/icons/SpinnerIcon';
 import { Alert } from '~/pages/shared/Alert';
+import { useEditProfileErrorHandler } from './hooks/useEditProfileErrorHandler';
 
 export type ProfileFormProps = {
   profile: ProfileDto;
@@ -20,8 +21,10 @@ export const ProfileForm: Component<ProfileFormProps> = (props) => {
   const [getDepartment, setDepartment] = createSignal<string>(props.profile.department);
   const [hobbies, setHobbies] = createStore<string[]>(props.profile.hobbies);
 
-  const { editProfile, getIsPending, getIsSuccess, getIsError, getErrorMessage } =
+  const { editProfile, getIsPending, getIsSuccess, getIsError, getError } =
     useEditProfileMutation();
+
+  const { handleError } = useEditProfileErrorHandler();
 
   const addHobby = (newHobby: string) => {
     setHobbies(produce((hobbies) => hobbies.push(newHobby)));
@@ -45,7 +48,7 @@ export const ProfileForm: Component<ProfileFormProps> = (props) => {
   return (
     <>
       <Show when={getIsError()}>
-        <Alert color="danger">{getErrorMessage()}</Alert>
+        <Alert color="danger">{handleError(getError())}</Alert>
       </Show>
 
       <Show when={getIsSuccess()}>

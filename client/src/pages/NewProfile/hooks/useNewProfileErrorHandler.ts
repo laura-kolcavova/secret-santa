@@ -4,7 +4,7 @@ import { useLocalization } from '~/translation/useLocalization';
 import { sharedMessages } from '~/pages/shared/sharedMessages';
 import { messages } from '../messages';
 
-export const useLoginErrorHandler = () => {
+export const useNewProfileErrorHandler = () => {
   const { formatMessage } = useLocalization();
 
   const handleError = (error: unknown): string => {
