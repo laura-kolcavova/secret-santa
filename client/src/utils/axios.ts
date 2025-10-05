@@ -4,7 +4,7 @@ import { appConfig } from '~/config/appConfig';
 import { REQUEST_TIMEOUT } from '~/constants';
 
 const defaultAxiosConfig: AxiosRequestConfig = {
-  baseURL: appConfig.API_URL,
+  baseURL: appConfig.apiUrl,
   timeout: REQUEST_TIMEOUT,
   headers: {
     'Content-Type': 'application/json',

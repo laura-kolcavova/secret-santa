@@ -8,11 +8,15 @@ const required = (envKey: string): string => {
   return value;
 };
 
-const toString = (value: string): string => {
+const envAsString = (envKey: string): string => {
+  const value = required(envKey);
+
   return value.toString();
 };
 
-const toNumber = (value: string): number => {
+const envAsNumber = (envKey: string): number => {
+  const value = required(envKey);
+
   const num = Number(value);
 
   if (isNaN(num)) {
@@ -22,7 +26,9 @@ const toNumber = (value: string): number => {
   return num;
 };
 
-const toBool = (value: string): boolean => {
+const envAsBool = (envKey: string): boolean => {
+  const value = required(envKey);
+
   const lowerValue = value.toLowerCase();
 
   if (lowerValue === 'true' || lowerValue === '1') {
@@ -46,10 +52,10 @@ export interface AppConfig {
 }
 
 export const appConfig: AppConfig = {
-  port: toNumber(required('PORT')),
-  jwtSecret: toString(required('JWT_SECRET')),
-  spaStaticFilesRootPath: toString(required('SPA_STATIC_FILES_ROOT_PATH')),
-  useProxyToSpaDevelopmentServer: toBool(required('USE_PROXY_TO_SPA_DEVELOPMENT_SERVER')),
-  proxyToSpaDevelopmentServerUrl: toString(required('PROXY_TO_SPA_DEVELOPMENT_SERVER_URL')),
-  sqliteDbFilePath: toString(required('SQLITE_DB_FILE_PATH')),
+  port: envAsNumber('PORT'),
+  jwtSecret: envAsString('JWT_SECRET'),
+  spaStaticFilesRootPath: envAsString('SPA_STATIC_FILES_ROOT_PATH'),
+  useProxyToSpaDevelopmentServer: envAsBool('USE_PROXY_TO_SPA_DEVELOPMENT_SERVER'),
+  proxyToSpaDevelopmentServerUrl: envAsString('PROXY_TO_SPA_DEVELOPMENT_SERVER_URL'),
+  sqliteDbFilePath: envAsString('SQLITE_DB_FILE_PATH'),
 };

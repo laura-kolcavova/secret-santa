@@ -1,30 +1,20 @@
 import { normalizeEmail } from '~/application/shared/utils/emailHelper';
 import { DrawGroup } from '../models/DrawGroup';
 import { DrawGroupParticipant } from '../models/DrawGroupParticipant';
-import { mockDrawGroups } from '~/persistence/drawGroups/mockDrawGroups';
 import { DrawnParticipant } from '../models/DrawnParticipant';
-import { DrawnByParticipant } from '../models/DrawnByParticipant';
+import { drawGroupsQueries } from '~/persistence/drawGroups/drawGroupsQueries';
+import { drawGroupsCommands } from '~/persistence/drawGroups/drawGroupsCommands';
 
 const findByYear = (year: number): DrawGroup | undefined => {
-  const drawGroup = mockDrawGroups.find((persistedDrawGroup) => persistedDrawGroup.year === year);
+  const drawGroup = drawGroupsQueries.findByYear(year);
 
-  if (drawGroup === undefined) {
-    return undefined;
-  }
-
-  return cloneDrawGroup(drawGroup);
+  return drawGroup;
 };
 
-const findByGuid = (drawGroupGuid: string): DrawGroup | undefined => {
-  const drawGroup = mockDrawGroups.find(
-    (persistedDrawGroup) => persistedDrawGroup.guid === drawGroupGuid,
-  );
+const findByGuid = (guid: string): DrawGroup | undefined => {
+  const drawGroup = drawGroupsQueries.findByGuid(guid);
 
-  if (drawGroup === undefined) {
-    return undefined;
-  }
-
-  return cloneDrawGroup(drawGroup);
+  return drawGroup;
 };
 
 const addParticipant = (drawGroup: DrawGroup, participantEmail: string): DrawGroupParticipant => {
@@ -33,23 +23,16 @@ const addParticipant = (drawGroup: DrawGroup, participantEmail: string): DrawGro
   const newDrawGroupParticipant: DrawGroupParticipant = {
     email: normalizedParticipantEmail,
     hasDrawn: false,
-    isDrawn: false,
   };
 
   drawGroup.participants.push(newDrawGroupParticipant);
 
-  mockDrawGroups.forEach((persistedDrawGroup) => {
-    if (persistedDrawGroup.guid !== drawGroup.guid) {
-      return;
-    }
-
-    persistedDrawGroup.participants.push(newDrawGroupParticipant);
-  });
+  drawGroupsCommands.addParticipant(drawGroup, newDrawGroupParticipant);
 
   return newDrawGroupParticipant;
 };
 
-const addDrawnParticipant = (
+const confirmDrawnParticipant = (
   drawGroup: DrawGroup,
   participant: DrawGroupParticipant,
   drawnParticipant: DrawGroupParticipant,
@@ -58,45 +41,10 @@ const addDrawnParticipant = (
     email: drawnParticipant.email,
   };
 
-  const newDrawnByParticipant: DrawnByParticipant = {
-    email: participant.email,
-  };
-
   participant.hasDrawn = true;
   participant.drawnParticipant = newDrawnParticipant;
 
-  drawnParticipant.isDrawn = true;
-  drawnParticipant.drawnByParticipant = newDrawnByParticipant;
-
-  mockDrawGroups.forEach((persistedDrawGroup) => {
-    if (persistedDrawGroup.guid !== drawGroup.guid) {
-      return;
-    }
-
-    persistedDrawGroup.participants.forEach((persitedDrawGroupParticipant) => {
-      if (persitedDrawGroupParticipant.email !== participant.email) {
-        return;
-      }
-
-      persitedDrawGroupParticipant.hasDrawn = true;
-      persitedDrawGroupParticipant.drawnParticipant = { ...newDrawnParticipant };
-    });
-  });
-
-  mockDrawGroups.forEach((persistedDrawGroup) => {
-    if (persistedDrawGroup.guid !== drawGroup.guid) {
-      return;
-    }
-
-    persistedDrawGroup.participants.forEach((persitedDrawGroupParticipant) => {
-      if (persitedDrawGroupParticipant.email !== drawnParticipant.email) {
-        return;
-      }
-
-      persitedDrawGroupParticipant.isDrawn = true;
-      persitedDrawGroupParticipant.drawnParticipant = { ...newDrawnByParticipant };
-    });
-  });
+  drawGroupsCommands.confirmDrawnParticipant(drawGroup, participant);
 
   return newDrawnParticipant;
 };
@@ -105,17 +53,5 @@ export const drawGroupManager = {
   findByYear,
   findByGuid,
   addParticipant,
-  addDrawnParticipant,
-};
-
-const cloneDrawGroup = (drawGroup: DrawGroup): DrawGroup => {
-  return {
-    ...drawGroup,
-    participants: drawGroup.participants.map((participant) => ({
-      ...participant,
-      drawnParticipant: participant.drawnParticipant
-        ? { ...participant.drawnParticipant }
-        : undefined,
-    })),
-  };
+  confirmDrawnParticipant,
 };
