@@ -1,7 +1,23 @@
+const required = (envKey: string): string => {
+  const value = import.meta.env[envKey];
+
+  if (value === undefined) {
+    throw new Error(`Environment variable ${envKey} is required but not defined.`);
+  }
+
+  return value;
+};
+
+const envAsString = (envKey: string): string => {
+  const value = required(envKey);
+
+  return value.toString();
+};
+
 export interface AppConfig {
-  API_URL: string;
+  apiUrl: string;
 }
 
 export const appConfig: AppConfig = {
-  API_URL: import.meta.env.VITE_APP_API_URL.toString(),
+  apiUrl: envAsString('VITE_APP_API_URL'),
 };

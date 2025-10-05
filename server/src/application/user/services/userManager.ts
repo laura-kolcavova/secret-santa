@@ -13,10 +13,6 @@ const findByEmail = (email: string): User | undefined => {
 
   const user = usersQueries.findByEmail(normalizedEmail);
 
-  if (user === undefined) {
-    return undefined;
-  }
-
   return user;
 };
 

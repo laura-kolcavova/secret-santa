@@ -8,6 +8,7 @@ import { mapDrawGroupsRoutes } from './api/drawGroups/drawGroupsRoutes';
 import path from 'path';
 import { mapProxyToSpaDevelopmentServer, mapSpaStaticFiles } from './api/shared/spa/spaRoutes';
 import { ensureDatabaseDeployed } from './persistence/shared/databaseDeploy';
+import { seedDatabase } from './persistence/shared/databaseSeed';
 
 const app = express();
 
@@ -28,6 +29,7 @@ if (appConfig.useProxyToSpaDevelopmentServer) {
 app.use(exceptionHandler);
 
 ensureDatabaseDeployed(appConfig.sqliteDbFilePath);
+seedDatabase(appConfig.sqliteDbFilePath);
 
 const port = appConfig.port;
 

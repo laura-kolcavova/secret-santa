@@ -14,7 +14,8 @@ const addUser = (user: User): void => {
             department,
             hobbies,
             pinHash,
-            createdAtUtc)
+            createdAtUtc
+        )
         VALUES (
             $email,
             $firstName,
@@ -22,7 +23,8 @@ const addUser = (user: User): void => {
             $department,
             $hobbies,
             $pinHash,
-            $createdAtUtc)`);
+            $createdAtUtc
+        )`);
 
     stmt.run({
       email: user.email,

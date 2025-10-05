@@ -24,14 +24,40 @@ export const findParticipantByEmail = (
   );
 };
 
-export const getParticipantsToDraw = (
+export const drawRandomParticipant = (
   drawGroup: DrawGroup,
-  participantEmail: string,
+  participant: DrawGroupParticipant,
+): DrawGroupParticipant | undefined => {
+  if (drawGroup.participants.length <= 1) {
+    return undefined;
+  }
+
+  const participantsToDraw = getParticipantsToDraw(drawGroup, participant);
+
+  if (participantsToDraw.length === 0) {
+    return undefined;
+  }
+
+  const randomIndex = Math.floor(Math.random() * participantsToDraw.length);
+
+  const drawnParticipant = participantsToDraw[randomIndex];
+
+  return drawnParticipant;
+};
+
+const getParticipantsToDraw = (
+  drawGroup: DrawGroup,
+  participant: DrawGroupParticipant,
 ): DrawGroupParticipant[] => {
-  const participantNormalizedEmail = normalizeEmail(participantEmail);
+  const participantNormalizedEmail = normalizeEmail(participant.email);
+
+  const alreadyDrawnEmails = drawGroup.participants
+    .filter((drawGroupParticipant) => drawGroupParticipant.hasDrawn)
+    .map((drawGroupParticipant) => drawGroupParticipant.drawnParticipant?.email);
+
+  const emailsToExclude = new Set([participantNormalizedEmail, ...alreadyDrawnEmails]);
 
   return drawGroup.participants.filter(
-    (drawGroupParticipant) =>
-      drawGroupParticipant.email !== participantNormalizedEmail && !drawGroupParticipant.isDrawn,
+    (drawGroupParticipant) => !emailsToExclude.has(drawGroupParticipant.email),
   );
 };

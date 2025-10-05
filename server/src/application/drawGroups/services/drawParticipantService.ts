@@ -2,7 +2,7 @@ import { Result, resultError, resultSuccess } from '~/application/shared/models/
 import { DrawnParticipant } from '../models/DrawnParticipant';
 import { drawGroupErrors } from '../drawGroupErrors';
 import { drawGroupManager } from './drawGroupManager';
-import { findParticipantByEmail, getParticipantsToDraw } from '../utils/drawGroupHelpers';
+import { drawRandomParticipant, findParticipantByEmail } from '../utils/drawGroupHelpers';
 
 const drawParticipant = (
   drawGroupGuid: string,
@@ -24,17 +24,13 @@ const drawParticipant = (
     return resultError(drawGroupErrors.userAlreadyDrawn());
   }
 
-  const participantsToDraw = getParticipantsToDraw(drawGroup, participantEmail);
+  const drawnParticipant = drawRandomParticipant(drawGroup, participant);
 
-  if (participantsToDraw.length === 0) {
+  if (!drawnParticipant) {
     return resultError(drawGroupErrors.noParticipantsToDraw());
   }
 
-  const randomIndex = Math.floor(Math.random() * participantsToDraw.length);
-
-  const drawnParticipant = participantsToDraw[randomIndex];
-
-  const newDrawnParticipant = drawGroupManager.addDrawnParticipant(
+  const newDrawnParticipant = drawGroupManager.confirmDrawnParticipant(
     drawGroup,
     participant,
     drawnParticipant,
