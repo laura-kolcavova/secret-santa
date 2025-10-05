@@ -15,12 +15,12 @@ export const mapDrawParticipant = (router: Router) => {
 
 const handle = (req: Request<DrawParticipantParams>, res: Response, next: NextFunction) => {
   try {
-    const drawGroupGuid = req.params.drawGroupGuid;
-    const participantEmail = req.user!.email;
+    const { abortSignal, loggedUser, params } = req;
 
     const drawParticipantResult = drawParticipantService.drawParticipant(
-      drawGroupGuid,
-      participantEmail,
+      params.drawGroupGuid,
+      loggedUser!.email,
+      abortSignal,
     );
 
     if (!drawParticipantResult.isSuccess) {
@@ -33,7 +33,7 @@ const handle = (req: Request<DrawParticipantParams>, res: Response, next: NextFu
 
     const drawnParticipant = drawParticipantResult.value!;
 
-    const drawnParticipantAsUser = userManager.findByEmail(drawnParticipant.email);
+    const drawnParticipantAsUser = userManager.findByEmail(drawnParticipant.email, abortSignal);
 
     if (!drawnParticipantAsUser) {
       const problemDetails = createProblemDetails(userErrors.notFound(), req);

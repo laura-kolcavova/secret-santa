@@ -2,7 +2,9 @@ import Database from 'better-sqlite3';
 import { User } from '~/application/user/models/User';
 import { appConfig } from '~/config/appConfig';
 
-const findByEmail = (email: string): User | undefined => {
+const findByEmail = (email: string, abortSignal: AbortSignal): User | undefined => {
+  abortSignal.throwIfAborted();
+
   const db = new Database(appConfig.sqliteDbFilePath, { readonly: true });
 
   try {
@@ -20,6 +22,8 @@ const findByEmail = (email: string): User | undefined => {
 
     const row = stmt.get({ email: email }) as any;
 
+    abortSignal.throwIfAborted();
+
     if (!row) {
       return undefined;
     }
@@ -34,6 +38,8 @@ const findByEmail = (email: string): User | undefined => {
       createdAtUtc: new Date(row.createdAtUtc),
     };
   } catch (error) {
+    abortSignal.throwIfAborted();
+
     console.error('Error finding user by email:', error);
     throw error;
   } finally {

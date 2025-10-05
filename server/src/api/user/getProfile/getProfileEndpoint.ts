@@ -9,9 +9,9 @@ export const mapGetProfile = (router: Router) => {
 
 const handle = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const email = req.user!.email;
+    const { abortSignal, loggedUser } = req;
 
-    const user = userManager.findByEmail(email);
+    const user = userManager.findByEmail(loggedUser!.email, abortSignal);
 
     if (!user) {
       res.status(204).send();

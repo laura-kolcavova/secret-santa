@@ -2,8 +2,8 @@ import { LoginResult, loginResultError, loginResultSuccess } from '../models/Log
 import { userErrors } from '../userErrors';
 import { userManager } from './userManager';
 
-const login = (email: string, pin: string): LoginResult => {
-  const user = userManager.findByEmail(email);
+const login = (email: string, pin: string, abortSignal: AbortSignal): LoginResult => {
+  const user = userManager.findByEmail(email, abortSignal);
 
   if (!user) {
     return loginResultError(userErrors.notFound());

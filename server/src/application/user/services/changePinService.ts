@@ -2,8 +2,13 @@ import { UnitResult, unitResultError, unitResultSuccess } from '../../shared/mod
 import { userManager } from './userManager';
 import { userErrors } from '../userErrors';
 
-const changePin = (email: string, currentPin: string, newPin: string): UnitResult => {
-  const user = userManager.findByEmail(email);
+const changePin = (
+  email: string,
+  currentPin: string,
+  newPin: string,
+  abortSignal: AbortSignal,
+): UnitResult => {
+  const user = userManager.findByEmail(email, abortSignal);
 
   if (!user) {
     return unitResultError(userErrors.notFound());
@@ -17,7 +22,7 @@ const changePin = (email: string, currentPin: string, newPin: string): UnitResul
     return unitResultError(userErrors.newPinMustDiffer());
   }
 
-  userManager.changePin(user, newPin);
+  userManager.changePin(user, newPin, abortSignal);
 
   return unitResultSuccess();
 };

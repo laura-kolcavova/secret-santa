@@ -11,14 +11,15 @@ export const mapChangePin = (router: Router) => {
 
 const handle = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const email = req.user!.email;
+    const { abortSignal, loggedUser, body } = req;
 
-    const changePinRequest = req.body as ChangePinRequestDto;
+    const changePinRequest = body as ChangePinRequestDto;
 
     const changePinResult = changePinService.changePin(
-      email,
+      loggedUser!.email,
       changePinRequest.currentPin,
       changePinRequest.newPin,
+      abortSignal,
     );
 
     if (!changePinResult.isSuccess) {

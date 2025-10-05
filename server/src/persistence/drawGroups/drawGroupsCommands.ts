@@ -3,7 +3,13 @@ import { DrawGroup } from '~/application/drawGroups/models/DrawGroup';
 import { DrawGroupParticipant } from '~/application/drawGroups/models/DrawGroupParticipant';
 import { appConfig } from '~/config/appConfig';
 
-const addParticipant = (drawGroup: DrawGroup, participant: DrawGroupParticipant): void => {
+const addParticipant = (
+  drawGroup: DrawGroup,
+  participant: DrawGroupParticipant,
+  abortSignal: AbortSignal,
+): void => {
+  abortSignal.throwIfAborted();
+
   const db = new Database(appConfig.sqliteDbFilePath, { readonly: false });
 
   try {
@@ -26,7 +32,11 @@ const addParticipant = (drawGroup: DrawGroup, participant: DrawGroupParticipant)
       drawGroupGuid: drawGroup.guid,
       email: participant.email,
     });
+
+    abortSignal.throwIfAborted();
   } catch (error) {
+    abortSignal.throwIfAborted();
+
     console.error('Error adding participant to draw group:', error);
 
     throw error;
@@ -35,7 +45,13 @@ const addParticipant = (drawGroup: DrawGroup, participant: DrawGroupParticipant)
   }
 };
 
-const confirmDrawnParticipant = (drawGroup: DrawGroup, participant: DrawGroupParticipant): void => {
+const confirmDrawnParticipant = (
+  drawGroup: DrawGroup,
+  participant: DrawGroupParticipant,
+  abortSignal: AbortSignal,
+): void => {
+  abortSignal.throwIfAborted();
+
   const db = new Database(appConfig.sqliteDbFilePath, { readonly: false });
 
   try {
@@ -59,7 +75,11 @@ const confirmDrawnParticipant = (drawGroup: DrawGroup, participant: DrawGroupPar
       participantEmail: participant.email,
       drawnParticipantEmail: participant.drawnParticipant!.email,
     });
+
+    abortSignal.throwIfAborted();
   } catch (error) {
+    abortSignal.throwIfAborted();
+
     console.error('Error confirming drawn participant:', error);
 
     throw error;

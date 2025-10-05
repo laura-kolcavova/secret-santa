@@ -2,7 +2,9 @@ import Database from 'better-sqlite3';
 import { User } from '~/application/user/models/User';
 import { appConfig } from '~/config/appConfig';
 
-const addUser = (user: User): void => {
+const addUser = (user: User, abortSignal: AbortSignal): void => {
+  abortSignal.throwIfAborted();
+
   const db = new Database(appConfig.sqliteDbFilePath, { readonly: false });
 
   try {
@@ -35,7 +37,11 @@ const addUser = (user: User): void => {
       pinHash: user.pinHash,
       createdAtUtc: user.createdAtUtc.toISOString(),
     });
+
+    abortSignal.throwIfAborted();
   } catch (error) {
+    abortSignal.throwIfAborted();
+
     console.error('Error adding user:', error);
 
     throw error;
@@ -44,7 +50,9 @@ const addUser = (user: User): void => {
   }
 };
 
-const updateProfile = (user: User): void => {
+const updateProfile = (user: User, abortSignal: AbortSignal): void => {
+  abortSignal.throwIfAborted();
+
   const db = new Database(appConfig.sqliteDbFilePath, { readonly: false });
 
   try {
@@ -64,7 +72,11 @@ const updateProfile = (user: User): void => {
       department: user.department,
       hobbies: JSON.stringify(user.hobbies),
     });
+
+    abortSignal.throwIfAborted();
   } catch (error) {
+    abortSignal.throwIfAborted();
+
     console.error('Error updating user profile:', error);
 
     throw error;
@@ -73,7 +85,9 @@ const updateProfile = (user: User): void => {
   }
 };
 
-const updatePinHash = (user: User): void => {
+const updatePinHash = (user: User, abortSignal: AbortSignal): void => {
+  abortSignal.throwIfAborted();
+
   const db = new Database(appConfig.sqliteDbFilePath, { readonly: false });
 
   try {
@@ -87,7 +101,11 @@ const updatePinHash = (user: User): void => {
       email: user.email,
       pinHash: user.pinHash,
     });
+
+    abortSignal.throwIfAborted();
   } catch (error) {
+    abortSignal.throwIfAborted();
+
     console.error('Error updating user PIN hash:', error);
     throw error;
   } finally {

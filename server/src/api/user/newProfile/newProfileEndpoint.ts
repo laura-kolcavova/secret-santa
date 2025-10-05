@@ -10,16 +10,21 @@ export const mapNewProfile = (router: Router) => {
 
 const handle = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const newProfileRequest = req.body as NewProfileRequestDto;
+    const { abortSignal, body } = req;
 
-    const newProfileResult = newProfileService.newProfile({
-      email: newProfileRequest.email,
-      pin: newProfileRequest.pin,
-      firstName: newProfileRequest.firstName,
-      lastName: newProfileRequest.lastName,
-      department: newProfileRequest.department,
-      hobbies: newProfileRequest.hobbies,
-    });
+    const newProfileRequest = body as NewProfileRequestDto;
+
+    const newProfileResult = newProfileService.newProfile(
+      {
+        email: newProfileRequest.email,
+        pin: newProfileRequest.pin,
+        firstName: newProfileRequest.firstName,
+        lastName: newProfileRequest.lastName,
+        department: newProfileRequest.department,
+        hobbies: newProfileRequest.hobbies,
+      },
+      abortSignal,
+    );
 
     if (!newProfileResult.isSuccess) {
       const problemDetails = createProblemDetails(newProfileResult.error!, req);

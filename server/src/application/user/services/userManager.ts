@@ -8,10 +8,10 @@ const checkPin = (user: User, pin: string): boolean => {
   return comparePin(pin, user.pinHash);
 };
 
-const findByEmail = (email: string): User | undefined => {
+const findByEmail = (email: string, abortSignal: AbortSignal): User | undefined => {
   const normalizedEmail = normalizeEmail(email);
 
-  const user = usersQueries.findByEmail(normalizedEmail);
+  const user = usersQueries.findByEmail(normalizedEmail, abortSignal);
 
   return user;
 };
@@ -23,6 +23,7 @@ const createUser = (
   lastName: string,
   department: string,
   hobbies: string[],
+  abortSignal: AbortSignal,
 ): User => {
   const normalizedEmail = normalizeEmail(email);
 
@@ -38,7 +39,7 @@ const createUser = (
     createdAtUtc: new Date(Date.now()),
   };
 
-  usersCommands.addUser(user);
+  usersCommands.addUser(user, abortSignal);
 
   return user;
 };
@@ -49,21 +50,22 @@ const changeProfile = (
   lastName: string,
   department: string,
   hobbies: string[],
+  abortSignal: AbortSignal,
 ): void => {
   user.firstName = firstName;
   user.lastName = lastName;
   user.department = department;
   user.hobbies = [...hobbies];
 
-  usersCommands.updateProfile(user);
+  usersCommands.updateProfile(user, abortSignal);
 };
 
-const changePin = (user: User, pin: string): void => {
+const changePin = (user: User, pin: string, abortSignal: AbortSignal): void => {
   const pinHash = computePinHash(pin);
 
   user.pinHash = pinHash;
 
-  usersCommands.updatePinHash(user);
+  usersCommands.updatePinHash(user, abortSignal);
 };
 
 export const userManager = {

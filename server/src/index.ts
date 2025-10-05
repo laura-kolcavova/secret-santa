@@ -9,11 +9,14 @@ import path from 'path';
 import { mapProxyToSpaDevelopmentServer, mapSpaStaticFiles } from './api/shared/spa/spaRoutes';
 import { ensureDatabaseDeployed } from './persistence/shared/databaseDeploy';
 import { seedDatabase } from './persistence/shared/databaseSeed';
+import { abortSignalHandler } from './api/shared/middlewares/abortSignalHandler';
 
 const app = express();
 
 app.use(json());
 app.use(cookieParser());
+
+app.use(abortSignalHandler);
 
 mapUsersEndpoints(app);
 mapDrawGroupsRoutes(app);

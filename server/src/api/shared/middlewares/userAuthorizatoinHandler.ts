@@ -6,7 +6,9 @@ export const userAuthorizationHandler = [
   userAuthenticationHandler,
   (req: Request, res: Response, next: NextFunction) => {
     try {
-      if (!req.user) {
+      const { loggedUser } = req;
+
+      if (!loggedUser) {
         const problemDetails: ProblemDetails = {
           type: 'https://tools.ietf.org/html/rfc9110#section-15.5.2',
           title: 'Unauthorized',

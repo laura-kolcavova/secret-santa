@@ -3,7 +3,9 @@ import { DrawGroup } from '~/application/drawGroups/models/DrawGroup';
 import { DrawGroupParticipant } from '~/application/drawGroups/models/DrawGroupParticipant';
 import { appConfig } from '~/config/appConfig';
 
-const findByYear = (year: number): DrawGroup | undefined => {
+const findByYear = (year: number, abortSignal: AbortSignal): DrawGroup | undefined => {
+  abortSignal.throwIfAborted();
+
   const db = new Database(appConfig.sqliteDbFilePath, { readonly: true });
 
   try {
@@ -23,6 +25,8 @@ const findByYear = (year: number): DrawGroup | undefined => {
         WHERE dg.year = $year`);
 
     const rows = stmt.all({ year: year }) as any[];
+
+    abortSignal.throwIfAborted();
 
     if (rows.length === 0) {
       return undefined;
@@ -50,6 +54,8 @@ const findByYear = (year: number): DrawGroup | undefined => {
       createdAtUtc: new Date(firstRow.createdAtUtc),
     };
   } catch (error) {
+    abortSignal.throwIfAborted();
+
     console.error('Error finding draw group by year:', error);
 
     throw error;
@@ -58,7 +64,9 @@ const findByYear = (year: number): DrawGroup | undefined => {
   }
 };
 
-const findByGuid = (guid: string): DrawGroup | undefined => {
+const findByGuid = (guid: string, abortSignal: AbortSignal): DrawGroup | undefined => {
+  abortSignal.throwIfAborted();
+
   const db = new Database(appConfig.sqliteDbFilePath, { readonly: true });
 
   try {
@@ -78,6 +86,8 @@ const findByGuid = (guid: string): DrawGroup | undefined => {
         WHERE dg.guid = $guid`);
 
     const rows = stmt.all({ guid: guid }) as any[];
+
+    abortSignal.throwIfAborted();
 
     if (rows.length === 0) {
       return undefined;

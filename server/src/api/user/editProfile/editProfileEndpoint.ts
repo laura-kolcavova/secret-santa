@@ -11,16 +11,17 @@ export const mapEditProfile = (router: Router) => {
 
 const handle = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const email = req.user!.email;
+    const { abortSignal, loggedUser, body } = req;
 
-    const editProfileRequest = req.body as EditProfileRequestDto;
+    const editProfileRequest = body as EditProfileRequestDto;
 
     const loginResult = editProfileService.editProfile(
-      email,
+      loggedUser!.email,
       editProfileRequest.firstName,
       editProfileRequest.lastName,
       editProfileRequest.department,
       editProfileRequest.hobbies,
+      abortSignal,
     );
 
     if (!loginResult.isSuccess) {

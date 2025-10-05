@@ -2,7 +2,13 @@ import { NextFunction, Request, Response } from 'express';
 import { ProblemDetails } from '../ProblemDetails';
 
 export const exceptionHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.log(err);
+  if (err.name === 'AbortError') {
+    console.info('Operation was cancelled');
+
+    return;
+  }
+
+  console.error(err);
 
   const problemDetails: ProblemDetails = {
     type: 'https://tools.ietf.org/html/rfc9110#section-15.6.1',

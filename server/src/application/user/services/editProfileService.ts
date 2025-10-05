@@ -8,14 +8,15 @@ const editProfile = (
   lastName: string,
   department: string,
   hobbies: string[],
+  abortSignal: AbortSignal,
 ): UnitResult => {
-  const user = userManager.findByEmail(email);
+  const user = userManager.findByEmail(email, abortSignal);
 
   if (!user) {
     return unitResultError(userErrors.notFound());
   }
 
-  userManager.changeProfile(user, firstName, lastName, department, hobbies);
+  userManager.changeProfile(user, firstName, lastName, department, hobbies, abortSignal);
 
   return unitResultSuccess();
 };
