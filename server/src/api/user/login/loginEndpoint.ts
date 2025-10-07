@@ -11,9 +11,11 @@ export const mapLogin = (router: Router) => {
 
 const handle = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const loginRequest = req.body as LoginRequestDto;
+    const { abortSignal, body } = req;
 
-    const loginResult = loginService.login(loginRequest.email, loginRequest.pin);
+    const loginRequest = body as LoginRequestDto;
+
+    const loginResult = loginService.login(loginRequest.email, loginRequest.pin, abortSignal);
 
     if (!loginResult.isSuccess) {
       const problemDetails = createProblemDetails(loginResult.error!, req);
@@ -22,6 +24,8 @@ const handle = (req: Request, res: Response, next: NextFunction) => {
 
       return;
     }
+
+    abortSignal.throwIfAborted();
 
     signInUser(res, loginResult.user!);
 

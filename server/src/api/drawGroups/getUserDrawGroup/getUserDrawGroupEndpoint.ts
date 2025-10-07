@@ -14,9 +14,11 @@ export const mapGetUserDrawGroup = (router: Router) => {
 
 const handle = (req: Request, res: Response, next: NextFunction) => {
   try {
+    const { abortSignal, loggedUser } = req;
+
     const currentYear = new Date().getFullYear();
 
-    const drawGroup = drawGroupManager.findByYear(currentYear);
+    const drawGroup = drawGroupManager.findByYear(currentYear, abortSignal);
 
     if (!drawGroup) {
       res.status(204).send();
@@ -24,14 +26,15 @@ const handle = (req: Request, res: Response, next: NextFunction) => {
       return;
     }
 
-    const email = req.user!.email;
-
-    const participant = findParticipantByEmail(drawGroup, email);
+    const participant = findParticipantByEmail(drawGroup, loggedUser!.email);
 
     let drawnParticipantDto: DrawnParticipantDto | undefined = undefined;
 
     if (participant && participant.drawnParticipant) {
-      const drawnParticipantAsUser = userManager.findByEmail(participant.drawnParticipant.email);
+      const drawnParticipantAsUser = userManager.findByEmail(
+        participant.drawnParticipant.email,
+        abortSignal,
+      );
 
       if (!drawnParticipantAsUser) {
         const problemDetails = createProblemDetails(userErrors.notFound(), req);

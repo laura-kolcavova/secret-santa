@@ -9,7 +9,7 @@ import { LoggedUserDto } from './dto/LoggedUserDto';
 
 const baseUrl = '/api/users';
 
-const login = (loginRequest: LoginRequestDto, signal?: GenericAbortSignal): AxiosPromise<void> => {
+const login = (loginRequest: LoginRequestDto, signal?: AbortSignal): AxiosPromise<void> => {
   return callAxios({
     url: `${baseUrl}/login`,
     method: 'POST',

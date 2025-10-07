@@ -7,8 +7,9 @@ import { drawRandomParticipant, findParticipantByEmail } from '../utils/drawGrou
 const drawParticipant = (
   drawGroupGuid: string,
   participantEmail: string,
+  abortSignal: AbortSignal,
 ): Result<DrawnParticipant> => {
-  const drawGroup = drawGroupManager.findByGuid(drawGroupGuid);
+  const drawGroup = drawGroupManager.findByGuid(drawGroupGuid, abortSignal);
 
   if (!drawGroup) {
     return resultError(drawGroupErrors.notFound());
@@ -34,6 +35,7 @@ const drawParticipant = (
     drawGroup,
     participant,
     drawnParticipant,
+    abortSignal,
   );
 
   return resultSuccess(newDrawnParticipant);

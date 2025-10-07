@@ -1,12 +1,19 @@
 import { createResource } from 'solid-js';
+import { useAbortController } from '~/abort/useAbortController';
 import { drawGroupsClient } from '~/api/drawGroups/drawGroupsClient';
 
-const fetchUserDrawGroup = async () => {
-  const response = await drawGroupsClient.getUserDrawGroup();
-
-  return response.status === 204 ? null : response.data;
-};
-
 export const useUserDrawGroupQuery = () => {
-  return createResource(fetchUserDrawGroup);
+  const { createAbortSignal, finishAbortSignal } = useAbortController();
+
+  return createResource(async () => {
+    try {
+      const signal = createAbortSignal();
+
+      const response = await drawGroupsClient.getUserDrawGroup(signal);
+
+      return response.status === 204 ? null : response.data;
+    } catch {
+      finishAbortSignal();
+    }
+  });
 };

@@ -9,6 +9,7 @@ import { messages } from './messages';
 import { useLocalization } from '~/translation/useLocalization';
 import { useLoggedUserContext } from '~/authentication/LoggedUserProvider';
 import { useLoginErrorHandler } from './hooks/useLoginErrorHandler';
+import { useAbortController } from '~/abort/useAbortController';
 
 export const LogIn: Component = () => {
   const [loggedUserState] = useLoggedUserContext();

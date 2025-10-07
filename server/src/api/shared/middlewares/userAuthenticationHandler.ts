@@ -23,7 +23,7 @@ export const userAuthenticationHandler = (req: Request, res: Response, next: Nex
 
       const userTokenPayload = decoded as UserTokenPayload;
 
-      req.user = userTokenPayload;
+      req.loggedUser = userTokenPayload;
 
       next();
     });

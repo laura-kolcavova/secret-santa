@@ -2,7 +2,9 @@ import Database from 'better-sqlite3';
 import { User } from '~/application/user/models/User';
 import { appConfig } from '~/config/appConfig';
 
-const addUser = (user: User): void => {
+const addUser = (user: User, abortSignal: AbortSignal): void => {
+  abortSignal.throwIfAborted();
+
   const db = new Database(appConfig.sqliteDbFilePath, { readonly: false });
 
   try {
@@ -44,7 +46,9 @@ const addUser = (user: User): void => {
   }
 };
 
-const updateProfile = (user: User): void => {
+const updateProfile = (user: User, abortSignal: AbortSignal): void => {
+  abortSignal.throwIfAborted();
+
   const db = new Database(appConfig.sqliteDbFilePath, { readonly: false });
 
   try {
@@ -73,7 +77,9 @@ const updateProfile = (user: User): void => {
   }
 };
 
-const updatePinHash = (user: User): void => {
+const updatePinHash = (user: User, abortSignal: AbortSignal): void => {
+  abortSignal.throwIfAborted();
+
   const db = new Database(appConfig.sqliteDbFilePath, { readonly: false });
 
   try {
@@ -89,6 +95,7 @@ const updatePinHash = (user: User): void => {
     });
   } catch (error) {
     console.error('Error updating user PIN hash:', error);
+
     throw error;
   } finally {
     db.close();

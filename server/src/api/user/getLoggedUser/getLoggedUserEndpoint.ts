@@ -9,19 +9,19 @@ export const mapGetLoggedUser = (router: Router) => {
 
 const handle = (req: Request, res: Response, next: NextFunction) => {
   try {
-    if (!req.user) {
+    const { loggedUser } = req;
+
+    if (!loggedUser) {
       res.status(204).send();
 
       return;
     }
 
-    const userTokenPayload = req.user;
-
     const loggedUserDto: LoggedUserDto = {
-      email: userTokenPayload.email,
-      fullName: userTokenPayload.fullName,
-      fistName: userTokenPayload.firstName,
-      lastName: userTokenPayload.lastName,
+      email: loggedUser.email,
+      fullName: loggedUser.fullName,
+      fistName: loggedUser.firstName,
+      lastName: loggedUser.lastName,
     };
 
     res.status(200).json(loggedUserDto);

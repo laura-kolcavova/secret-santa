@@ -1,4 +1,5 @@
 import { batch, createSignal } from 'solid-js';
+import { useAbortController } from '~/abort/useAbortController';
 import { drawGroupsClient } from '~/api/drawGroups/drawGroupsClient';
 import { DrawParticipantResponseDto } from '~/api/drawGroups/dto/DrawParticipantResponseDto';
 
@@ -8,7 +9,9 @@ export const useDrawParticipantMutation = () => {
   const [getError, setError] = createSignal<unknown>(undefined);
   const [getData, setData] = createSignal<DrawParticipantResponseDto | undefined>(undefined);
 
-  const mutateAsync = async (drawGroupGuid: string, signal?: AbortSignal): Promise<void> => {
+  const { createAbortSignal, finishAbortSignal } = useAbortController();
+
+  const mutateAsync = async (drawGroupGuid: string): Promise<void> => {
     batch(() => {
       setIsPending(true);
       setIsSuccess(false);
@@ -17,6 +20,8 @@ export const useDrawParticipantMutation = () => {
     });
 
     try {
+      const signal = createAbortSignal();
+
       const response = await drawGroupsClient.drawParticipant(drawGroupGuid, signal);
 
       batch(() => {
@@ -29,11 +34,13 @@ export const useDrawParticipantMutation = () => {
         setIsPending(false);
         setError(error);
       });
+    } finally {
+      finishAbortSignal();
     }
   };
 
-  const mutate = (drawGroupGuid: string, signal?: AbortSignal): void => {
-    mutateAsync(drawGroupGuid, signal);
+  const mutate = (drawGroupGuid: string): void => {
+    mutateAsync(drawGroupGuid);
   };
 
   return { mutate, getIsPending, getIsSuccess, getData, getError };

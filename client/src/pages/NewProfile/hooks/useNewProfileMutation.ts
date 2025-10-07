@@ -1,4 +1,5 @@
 import { batch, createSignal } from 'solid-js';
+import { useAbortController } from '~/abort/useAbortController';
 import { NewProfileRequestDto } from '~/api/user/dto/NewProfileRequestDto';
 import { userClient } from '~/api/user/userClient';
 
@@ -8,7 +9,9 @@ export const useNewProfileMutation = () => {
   const [getIsError, setIsError] = createSignal<boolean>(false);
   const [getError, setError] = createSignal<unknown>(undefined);
 
-  const newProfileAsync = async (newProfileRequest: NewProfileRequestDto, signal?: AbortSignal) => {
+  const { createAbortSignal, finishAbortSignal } = useAbortController();
+
+  const newProfileAsync = async (newProfileRequest: NewProfileRequestDto) => {
     batch(() => {
       setIsPending(true);
       setIsSuccess(false);
@@ -17,6 +20,8 @@ export const useNewProfileMutation = () => {
     });
 
     try {
+      const signal = createAbortSignal();
+
       await userClient.newProfile(newProfileRequest, signal);
 
       batch(() => {
@@ -29,11 +34,13 @@ export const useNewProfileMutation = () => {
         setIsError(true);
         setError(error);
       });
+    } finally {
+      finishAbortSignal();
     }
   };
 
-  const newProfile = (newProfileRequest: NewProfileRequestDto, signal?: AbortSignal) => {
-    newProfileAsync(newProfileRequest, signal);
+  const newProfile = (newProfileRequest: NewProfileRequestDto) => {
+    newProfileAsync(newProfileRequest);
   };
 
   return { newProfile, getIsPending, getIsSuccess, getIsError, getError };

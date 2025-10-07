@@ -34,6 +34,7 @@ export const ModalProvider: ParentComponent = (props) => {
         setModal(() => modal);
         setIsModalOpen(true);
       });
+
       return dispose;
     });
   };

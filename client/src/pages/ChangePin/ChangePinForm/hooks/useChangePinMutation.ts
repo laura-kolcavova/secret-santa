@@ -2,6 +2,7 @@ import { batch, createSignal } from 'solid-js';
 
 import { userClient } from '~/api/user/userClient';
 import { ChangePinRequestDto } from '~/api/user/dto/ChangePinRequestDto';
+import { useAbortController } from '~/abort/useAbortController';
 
 export const useChangePinMutation = () => {
   const [getIsPending, setIsPending] = createSignal<boolean>(false);
@@ -9,7 +10,9 @@ export const useChangePinMutation = () => {
   const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
   const [getError, setError] = createSignal<unknown>(undefined);
 
-  const changePinAsync = async (changePinRequest: ChangePinRequestDto, signal?: AbortSignal) => {
+  const { createAbortSignal, finishAbortSignal } = useAbortController();
+
+  const changePinAsync = async (changePinRequest: ChangePinRequestDto) => {
     batch(() => {
       setIsPending(true);
       setIsSuccess(false);
@@ -18,6 +21,8 @@ export const useChangePinMutation = () => {
     });
 
     try {
+      const signal = createAbortSignal();
+
       await userClient.changePin(changePinRequest, signal);
 
       batch(() => {
@@ -30,11 +35,13 @@ export const useChangePinMutation = () => {
         setIsError(true);
         setError(error);
       });
+    } finally {
+      finishAbortSignal();
     }
   };
 
-  const changePin = (changePinRequest: ChangePinRequestDto, signal?: AbortSignal) => {
-    changePinAsync(changePinRequest, signal);
+  const changePin = (changePinRequest: ChangePinRequestDto) => {
+    changePinAsync(changePinRequest);
   };
 
   return { changePin, getIsPending, getIsSuccess, getIsError, getError };

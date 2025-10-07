@@ -3,7 +3,9 @@ import { DrawGroup } from '~/application/drawGroups/models/DrawGroup';
 import { DrawGroupParticipant } from '~/application/drawGroups/models/DrawGroupParticipant';
 import { appConfig } from '~/config/appConfig';
 
-const findByYear = (year: number): DrawGroup | undefined => {
+const findByYear = (year: number, abortSignal: AbortSignal): DrawGroup | undefined => {
+  abortSignal.throwIfAborted();
+
   const db = new Database(appConfig.sqliteDbFilePath, { readonly: true });
 
   try {
@@ -58,7 +60,9 @@ const findByYear = (year: number): DrawGroup | undefined => {
   }
 };
 
-const findByGuid = (guid: string): DrawGroup | undefined => {
+const findByGuid = (guid: string, abortSignal: AbortSignal): DrawGroup | undefined => {
+  abortSignal.throwIfAborted();
+
   const db = new Database(appConfig.sqliteDbFilePath, { readonly: true });
 
   try {

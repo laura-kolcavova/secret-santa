@@ -11,10 +11,13 @@ export const mapJoinDrawGroup = (router: Router) => {
 
 const handle = (req: Request<JoinDrawGroupParams>, res: Response, next: NextFunction) => {
   try {
-    const drawGroupGuid = req.params.drawGroupGuid;
-    const participantEmail = req.user!.email;
+    const { abortSignal, loggedUser, params } = req;
 
-    const joinDrawGroupResult = joinDrawGroupService.joinDrawGroup(drawGroupGuid, participantEmail);
+    const joinDrawGroupResult = joinDrawGroupService.joinDrawGroup(
+      params.drawGroupGuid,
+      loggedUser!.email,
+      abortSignal,
+    );
 
     if (!joinDrawGroupResult.isSuccess) {
       const problemDetails = createProblemDetails(joinDrawGroupResult.error!, req);
