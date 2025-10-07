@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "npx tsx --env-file=.env --watch src/index.ts"
+    "dev": "npx tsx --env-file=.env.development --watch src/index.ts",
+    "prod": "tsc && node ./build/index.js"
   },
   "keywords": [],
   "author": "",

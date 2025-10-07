@@ -4,9 +4,9 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "dev": "vite --mode development",
+    "build:dev": "tsc -b && vite build --mode development",
+    "build:prod": "tsc -b && vite build --mode production"
   },
   "license": "MIT",
   "devDependencies": {
