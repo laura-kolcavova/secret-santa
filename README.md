@@ -170,8 +170,11 @@ PROXY_TO_SPA_DEVELOPMENT_SERVER_URL=http://localhost:3200
 
 ## Database
 
-- The SQLite database will be created automatically at the specified path
-- Ensure the database directory exists and has write permissions
+- The SQLite database files will be created automatically when the server starts
+- By default the database files will be created in the `database` folder:
+  - Production: `database/database.sqlite`
+  - Development: `database/database.Development.sqlite`
+- Ensure the `database` directory exists and has write permissions
 
 ## Features
 
