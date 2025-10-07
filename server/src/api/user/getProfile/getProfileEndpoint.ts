@@ -7,7 +7,7 @@ export const mapGetProfile = (router: Router) => {
   router.get('/profile', userAuthorizationHandler, handle);
 };
 
-const handle = async (req: Request, res: Response, next: NextFunction) => {
+const handle = (req: Request, res: Response, next: NextFunction) => {
   try {
     const { abortSignal, loggedUser } = req;
 

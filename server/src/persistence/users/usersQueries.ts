@@ -22,8 +22,6 @@ const findByEmail = (email: string, abortSignal: AbortSignal): User | undefined 
 
     const row = stmt.get({ email: email }) as any;
 
-    abortSignal.throwIfAborted();
-
     if (!row) {
       return undefined;
     }
@@ -38,9 +36,8 @@ const findByEmail = (email: string, abortSignal: AbortSignal): User | undefined 
       createdAtUtc: new Date(row.createdAtUtc),
     };
   } catch (error) {
-    abortSignal.throwIfAborted();
-
     console.error('Error finding user by email:', error);
+
     throw error;
   } finally {
     db.close();

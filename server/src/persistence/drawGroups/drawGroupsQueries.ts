@@ -26,8 +26,6 @@ const findByYear = (year: number, abortSignal: AbortSignal): DrawGroup | undefin
 
     const rows = stmt.all({ year: year }) as any[];
 
-    abortSignal.throwIfAborted();
-
     if (rows.length === 0) {
       return undefined;
     }
@@ -54,8 +52,6 @@ const findByYear = (year: number, abortSignal: AbortSignal): DrawGroup | undefin
       createdAtUtc: new Date(firstRow.createdAtUtc),
     };
   } catch (error) {
-    abortSignal.throwIfAborted();
-
     console.error('Error finding draw group by year:', error);
 
     throw error;
@@ -86,8 +82,6 @@ const findByGuid = (guid: string, abortSignal: AbortSignal): DrawGroup | undefin
         WHERE dg.guid = $guid`);
 
     const rows = stmt.all({ guid: guid }) as any[];
-
-    abortSignal.throwIfAborted();
 
     if (rows.length === 0) {
       return undefined;

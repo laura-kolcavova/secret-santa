@@ -32,11 +32,7 @@ const addParticipant = (
       drawGroupGuid: drawGroup.guid,
       email: participant.email,
     });
-
-    abortSignal.throwIfAborted();
   } catch (error) {
-    abortSignal.throwIfAborted();
-
     console.error('Error adding participant to draw group:', error);
 
     throw error;
@@ -75,11 +71,7 @@ const confirmDrawnParticipant = (
       participantEmail: participant.email,
       drawnParticipantEmail: participant.drawnParticipant!.email,
     });
-
-    abortSignal.throwIfAborted();
   } catch (error) {
-    abortSignal.throwIfAborted();
-
     console.error('Error confirming drawn participant:', error);
 
     throw error;

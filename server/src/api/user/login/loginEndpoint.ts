@@ -9,7 +9,7 @@ export const mapLogin = (router: Router) => {
   router.post('/login', loginValidation, handle);
 };
 
-const handle = async (req: Request, res: Response, next: NextFunction) => {
+const handle = (req: Request, res: Response, next: NextFunction) => {
   try {
     const { abortSignal, body } = req;
 
@@ -24,6 +24,8 @@ const handle = async (req: Request, res: Response, next: NextFunction) => {
 
       return;
     }
+
+    abortSignal.throwIfAborted();
 
     signInUser(res, loginResult.user!);
 
