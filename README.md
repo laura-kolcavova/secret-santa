@@ -5,7 +5,7 @@ A Secret Santa application built with SolidJS frontend and Express.js backend.
 ## Architecture
 
 - **Client**: SolidJS app built with Vite and styled with TailwindCSS
-- **Server**: Express.js API with SQLite database
+- **Server**: Express.js API with SQLite database that also serves the client in production
 
 ## Prerequisites
 
@@ -109,6 +109,8 @@ A Secret Santa application built with SolidJS frontend and Express.js backend.
    npm run prod
    ```
 
+**Note**: In production, the server hosts both the API and the client application. The client will be available at `http://localhost:<PORT>/` (where `<PORT>` is your configured server port), and the API endpoints will be available at `http://localhost:<PORT>/api/*`.
+
 ## Environment Configuration
 
 ### Client Environment Variables
@@ -129,7 +131,7 @@ VITE_APP_API_URL=/
 
 **Required Client Environment Variables:**
 
-- `VITE_APP_API_URL`: The base URL of the server
+- `VITE_APP_API_URL`: The base URL of the server. In production, this should be set to your server's URL since the server hosts both the client and API.
 
 ### Server Environment Variables
 
@@ -162,7 +164,7 @@ PROXY_TO_SPA_DEVELOPMENT_SERVER_URL=http://localhost:3200
 - `PORT`: Port number for the server to listen on
 - `JWT_SECRET`: Secret key for JWT token signing (use a secure random string in production)
 - `SQLITE_DB_FILE_PATH`: Path to the SQLite database file
-- `SPA_STATIC_FILES_ROOT_PATH`: Path to the built client files
+- `SPA_STATIC_FILES_ROOT_PATH`: Path to the built client files (the server serves the client from this directory in production)
 - `USE_PROXY_TO_SPA_DEVELOPMENT_SERVER`: Set to `true` for development, `false` for production
 - `PROXY_TO_SPA_DEVELOPMENT_SERVER_URL`: URL of the development client server (only needed for development)
 
