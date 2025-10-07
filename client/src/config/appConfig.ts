@@ -1,5 +1,5 @@
 const getEnv = (envKey: string): string | undefined => {
-  return process.env[envKey];
+  return import.meta.env[envKey];
 };
 
 const envRequired = (envKey: string): string => {

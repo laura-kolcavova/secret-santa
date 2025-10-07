@@ -1,6 +1,7 @@
 import { ValidationError } from 'express-validator';
-import { ProblemDetails } from '../shared/ProblemDetails';
+
 import { Request } from 'express';
+import { ProblemDetails } from '../ProblemDetails';
 
 export const createExpressValidatorProblemDetails = (
   validationErrors: ValidationError[],
