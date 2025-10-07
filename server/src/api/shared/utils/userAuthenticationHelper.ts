@@ -1,9 +1,9 @@
-import { IdentityUser } from '~/application/user/models/User';
 import { Response, CookieOptions } from 'express';
 import { userTokenGenerator } from '~/application/user/services/userTokenGenerator';
 import { COOKIE_USER_AUTHENTICATION_NAME } from '~/application/user/constants';
+import { User } from '~/application/user/models/User';
 
-export const signInUser = (res: Response, user: IdentityUser) => {
+export const signInUser = (res: Response, user: User) => {
   const userToken = userTokenGenerator.generateUserToken(user);
 
   const oneDayInMs = 24 * 60 * 60 * 1000;

@@ -1,17 +1,25 @@
-const required = (envKey: string): string => {
-  const value = import.meta.env[envKey];
+const getEnv = (envKey: string): string | undefined => {
+  return import.meta.env[envKey];
+};
+
+const envRequired = (envKey: string): string => {
+  const value = getEnv(envKey);
 
   if (value === undefined) {
     throw new Error(`Environment variable ${envKey} is required but not defined.`);
   }
 
-  return value;
+  return envKey;
 };
 
-const envAsString = (envKey: string): string => {
-  const value = required(envKey);
+const envAsString = (envKey: string): string | undefined => {
+  const value = getEnv(envKey);
 
-  return value.toString();
+  if (value === undefined) {
+    return value;
+  }
+
+  return value;
 };
 
 export interface AppConfig {
@@ -19,5 +27,5 @@ export interface AppConfig {
 }
 
 export const appConfig: AppConfig = {
-  apiUrl: envAsString('VITE_APP_API_URL'),
+  apiUrl: envAsString(envRequired('VITE_APP_API_URL'))!,
 };

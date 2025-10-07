@@ -1,6 +1,6 @@
 import { ValidationError } from '~/application/shared/models/ValidationError';
-import { ProblemDetails } from '../shared/ProblemDetails';
 import { Request } from 'express';
+import { ProblemDetails } from '../ProblemDetails';
 
 export const createProblemDetails = (validaitonError: ValidationError, req: Request) => {
   const problemDetails: ProblemDetails = {

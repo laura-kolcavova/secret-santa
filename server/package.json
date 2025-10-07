@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "npx tsx --env-file=.env --watch src/index.ts"
+    "dev": "npx tsx --env-file=.env.development --watch src/index.ts",
+    "build": "tsc && tsc-alias",
+    "prod": "npm run build && node --env-file=.env build/index.js"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +28,7 @@
     "@types/express": "^5.0.3",
     "@types/express-http-proxy": "^1.6.7",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^24.5.0"
+    "@types/node": "^24.5.0",
+    "tsc-alias": "^1.8.16"
   }
 }

@@ -17,8 +17,12 @@ export const mapSpaStaticFiles = (app: Application, spaStaticFilesRootPath: stri
   app.use(express.static(spaStaticFilesRootPath));
 
   app.use('/', (req: Request, res: Response, next: NextFunction) => {
-    const indexPath = path.join(spaStaticFilesRootPath, 'index.html');
+    try {
+      const indexPath = path.join(spaStaticFilesRootPath, 'index.html');
 
-    res.sendFile(indexPath);
+      res.sendFile(indexPath);
+    } catch (error) {
+      next(error);
+    }
   });
 };

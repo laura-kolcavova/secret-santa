@@ -12,6 +12,9 @@
     "strict": true,
     "skipLibCheck": true,
 
+    "outDir": "./build",
+    "rootDir": "./src",
+
     "paths": {
       "~": ["./src"],
       "~/*": ["./src/*"]
