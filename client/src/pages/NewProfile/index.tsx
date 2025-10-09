@@ -4,7 +4,6 @@ import { A, useNavigate } from '@solidjs/router';
 import { pages } from '~/navigation/pages';
 import { SpinnerIcon } from '../shared/icons/SpinnerIcon';
 import { useNewProfileMutation } from './hooks/useNewProfileMutation';
-import { Department } from '~/models/Department';
 import { HobbiesInput } from '../shared/HobbiesInput';
 import { createStore, produce } from 'solid-js/store';
 import { FieldValidations } from '~/forms/FieldValidations';
@@ -16,6 +15,7 @@ import { HobbyList } from '../shared/HobbyList';
 import { ProfileCreatedInfo } from './ProfileCreatedInfo';
 import { useLoggedUserContext } from '~/authentication/LoggedUserProvider';
 import { useNewProfileErrorHandler } from './hooks/useNewProfileErrorHandler';
+import { DepartmentSelect } from '../shared/DepartmentSelect';
 
 export const NewProfile: Component = () => {
   const [loggedUserState] = useLoggedUserContext();
@@ -36,7 +36,7 @@ const NewProfileComponent: Component = () => {
 
   const [getFirstName, setFirstName] = createSignal<string>('');
   const [getLastName, setLastName] = createSignal<string>('');
-  const [getDepartment, setDepartment] = createSignal<string>(Object.values(Department)[0]);
+  const [getDepartment, setDepartment] = createSignal<string>('');
   const [getEmail, setEmail] = createSignal<string>('');
   const [getPin, setPin] = createSignal<string>('');
   const [getPinConfirm, setPinConfirm] = createSignal<string>('');
@@ -161,19 +161,12 @@ const NewProfileComponent: Component = () => {
               <FormattedMessage message={messages.department} />
             </label>
 
-            <select
+            <DepartmentSelect
               id="department"
               name="department"
-              required
-              class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100 cursor-pointer"
-              onChange={(e) => {
-                console.log(e);
-                setDepartment(e.currentTarget.value);
-              }}>
-              <For each={Object.values(Department)}>
-                {(department) => <option value={department}>{department}</option>}
-              </For>
-            </select>
+              setDepartment={setDepartment}
+              getDepartment={getDepartment}
+            />
           </div>
 
           <div class="mb-6 col-2 row-1">

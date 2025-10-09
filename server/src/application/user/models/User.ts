@@ -7,3 +7,7 @@ export type User = {
   pinHash: string;
   createdAtUtc: Date;
 };
+
+export const getFullName = (user: User) => {
+  return `${user.firstName} ${user.lastName}`;
+};

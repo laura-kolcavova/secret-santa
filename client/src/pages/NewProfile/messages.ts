@@ -15,6 +15,10 @@ export const messages = {
     id: 'newProfile.department',
     defaultMessage: 'DEPARTMENT',
   },
+  selectDepartment: {
+    id: 'newProfile.selectDepartment',
+    defaultMessage: 'SELECT DEPARTMENT',
+  },
   email: {
     id: 'newProfile.email',
     defaultMessage: 'E-MAIL',

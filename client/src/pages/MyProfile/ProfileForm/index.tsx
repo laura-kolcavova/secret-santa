@@ -1,15 +1,16 @@
-import { Component, createSignal, For, Show } from 'solid-js';
+import { Component, createEffect, createSignal, For, Show } from 'solid-js';
 import { createStore, produce } from 'solid-js/store';
 import { ProfileDto } from '~/api/user/dto/ProfileDto';
 import { FormattedMessage } from '~/translation/FormattedMessage';
 import { messages } from '../messages';
-import { Department } from '~/models/Department';
 import { HobbiesInput } from '~/pages/shared/HobbiesInput';
 import { HobbyList } from '~/pages/shared/HobbyList';
 import { useEditProfileMutation } from './hooks/useEditProfileMutation';
 import { SpinnerIcon } from '~/pages/shared/icons/SpinnerIcon';
 import { Alert } from '~/pages/shared/Alert';
 import { useEditProfileErrorHandler } from './hooks/useEditProfileErrorHandler';
+import { DepartmentSelect } from '~/pages/shared/DepartmentSelect';
+import { useLoggedUserContext } from '~/authentication/LoggedUserProvider';
 
 export type ProfileFormProps = {
   profile: ProfileDto;
@@ -21,8 +22,10 @@ export const ProfileForm: Component<ProfileFormProps> = (props) => {
   const [getDepartment, setDepartment] = createSignal<string>(props.profile.department);
   const [hobbies, setHobbies] = createStore<string[]>(props.profile.hobbies);
 
-  const { editProfile, getIsPending, getIsSuccess, getIsError, getError } =
+  const { editProfile, getIsPending, getIsSuccess, getIsError, getError, getData } =
     useEditProfileMutation();
+
+  const [_, { setUser }] = useLoggedUserContext();
 
   const { handleError } = useEditProfileErrorHandler();
 
@@ -44,6 +47,12 @@ export const ProfileForm: Component<ProfileFormProps> = (props) => {
       hobbies: [...hobbies],
     });
   };
+
+  createEffect(() => {
+    if (getIsSuccess()) {
+      setUser(getData()!);
+    }
+  });
 
   return (
     <>
@@ -99,17 +108,12 @@ export const ProfileForm: Component<ProfileFormProps> = (props) => {
             <FormattedMessage message={messages.department} />
           </label>
 
-          <select
+          <DepartmentSelect
             id="department"
             name="department"
-            required
-            class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100 cursor-pointer"
-            value={getDepartment()}
-            onChange={(e) => setDepartment(e.currentTarget.value)}>
-            <For each={Object.values(Department)}>
-              {(department) => <option value={department}>{department}</option>}
-            </For>
-          </select>
+            setDepartment={setDepartment}
+            getDepartment={getDepartment}
+          />
         </div>
 
         <div class="mb-4">

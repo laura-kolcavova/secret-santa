@@ -57,7 +57,7 @@ const getProfile = (signal?: GenericAbortSignal): AxiosPromise<ProfileDto> => {
 const editProfile = (
   editProfileRequest: EditProfileRequestDto,
   signal?: GenericAbortSignal,
-): AxiosPromise<void> => {
+): AxiosPromise<LoggedUserDto> => {
   return callAxios({
     url: `${baseUrl}/profile`,
     method: 'PUT',
