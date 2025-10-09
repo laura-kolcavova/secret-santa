@@ -1,4 +1,4 @@
-import { Accessor, Component, For, Show, batch, createSignal } from 'solid-js';
+import { Accessor, Component, For, Show, batch, createSignal, onCleanup, onMount } from 'solid-js';
 import { useDepartmentsQuery } from './hooks/useDepartmentsQuery';
 import { FormattedMessage } from '~/translation/FormattedMessage';
 import { messages } from '../../NewProfile/messages';
@@ -12,7 +12,10 @@ export type DepartmentSelectProps = {
 
 export const DepartmentSelect: Component<DepartmentSelectProps> = (props) => {
   const [data] = useDepartmentsQuery();
+
   const [isOpen, setIsOpen] = createSignal(false);
+
+  let dropdownRef: HTMLDivElement | undefined;
 
   const selectDepartment = (department: string) => {
     batch(() => {
@@ -23,9 +26,23 @@ export const DepartmentSelect: Component<DepartmentSelectProps> = (props) => {
 
   const isDeparmentSelected = () => !!props.getDepartment();
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef && !dropdownRef.contains(event.target as Node)) {
+      setIsOpen(false);
+    }
+  };
+
+  onMount(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+  });
+
+  onCleanup(() => {
+    document.removeEventListener('mousedown', handleClickOutside);
+  });
+
   return (
     <Show when={!data.loading}>
-      <div class="relative">
+      <div class="relative" ref={dropdownRef}>
         <select
           id={props.id}
           name={props.name}
