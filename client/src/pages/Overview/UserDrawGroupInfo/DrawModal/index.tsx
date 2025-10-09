@@ -10,6 +10,7 @@ import { Alert } from '~/pages/shared/Alert';
 import { useDrawParticipantErrorHandler } from './hooks/useDrawParticipantErrorHandler';
 import { sharedMessages } from '~/pages/shared/sharedMessages';
 import { DrawnParticipantButton } from './DrawnParticipantButton';
+import { ShakingPresent } from './ShakingPresent';
 
 export type DrawModalProps = {
   drawGroup: DrawGroupDto;
@@ -58,14 +59,11 @@ export const DrawModal: VoidComponent<DrawModalProps> = ({ drawGroup, refetchDra
               {drawGroup.name}
             </Dialog.Label>
 
-            <Show when={!getIsDrawing()} fallback={<div></div>}>
-              <Dialog.Close
-                class="p-1 cursor-pointer text-gray-600 hover:text-gray-500 absolute right-0 top-0"
-                onClick={hideModal}
-                disabled={getIsDrawing()}>
-                <XMarkIcon class="size-6" />
-              </Dialog.Close>
-            </Show>
+            <Dialog.Close
+              class="p-1 cursor-pointer text-gray-600 hover:text-gray-500 absolute right-0 top-0"
+              onClick={hideModal}>
+              <XMarkIcon class="size-6" />
+            </Dialog.Close>
           </div>
 
           <div class="flex-1 mb-8">
@@ -77,9 +75,7 @@ export const DrawModal: VoidComponent<DrawModalProps> = ({ drawGroup, refetchDra
                     <FormattedMessage message={messages.drawingInProgress} />
                   </Dialog.Description>
 
-                  <div class="flex-1 flex flex-col items-center justify-center">
-                    <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-pallete-4"></div>
-                  </div>
+                  <ShakingPresent />
                 </>
               }>
               <Show
@@ -91,10 +87,19 @@ export const DrawModal: VoidComponent<DrawModalProps> = ({ drawGroup, refetchDra
                     </Dialog.Description>
 
                     <Show when={getError()}>
-                      <Alert color="danger" isDismissible={false}>
+                      <Alert color="danger" isDismissible={true}>
                         <FormattedMessage message={handleError(getError())} />
                       </Alert>
                     </Show>
+
+                    <div class="w-64 h-64 mx-auto -m-10">
+                      <img
+                        src="/images/present.png"
+                        alt="present"
+                        draggable="false"
+                        class="w-full h-full object-contain pointer-events-none"
+                      />
+                    </div>
                   </>
                 }>
                 <div class="flex flex-col justify-center">
@@ -108,23 +113,21 @@ export const DrawModal: VoidComponent<DrawModalProps> = ({ drawGroup, refetchDra
             </Show>
           </div>
 
-          <Show when={!getIsDrawing()}>
-            <div class="flex items-center justify-center gap-8">
-              <Dialog.Close
-                class="py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-2 hover:bg-pallete-3 text-pallete-8"
-                onClick={hideModal}>
-                <FormattedMessage message={sharedMessages.close} />
-              </Dialog.Close>
+          <div class="flex items-center justify-center gap-8">
+            <Dialog.Close
+              class="py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-2 hover:bg-pallete-3 text-pallete-8"
+              onClick={hideModal}>
+              <FormattedMessage message={sharedMessages.close} />
+            </Dialog.Close>
 
-              <Show when={!getIsDrawnFinished()}>
-                <button
-                  class="py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
-                  onClick={draw}>
-                  <FormattedMessage message={messages.draw} />
-                </button>
-              </Show>
-            </div>
-          </Show>
+            <Show when={!getIsDrawing() && !getIsDrawnFinished()}>
+              <button
+                class="py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
+                onClick={draw}>
+                <FormattedMessage message={messages.draw} />
+              </button>
+            </Show>
+          </div>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog>

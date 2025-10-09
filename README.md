@@ -1,6 +1,8 @@
-# Santa-los
+# Secret-Santa
 
 A Secret Santa application built with SolidJS frontend and Express.js backend.
+
+Create profiles, groups and draw a random gift recipient.
 
 ## Architecture
 
@@ -51,6 +53,8 @@ A Secret Santa application built with SolidJS frontend and Express.js backend.
    ```bash
    npm run dev
    ```
+
+**Note**: In development, the server provides a proxy to the client development server by default. This allows you to access both the client and API through the server URL (`http://localhost:3100`). The server automatically forwards non-API requests to the client development server running on port 3200.
 
 ## Production Deployment
 
@@ -171,10 +175,10 @@ PROXY_TO_SPA_DEVELOPMENT_SERVER_URL=http://localhost:3200
 ## Database
 
 - The SQLite database files will be created automatically when the server starts
-- By default the database files will be created in the `database` folder:
-  - Production: `database/database.sqlite`
-  - Development: `database/database.Development.sqlite`
-- Ensure the `database` directory exists and has write permissions
+- By default the database files will be created in the `server/database` folder:
+  - Production: `database.sqlite`
+  - Development: `database.Development.sqlite`
+- Ensure the specified database directory exists and has write permissions
 
 ## Features
 
