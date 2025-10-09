@@ -16,7 +16,6 @@ const handle = (req: Request, res: Response, next: NextFunction) => {
 
       return;
     }
-
     const loggedUserDto: LoggedUserDto = {
       email: loggedUser.email,
       fullName: loggedUser.fullName,

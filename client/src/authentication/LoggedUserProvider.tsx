@@ -25,6 +25,7 @@ export type LoggedUserContextValue = [
   actions: {
     refresh: () => void;
     clear: () => void;
+    setUser: (newUser: LoggedUserDto) => void;
   },
 ];
 
@@ -57,8 +58,15 @@ export const LoggedUserProvider: ParentComponent = (props) => {
     setState(getInitState());
   };
 
+  const setUser = (newUser: LoggedUserDto) => {
+    setState({
+      isAuthenticated: true,
+      user: newUser,
+    });
+  };
+
   return (
-    <LoggedUserContext.Provider value={[state, { refresh, clear }]}>
+    <LoggedUserContext.Provider value={[state, { refresh, clear, setUser }]}>
       <Switch
         fallback={
           <div class="flex flex-col justify-center items-center h-full">

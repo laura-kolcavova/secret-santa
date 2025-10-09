@@ -4,6 +4,9 @@ import { editProfileService } from '~/application/user/services/editProfileServi
 import { editProfileValidation } from './editProfileValidation';
 import { userAuthorizationHandler } from '~/api/shared/middlewares/userAuthorizatoinHandler';
 import { createProblemDetails } from '~/api/shared/utils/validationErrorHelper';
+import { signInUser } from '~/api/shared/utils/userAuthenticationHelper';
+import { LoggedUserDto } from '../getLoggedUser/LoggedUserDto';
+import { getFullName } from '~/application/user/models/User';
 
 export const mapEditProfile = (router: Router) => {
   router.put('/profile', userAuthorizationHandler, editProfileValidation, handle);
@@ -15,7 +18,7 @@ const handle = (req: Request, res: Response, next: NextFunction) => {
 
     const editProfileRequest = body as EditProfileRequestDto;
 
-    const loginResult = editProfileService.editProfile(
+    const editProfileResult = editProfileService.editProfile(
       loggedUser!.email,
       editProfileRequest.firstName,
       editProfileRequest.lastName,
@@ -24,15 +27,28 @@ const handle = (req: Request, res: Response, next: NextFunction) => {
       abortSignal,
     );
 
-    if (!loginResult.isSuccess) {
-      const problemDetails = createProblemDetails(loginResult.error!, req);
+    if (!editProfileResult.isSuccess) {
+      const problemDetails = createProblemDetails(editProfileResult.error!, req);
 
       res.status(400).json(problemDetails);
 
       return;
     }
 
-    res.status(204).send();
+    abortSignal.throwIfAborted();
+
+    const user = editProfileResult.value!;
+
+    signInUser(res, user);
+
+    const loggedUserDto: LoggedUserDto = {
+      email: user.email,
+      fullName: getFullName(user),
+      fistName: user.firstName,
+      lastName: user.lastName,
+    };
+
+    res.status(200).json(loggedUserDto);
   } catch (error) {
     next(error);
   }

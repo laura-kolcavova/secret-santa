@@ -1,6 +1,7 @@
 import { batch, createSignal } from 'solid-js';
 import { useAbortController } from '~/abort/useAbortController';
 import { EditProfileRequestDto } from '~/api/user/dto/EditProfileRequestDto';
+import { LoggedUserDto } from '~/api/user/dto/LoggedUserDto';
 import { userClient } from '~/api/user/userClient';
 
 export const useEditProfileMutation = () => {
@@ -8,6 +9,7 @@ export const useEditProfileMutation = () => {
   const [getIsError, setIsError] = createSignal<boolean>(false);
   const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
   const [getError, setError] = createSignal<unknown>(undefined);
+  const [getData, setData] = createSignal<LoggedUserDto | undefined>(undefined);
 
   const { createAbortSignal, finishAbortSignal } = useAbortController();
 
@@ -17,16 +19,18 @@ export const useEditProfileMutation = () => {
       setIsSuccess(false);
       setIsError(false);
       setError(undefined);
+      setData(undefined);
     });
 
     try {
       const signal = createAbortSignal();
 
-      await userClient.editProfile(editProfileRequest, signal);
+      const { data } = await userClient.editProfile(editProfileRequest, signal);
 
       batch(() => {
         setIsSuccess(true);
         setIsPending(false);
+        setData(data);
       });
     } catch (error) {
       batch(() => {
@@ -43,5 +47,5 @@ export const useEditProfileMutation = () => {
     editProfileAsync(editProfileRequest);
   };
 
-  return { editProfile, getIsPending, getIsSuccess, getIsError, getError };
+  return { editProfile, getIsPending, getIsSuccess, getIsError, getError, getData };
 };

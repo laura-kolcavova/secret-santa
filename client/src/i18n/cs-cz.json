@@ -23,6 +23,7 @@
     "newProfile.firstName": "Jméno",
     "newProfile.lastName": "Příjmení",
     "newProfile.department": "Oddělení",
+    "newProfile.selectDepartment": "Vyberte oddělení",
     "newProfile.email": "E-mail",
     "newProfile.pin": "Pin (4 čísla)",
     "newProfile.pinConfirm": "Zopakujte pin",

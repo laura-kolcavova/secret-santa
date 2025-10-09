@@ -40,3 +40,8 @@ body {
   background-color: var(--pallete-1);
   color: var(--pallete-6);
 }
+
+::placeholder {
+  color: var(--color-gray-500);
+  opacity: 1;
+}
