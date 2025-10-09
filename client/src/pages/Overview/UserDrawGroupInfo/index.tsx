@@ -103,7 +103,27 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
         </Show>
       </div>
 
-      <Countdown targetDate={drawGroup.drawStartUtc} />
+      <div class="relative z-10">
+        <div class="absolute bottom-1/2 left-2 translate-y-1/2 w-20 h-20 -rotate-12">
+          <img
+            src="/images/present.png"
+            alt="present"
+            draggable="false"
+            class="w-full h-full object-contain pointer-events-none"
+          />
+        </div>
+
+        <div class="absolute bottom-1/2 right-2 translate-y-1/2 w-20 h-20 rotate-64">
+          <img
+            src="/images/berries.png"
+            alt="holly berries"
+            draggable="false"
+            class="w-full h-full object-contain pointer-events-none"
+          />
+        </div>
+
+        <Countdown targetDate={drawGroup.drawStartUtc} />
+      </div>
     </div>
   );
 };

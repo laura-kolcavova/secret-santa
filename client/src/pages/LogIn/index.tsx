@@ -77,7 +77,34 @@ const LoginComponent: Component = () => {
         <Alert color="danger">{handleErrorLogin(getErrorLogin())}</Alert>
       </Show>
 
-      <form onSubmit={handleSubmit} class="mb-12 w-full max-w-xs mx-auto">
+      <form onSubmit={handleSubmit} class="mb-12 w-full max-w-xs mx-auto relative z-10 mt-32">
+        <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-48 h-48">
+          <img
+            src="/images/santa.png"
+            alt="santa"
+            draggable="false"
+            class="w-full h-full object-contain pointer-events-none"
+          />
+        </div>
+
+        <div class="absolute -bottom-10 -left-48 w-48 h-48 -rotate-12">
+          <img
+            src="/images/present.png"
+            alt="present"
+            draggable="false"
+            class="w-full h-full object-contain pointer-events-none"
+          />
+        </div>
+
+        <div class="absolute -bottom-10 -right-48 w-48 h-48 rotate-64">
+          <img
+            src="/images/berries.png"
+            alt="holly berries"
+            draggable="false"
+            class="w-full h-full object-contain pointer-events-none"
+          />
+        </div>
+
         <div class="mb-6">
           <label class="block mb-2 text-sm font-bold text-pallete-4" for="email">
             <FormattedMessage message={messages.email} />
