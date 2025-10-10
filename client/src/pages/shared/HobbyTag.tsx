@@ -13,8 +13,12 @@ export const HobbyTag: Component<HobbyTagProps> = (props) => {
 
       {props.removeTag && (
         <button
+          type="button"
           class="inline-block align-middle cursor-pointer p-2 -mr-2 -mt-2 -mb-2"
-          onClick={() => props.removeTag!(props.tag)}>
+          onClick={() => {
+            console.log('click?', props.tag);
+            props.removeTag!(props.tag);
+          }}>
           <XMarkIcon class="size-5" />
         </button>
       )}

@@ -29,11 +29,15 @@ export const AntiforgeryTokenProvider: ParentComponent = (props) => {
   };
 
   createEffect(() => {
+    const token = dataAntiforgeryToken();
+
+    if (!token) {
+      return;
+    }
+
     const interceptor = axios.interceptors.request.use(
       (config) => {
         if (config.method !== 'get') {
-          const token = dataAntiforgeryToken();
-
           config.headers['X-CSRF-Token'] = token;
         }
         return config;
@@ -43,7 +47,9 @@ export const AntiforgeryTokenProvider: ParentComponent = (props) => {
       },
     );
 
-    return () => axios.interceptors.request.eject(interceptor);
+    return () => {
+      axios.interceptors.request.eject(interceptor);
+    };
   });
 
   return (

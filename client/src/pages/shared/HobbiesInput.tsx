@@ -26,37 +26,43 @@ export const HobbiesInput: Component<HobbiesInputProps> = (props) => {
     }
   };
 
-  const handleSubmit = (e: SubmitEvent) => {
-    e.preventDefault();
-
+  const handleAddButtonClick = () => {
     addHobby();
-
     setInputValue('');
+  };
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+
+      addHobby();
+      setInputValue('');
+    }
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <div class="flex flex-row gap-2">
-          <input
-            id={props.id}
-            type="text"
-            autocomplete="off"
-            maxLength="256"
-            class='"block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100'
-            placeholder={formatMessage(messages.enterHobbyAndPressEnter)}
-            value={getInputValue()}
-            onInput={(e) => setInputValue(e.currentTarget.value)}
-          />
+      <div class="flex flex-row gap-2">
+        <input
+          id={props.id}
+          type="text"
+          autocomplete="off"
+          maxLength="256"
+          class='"block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100'
+          placeholder={formatMessage(messages.enterHobbyAndPressEnter)}
+          value={getInputValue()}
+          onInput={(e) => setInputValue(e.currentTarget.value)}
+          onKeyDown={handleKeyDown}
+        />
 
-          <button
-            class="px-3 py-2 rounded-md text-base font-normal cursor-pointer bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
-            onClick={addHobby}
-            disabled={!getHobbyFromInput()}>
-            <PlusIcon class="size-5" />
-          </button>
-        </div>
-      </form>
+        <button
+          type="button"
+          class="px-3 py-2 rounded-md text-base font-normal cursor-pointer bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
+          onClick={handleAddButtonClick}
+          disabled={!getHobbyFromInput()}>
+          <PlusIcon class="size-5" />
+        </button>
+      </div>
     </>
   );
 };
