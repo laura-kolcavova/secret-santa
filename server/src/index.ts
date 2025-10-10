@@ -10,14 +10,18 @@ import { mapProxyToSpaDevelopmentServer, mapSpaStaticFiles } from './api/shared/
 import { ensureDatabaseDeployed } from './persistence/shared/databaseDeploy';
 import { seedDatabase } from './persistence/shared/databaseSeed';
 import { abortSignalHandler } from './api/shared/middlewares/abortSignalHandler';
+import { csrfProtectionHandler } from './api/shared/middlewares/csrfProtectionHandler';
+import { mapSettingsRoutes } from './api/settings/settingsRoutes';
 
 const app = express();
 
 app.use(json());
 app.use(cookieParser());
 
+app.use(csrfProtectionHandler);
 app.use(abortSignalHandler);
 
+mapSettingsRoutes(app);
 mapUsersEndpoints(app);
 mapDrawGroupsRoutes(app);
 
