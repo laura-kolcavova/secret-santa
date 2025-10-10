@@ -180,6 +180,22 @@ PROXY_TO_SPA_DEVELOPMENT_SERVER_URL=http://localhost:3200
   - Development: `database.Development.sqlite`
 - Ensure the specified database directory exists and has write permissions
 
+## Configuration
+
+### Departments Configuration
+
+The application uses a configurable departments list that appears in department selection dropdowns throughout the application.
+
+**File Location**: `client/public/departments.json`
+
+**Default Configuration**:
+
+```json
+{
+  "departments": ["Department A", "Department B", "Department C"]
+}
+```
+
 ## Features
 
 - User authentication with JWT tokens
