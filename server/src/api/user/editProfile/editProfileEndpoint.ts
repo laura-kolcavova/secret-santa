@@ -7,9 +7,16 @@ import { createProblemDetails } from '~/api/shared/utils/validationErrorHelper';
 import { signInUser } from '~/api/shared/utils/userAuthenticationHelper';
 import { LoggedUserDto } from '../getLoggedUser/LoggedUserDto';
 import { getFullName } from '~/application/user/models/User';
+import { csrfProtectionHandler } from '~/api/shared/middlewares/csrfProtectionHandler';
 
 export const mapEditProfile = (router: Router) => {
-  router.put('/profile', userAuthorizationHandler, editProfileValidation, handle);
+  router.put(
+    '/profile',
+    userAuthorizationHandler,
+    editProfileValidation,
+    csrfProtectionHandler,
+    handle,
+  );
 };
 
 const handle = (req: Request, res: Response, next: NextFunction) => {

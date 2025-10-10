@@ -6,16 +6,19 @@ import { pages } from './navigation/pages';
 import { ProtectedRoute } from './navigation/ProtectedRoute';
 import { Layout } from './pages/shared/Layout';
 import { ErrorFallback } from './pages/shared/ErrorFallback';
+import { AntiforgeryTokenProvider } from './antiforgery/AntiforgeryTokenProvider';
 
 export const App: Component = () => {
   return (
     <TranslationProvider>
       <ErrorBoundary fallback={(error) => <ErrorFallback error={error} />}>
-        <LoggedUserProvider>
-          <Router root={Layout}>
-            <PagesRoutes />
-          </Router>
-        </LoggedUserProvider>
+        <AntiforgeryTokenProvider>
+          <LoggedUserProvider>
+            <Router root={Layout}>
+              <PagesRoutes />
+            </Router>
+          </LoggedUserProvider>
+        </AntiforgeryTokenProvider>
       </ErrorBoundary>
     </TranslationProvider>
   );

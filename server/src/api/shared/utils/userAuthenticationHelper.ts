@@ -1,6 +1,6 @@
 import { Response, CookieOptions } from 'express';
 import { userTokenGenerator } from '~/application/user/services/userTokenGenerator';
-import { COOKIE_USER_AUTHENTICATION_NAME } from '~/application/user/constants';
+import { COOKIE_USER_AUTHENTICATION_NAME } from '~/api/shared/constants';
 import { User } from '~/application/user/models/User';
 
 export const signInUser = (res: Response, user: User) => {
