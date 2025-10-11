@@ -51,11 +51,24 @@ const confirmDrawnParticipant = (
   const db = new Database(appConfig.sqliteDbFilePath, { readonly: false });
 
   try {
-    const stmt = db.prepare(`
+    const updateParticipant = db.prepare(`
+      UPDATE draw_group_participants
+      SET
+        hasDrawn = 1,
+        drawnParticipantEmail = $drawnParticipantEmail
+      WHERE drawGroupId = (
+        SELECT
+          id
+        FROM draw_groups
+        WHERE guid = $drawGroupGuid
+        LIMIT 1
+      )
+      AND email = $participantEmail`);
+
+    const updateDrawnParticipant = db.prepare(`
         UPDATE draw_group_participants
         SET
-            hasDrawn = 1,
-            drawnParticipantEmail = $drawnParticipantEmail
+            isDrawn = 1
         WHERE drawGroupId = (
             SELECT
                 id
@@ -63,14 +76,22 @@ const confirmDrawnParticipant = (
             WHERE guid = $drawGroupGuid
             LIMIT 1
         )
-        AND email = $participantEmail
-    `);
+        AND email = $drawnParticipantEmail`);
 
-    stmt.run({
-      drawGroupGuid: drawGroup.guid,
-      participantEmail: participant.email,
-      drawnParticipantEmail: participant.drawnParticipant!.email,
+    const transaction = db.transaction(() => {
+      updateParticipant.run({
+        drawGroupGuid: drawGroup.guid,
+        participantEmail: participant.email,
+        drawnParticipantEmail: participant.drawnParticipant!.email,
+      });
+
+      updateDrawnParticipant.run({
+        drawGroupGuid: drawGroup.guid,
+        drawnParticipantEmail: participant.drawnParticipant!.email,
+      });
     });
+
+    transaction();
   } catch (error) {
     console.error('Error confirming drawn participant:', error);
 

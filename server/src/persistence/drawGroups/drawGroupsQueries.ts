@@ -19,6 +19,7 @@ const findByYear = (year: number, abortSignal: AbortSignal): DrawGroup | undefin
             dg.createdAtUtc,
             dgp.email,
             dgp.hasDrawn,
+            dgp.isDrawn,
             dgp.drawnParticipantEmail
         FROM draw_groups dg
         LEFT JOIN draw_group_participants dgp ON dg.id = dgp.drawGroupId
@@ -37,6 +38,7 @@ const findByYear = (year: number, abortSignal: AbortSignal): DrawGroup | undefin
       .map<DrawGroupParticipant>((row) => ({
         email: row.email,
         hasDrawn: Boolean(row.hasDrawn),
+        isDrawn: Boolean(row.isDrawn),
         drawnParticipant: row.drawnParticipantEmail
           ? { email: row.drawnParticipantEmail }
           : undefined,
@@ -76,6 +78,7 @@ const findByGuid = (guid: string, abortSignal: AbortSignal): DrawGroup | undefin
             dg.createdAtUtc,
             dgp.email,
             dgp.hasDrawn,
+            dgp.isDrawn,
             dgp.drawnParticipantEmail
         FROM draw_groups dg
         LEFT JOIN draw_group_participants dgp ON dg.id = dgp.drawGroupId
@@ -94,6 +97,7 @@ const findByGuid = (guid: string, abortSignal: AbortSignal): DrawGroup | undefin
       .map<DrawGroupParticipant>((row) => ({
         email: row.email,
         hasDrawn: Boolean(row.hasDrawn),
+        isDrawn: Boolean(row.isDrawn),
         drawnParticipant: row.drawnParticipantEmail
           ? { email: row.drawnParticipantEmail }
           : undefined,
