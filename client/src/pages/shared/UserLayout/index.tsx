@@ -20,7 +20,7 @@ export const UserLayout: Component<UserLayoutProps> = (props) => {
   const changePinPath = pages.ChangePin.paths[0];
 
   return (
-    <div class="container mx-auto py-6">
+    <div class="page-container mx-auto py-6">
       <div class="mb-4">
         <h1>
           <span class="block text-2xl font-bold">{loggedUserContextState.user.fullName}</span>
@@ -30,8 +30,8 @@ export const UserLayout: Component<UserLayoutProps> = (props) => {
         </h1>
       </div>
 
-      <div class="grid grid-cols-2 gap-6 grid-cols-[17rem_1fr]">
-        <div class="col-1">
+      <div class="grid grid-cols-1 grid-rows-[auto_1fr] md:grid-cols-[17rem_1fr] md:grid-rows-1 gap-6">
+        <div class="order-1">
           <nav>
             <ul class="list-none">
               <SidebarNavItem
@@ -55,7 +55,7 @@ export const UserLayout: Component<UserLayoutProps> = (props) => {
           </nav>
         </div>
 
-        <div class="col-2 px-6">{props.children}</div>
+        <div class="order-2 md:px-6">{props.children}</div>
       </div>
     </div>
   );

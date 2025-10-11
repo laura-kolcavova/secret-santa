@@ -45,3 +45,41 @@ body {
   color: var(--color-gray-500);
   opacity: 1;
 }
+
+.page-container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 576px) {
+  .page-container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .page-container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .page-container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .page-container {
+    max-width: 1140px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .page-container {
+    max-width: 1320px;
+  }
+}
