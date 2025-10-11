@@ -52,7 +52,7 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
   };
 
   return (
-    <div class="p-4 rounded shadow-md max-w-md min-h-70 flex flex-col bg-white ">
+    <div class="p-4 rounded shadow-md max-w-md min-w-md min-h-70 flex flex-col bg-white ">
       <div class="mb-2 text-lg font-bold text-center text-pallete-6">{drawGroup.name}</div>
 
       <div class="px-4 mb-8 flex items-center justify-between">

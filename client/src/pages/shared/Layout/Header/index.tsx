@@ -8,7 +8,7 @@ export const Header: Component = () => {
 
   return (
     <header class="border-b border-solid border-gray-300 bg-gray-50">
-      <div class="container mx-auto flex py-6">
+      <div class="page-container mx-auto flex py-6">
         <div class="flex-1"></div>
 
         <div class="flex-1 flex items-center justify-center">

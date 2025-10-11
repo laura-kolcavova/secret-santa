@@ -72,7 +72,7 @@ const LoginComponent: Component = () => {
   };
 
   return (
-    <div class="container mx-auto py-6">
+    <div class="page-container mx-auto py-6">
       <Show when={getIsErrorLogin()}>
         <Alert color="danger">{handleErrorLogin(getErrorLogin())}</Alert>
       </Show>
