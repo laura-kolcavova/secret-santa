@@ -2,11 +2,11 @@ import { Request, Response, NextFunction, Router } from 'express';
 import { userAuthorizationHandler } from '~/api/shared/middlewares/userAuthorizatoinHandler';
 import { drawGroupManager } from '~/application/drawGroups/services/drawGroupManager';
 import { DrawnParticipantDto, UserDrawGroupDto } from './UserDrawGroupDto';
-import { findParticipantByEmail } from '~/application/drawGroups/utils/drawGroupHelpers';
 import { userManager } from '~/application/user/services/userManager';
 import { userErrors } from '~/application/user/userErrors';
 import { createProblemDetails } from '~/api/shared/utils/validationErrorHelper';
 import { getFullName } from '~/application/user/models/User';
+import { findParticipantByEmail } from '~/application/drawGroups/models/DrawGroup';
 
 export const mapGetUserDrawGroup = (router: Router) => {
   router.get('/user', userAuthorizationHandler, handle);

@@ -5,7 +5,7 @@ import {
 } from '~/application/shared/models/UnitResult';
 import { drawGroupManager } from './drawGroupManager';
 import { drawGroupErrors } from '../drawGroupErrors';
-import { hasParticipantByEmail } from '../utils/drawGroupHelpers';
+import { hasParticipantByEmail } from '../models/DrawGroup';
 
 const joinDrawGroup = (
   drawGroupGuid: string,

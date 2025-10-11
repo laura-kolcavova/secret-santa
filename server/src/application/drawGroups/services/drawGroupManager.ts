@@ -27,6 +27,7 @@ const addParticipant = (
   const newDrawGroupParticipant: DrawGroupParticipant = {
     email: normalizedParticipantEmail,
     hasDrawn: false,
+    isDrawn: false,
   };
 
   drawGroup.participants.push(newDrawGroupParticipant);
@@ -48,6 +49,8 @@ const confirmDrawnParticipant = (
 
   participant.hasDrawn = true;
   participant.drawnParticipant = newDrawnParticipant;
+
+  drawnParticipant.isDrawn = true;
 
   drawGroupsCommands.confirmDrawnParticipant(drawGroup, participant, abortSignal);
 

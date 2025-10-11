@@ -40,6 +40,7 @@ const drawGroupParticipantsSql = `
         drawGroupId INTEGER NOT NULL,
         email TEXT NOT NULL,
         hasDrawn INTEGER NOT NULL DEFAULT 0,
+        isDrawn INTEGER NOT NULL DEFAULT 0,
         drawnParticipantEmail TEXT,
         FOREIGN KEY (drawGroupId) REFERENCES draw_groups (id) ON DELETE CASCADE
     );

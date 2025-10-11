@@ -2,7 +2,7 @@ import { Result, resultError, resultSuccess } from '~/application/shared/models/
 import { DrawnParticipant } from '../models/DrawnParticipant';
 import { drawGroupErrors } from '../drawGroupErrors';
 import { drawGroupManager } from './drawGroupManager';
-import { drawRandomParticipant, findParticipantByEmail } from '../utils/drawGroupHelpers';
+import { drawRandomParticipant, findParticipantByEmail } from '../models/DrawGroup';
 
 const drawParticipant = (
   drawGroupGuid: string,
