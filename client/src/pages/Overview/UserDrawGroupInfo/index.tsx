@@ -1,4 +1,4 @@
-import { Component, Show } from 'solid-js';
+import { Component, createSignal, Match, Show, Switch } from 'solid-js';
 import { DrawGroupDto, UserStatusDto } from '~/api/drawGroups/dto/UserDrawGroupDto';
 import { useLocalization } from '~/translation/useLocalization';
 import { UserSolidIcon } from '~/pages/shared/icons/UserSolidIcon';
@@ -10,6 +10,7 @@ import { Countdown } from '~/pages/shared/Countdown';
 import { DrawButton } from './DrawButton';
 import { ExitIcon } from '~/pages/shared/icons/ExitIcon';
 import { DrawnParticipantButton } from './DrawnParticipantButton';
+import { useTimer } from './hooks/useTimer';
 
 export type UserDrawGroupInfoProps = {
   drawGroup: DrawGroupDto;
@@ -22,33 +23,69 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
 
   const { formatDate } = useLocalization();
 
-  const canJoin = (): boolean => {
-    if (userStatus.isParticipant) {
-      return false;
-    }
+  const { getNowUtc } = useTimer();
 
-    return true;
+  const drawHasStarted = (): boolean => {
+    const nowUtc = getNowUtc();
+    const drawStartUtc = new Date(drawGroup.drawStartUtc);
+    const drawEndUtc = new Date(drawGroup.drawEndUtc);
 
-    // const nowLocal = new Date();
-    // const drawStartLocal = new Date(drawStartUtc);
-
-    // return nowLocal < drawStartLocal;
+    return nowUtc >= drawStartUtc && nowUtc <= drawEndUtc;
   };
 
-  const canDraw = (): boolean => {
-    if (!userStatus.isParticipant) {
-      return false;
-    }
+  const drawHasEnded = (): boolean => {
+    const nowUtc = getNowUtc();
+    const drawEndUtc = new Date(drawGroup.drawEndUtc);
 
-    if (userStatus.hasDrawn) {
-      return false;
-    }
+    return nowUtc > drawEndUtc;
+  };
 
-    const nowLocal = new Date();
-    const drawStartLocal = new Date(drawGroup.drawStartUtc);
-    const drawEndLocal = new Date(drawGroup.drawEndUtc);
+  const UserHasDrawnHandler: Component = () => {
+    return (
+      <>
+        <div class="mb-4 text-base font-medium text-gray-600">
+          <FormattedMessage message={messages.youHaveDrawn} />
+        </div>
 
-    return nowLocal >= drawStartLocal && nowLocal <= drawEndLocal;
+        <DrawnParticipantButton drawnParticipant={userStatus.drawnParticipant!} />
+      </>
+    );
+  };
+
+  const UserHasJoinedHandler: Component = () => {
+    return (
+      <Show
+        when={drawHasStarted()}
+        fallback={
+          <Show
+            when={drawHasEnded()}
+            fallback={
+              <div class="text-base font-medium text-gray-600">
+                <FormattedMessage message={messages.waitForDrawToBegin} />
+              </div>
+            }>
+            <div class="text-base font-medium text-gray-600">
+              <FormattedMessage message={messages.drawHasEnded} />
+            </div>
+          </Show>
+        }>
+        <DrawButton drawGroup={drawGroup} refetchDrawGroup={refetchDrawGroup} />
+      </Show>
+    );
+  };
+
+  const UserHasNotJoinedHandler: Component = () => {
+    return (
+      <Show
+        when={!drawHasEnded()}
+        fallback={
+          <div class="text-base font-medium text-gray-600">
+            <FormattedMessage message={messages.drawHasEnded} />
+          </div>
+        }>
+        <JoinDrawGroupButton drawGroup={drawGroup} refetchDrawGroup={refetchDrawGroup} />
+      </Show>
+    );
   };
 
   return (
@@ -68,39 +105,15 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
       </div>
 
       <div class="flex-1 flex flex-col justify-center items-center mb-2">
-        <Show
-          when={userStatus.isParticipant}
-          fallback={
-            <Show
-              when={canJoin()}
-              fallback={
-                <div class="text-base font-medium text-red-600">
-                  <FormattedMessage message={messages.cantJoinDrawAlreadyBegan} />
-                </div>
-              }>
-              <JoinDrawGroupButton drawGroup={drawGroup} refetchDrawGroup={refetchDrawGroup} />
-            </Show>
-          }>
-          <Show
-            when={userStatus.hasDrawn}
-            fallback={
-              <Show
-                when={canDraw()}
-                fallback={
-                  <div class="text-base font-medium text-gray-600">
-                    <FormattedMessage message={messages.waitForDrawToBegin} />
-                  </div>
-                }>
-                <DrawButton drawGroup={drawGroup} refetchDrawGroup={refetchDrawGroup} />
-              </Show>
-            }>
-            <div class="mb-4 text-base font-medium text-gray-600">
-              <FormattedMessage message={messages.youHaveDrawn} />
-            </div>
+        <Switch fallback={<UserHasNotJoinedHandler />}>
+          <Match when={userStatus.hasDrawn}>
+            <UserHasDrawnHandler />
+          </Match>
 
-            <DrawnParticipantButton drawnParticipant={userStatus.drawnParticipant!} />
-          </Show>
-        </Show>
+          <Match when={userStatus.isParticipant}>
+            <UserHasJoinedHandler />
+          </Match>
+        </Switch>
       </div>
 
       <div class="relative z-10">
@@ -122,7 +135,7 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
           />
         </div>
 
-        <Countdown targetDate={drawGroup.drawStartUtc} />
+        <Countdown sourceDate={getNowUtc()} targetDate={new Date(drawGroup.drawStartUtc)} />
       </div>
     </div>
   );

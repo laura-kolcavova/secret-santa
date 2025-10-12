@@ -1,4 +1,4 @@
-import { Component, createSignal, onCleanup, onMount } from 'solid-js';
+import { Component, createEffect, createSignal, onCleanup, onMount } from 'solid-js';
 import { FormattedMessage } from '~/translation/FormattedMessage';
 import { messages } from './messages';
 
@@ -10,7 +10,8 @@ type TimeParts = {
 };
 
 export type CountdownProps = {
-  targetDate: string;
+  sourceDate: Date;
+  targetDate: Date;
 };
 
 export const Countdown: Component<CountdownProps> = (props) => {
@@ -21,12 +22,10 @@ export const Countdown: Component<CountdownProps> = (props) => {
     seconds: 0,
   });
 
-  let interval: NodeJS.Timeout | null = null;
-
   const calculateTimeLeft = () => {
-    const now = new Date().getTime();
-    const target = new Date(props.targetDate).getTime();
-    const difference = target - now;
+    const source = props.sourceDate.getTime();
+    const target = props.targetDate.getTime();
+    const difference = target - source;
 
     if (difference > 0) {
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
@@ -40,16 +39,8 @@ export const Countdown: Component<CountdownProps> = (props) => {
     }
   };
 
-  onMount(() => {
+  createEffect(() => {
     calculateTimeLeft();
-
-    interval = setInterval(calculateTimeLeft, 1000);
-  });
-
-  onCleanup(() => {
-    if (interval) {
-      clearInterval(interval);
-    }
   });
 
   return (
