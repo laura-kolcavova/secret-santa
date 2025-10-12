@@ -19,6 +19,10 @@ export const messages = {
     id: 'overview.waitForDrawToBegin',
     defaultMessage: 'WAIT FOR THE DRAW TO BEGIN',
   },
+  drawHasEnded: {
+    id: 'overview.drawHasEnded',
+    defaultMessage: 'THE DRAW HAS ENDED',
+  },
   draw: {
     id: 'overview.draw',
     defaultMessage: 'DRAW',

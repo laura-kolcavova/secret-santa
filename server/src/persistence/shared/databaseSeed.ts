@@ -12,8 +12,8 @@ const drawGroup = () => `
         '${crypto.randomUUID()}',
         2025,
         'Christmas 2025',
-        '${new Date(Date.UTC(2025, 8, 31, 22, 0, 0)).toISOString()}',
-        '${new Date(Date.UTC(2025, 11, 31, 22, 0, 0)).toISOString()}',
+        '2025-09-30T22:00:00.000Z',
+        '2025-12-31T23:00:00.000Z',
         '${new Date().toISOString()}'
     WHERE NOT EXISTS (
         SELECT

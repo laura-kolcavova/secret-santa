@@ -45,6 +45,7 @@
     "overview.joinDraw": "Zůčastnit se",
     "overview.cantJoinDrawAlreadyBegan": "Nemůžete se zůčastnit, protože losování již začalo",
     "overview.waitForDrawToBegin": "Počkejte, až začne losování",
+    "overview.drawHasEnded": "Losování již skončilo",
     "overview.draw": "Losovat",
     "overview.youHaveDrawn": "Vylosovali jste:",
     "myProfile.profileNotFound": "Profil nebyl nalezen",
