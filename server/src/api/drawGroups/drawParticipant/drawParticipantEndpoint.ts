@@ -13,11 +13,11 @@ export const mapDrawParticipant = (router: Router) => {
   router.post('/:drawGroupGuid/draw', userAuthorizationHandler, drawParticipantValidation, handle);
 };
 
-const handle = (req: Request<DrawParticipantParams>, res: Response, next: NextFunction) => {
+const handle = async (req: Request<DrawParticipantParams>, res: Response, next: NextFunction) => {
   try {
     const { abortSignal, loggedUser, params } = req;
 
-    const drawParticipantResult = drawParticipantService.drawParticipant(
+    const drawParticipantResult = await drawParticipantService.drawParticipant(
       params.drawGroupGuid,
       loggedUser!.email,
       abortSignal,
