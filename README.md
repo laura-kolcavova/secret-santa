@@ -72,15 +72,7 @@ Create profiles, groups and draw a random gift recipient.
    npm ci --production=false
    ```
 
-3. Update the following environment files in the `client` directory:
-
-   #### `.env` (Production)
-
-   ```properties
-   VITE_APP_API_URL=<SERVER URL HERE>
-   ```
-
-4. Build for production:
+3. Build for production:
    ```bash
    npm run build:prod
    ```
@@ -124,7 +116,7 @@ Ensure the following environment files exist in the `client` directory:
 #### `.env` (Production)
 
 ```properties
-VITE_APP_API_URL=<SERVER URL HERE>
+VITE_APP_API_URL=/
 ```
 
 #### `.env.development` (Development)
@@ -135,7 +127,7 @@ VITE_APP_API_URL=/
 
 **Required Client Environment Variables:**
 
-- `VITE_APP_API_URL`: The base URL of the server. In production, this should be set to your server's URL since the server hosts both the client and API.
+- `VITE_APP_API_URL`: The base URL of the server. In production, the server hosts both the client and API. In development, the server provides a proxy to the client and hosts the API therefore the value `/`
 
 ### Server Environment Variables
 
