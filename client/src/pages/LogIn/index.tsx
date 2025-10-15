@@ -117,7 +117,7 @@ const LoginComponent: Component = () => {
             autocomplete="email"
             required
             maxLength="256"
-            class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
+            class="block w-full py-2 px-3 border rounded shadow focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
             placeholder={formatMessage(messages.enterEmail)}
             onInput={(e) => setEmail(e.currentTarget.value)}
           />
@@ -137,7 +137,7 @@ const LoginComponent: Component = () => {
             maxlength={4}
             inputmode="numeric"
             pattern="\d{4}"
-            class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
+            class="block w-full py-2 px-3 border rounded shadow focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
             placeholder={formatMessage(messages.enterPin)}
             onInput={(e) => setPin(e.currentTarget.value)}
             value={getPin()}

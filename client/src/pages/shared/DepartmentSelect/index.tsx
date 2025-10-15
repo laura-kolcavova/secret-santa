@@ -57,7 +57,7 @@ export const DepartmentSelect: Component<DepartmentSelectProps> = (props) => {
         </select>
 
         <div
-          class="block w-full py-2 px-3 border rounded shadow leading-tight focus:outline-none focus:shadow-outline bg-gray-100 border-gray-900 cursor-pointer"
+          class="block w-full py-2 px-3 border rounded shadow focus:outline-none focus:shadow-outline bg-gray-100 border-gray-900 cursor-pointer"
           classList={{
             'text-gray-500': !isDeparmentSelected(),
             'text-gray-900': isDeparmentSelected(),

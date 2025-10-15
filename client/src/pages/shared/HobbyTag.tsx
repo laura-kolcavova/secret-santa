@@ -9,7 +9,7 @@ export type HobbyTagProps = {
 export const HobbyTag: Component<HobbyTagProps> = (props) => {
   return (
     <div class="py-2 px-2.5 rounded-lg flex flex-row items-center bg-pallete-4 hover:bg-pallete-5 text-pallete-8">
-      <span class="text-sm font-normal align-middle">{props.tag}</span>
+      <span class="text-sm font-normal align-middle break-all">{props.tag}</span>
 
       {props.removeTag && (
         <button
