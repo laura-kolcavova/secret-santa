@@ -12,7 +12,7 @@ const drawGroup = () => `
         '${crypto.randomUUID()}',
         2025,
         'Christmas 2025',
-        '2025-09-30T22:00:00.000Z',
+        '2025-10-31T23:00:00.000Z',
         '2025-12-31T23:00:00.000Z',
         '${new Date().toISOString()}'
     WHERE NOT EXISTS (
