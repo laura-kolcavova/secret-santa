@@ -138,6 +138,9 @@ Ensure the following environment files exist in the `server` directory:
 ```properties
 PORT=<SERVER PORT HERE>
 JWT_SECRET=<JWT SECRET HERE>
+USE_HTTPS=true
+HTTPS_CERT_PATH=certs/cert.pem
+HTTPS_KEY_PATH=certs/key.pem
 SQLITE_DB_FILE_PATH=database/database.sqlite
 SPA_STATIC_FILES_ROOT_PATH=../../client/build
 USE_PROXY_TO_SPA_DEVELOPMENT_SERVER=false
@@ -149,6 +152,9 @@ PROXY_TO_SPA_DEVELOPMENT_SERVER_URL=
 ```properties
 PORT=3100
 JWT_SECRET=f0e5ad01-2ef8-4304-8abb-14c51c9cbe56
+USE_HTTPS=false
+HTTPS_CERT_PATH=
+HTTPS_KEY_PATH=
 SQLITE_DB_FILE_PATH=database/database.Development.sqlite
 SPA_STATIC_FILES_ROOT_PATH=../../client/build
 USE_PROXY_TO_SPA_DEVELOPMENT_SERVER=true
@@ -159,10 +165,13 @@ PROXY_TO_SPA_DEVELOPMENT_SERVER_URL=http://localhost:3200
 
 - `PORT`: Port number for the server to listen on
 - `JWT_SECRET`: Secret key for JWT token signing (use a secure random string in production)
+- `USE_HTTPS`: Set to `true` to enable HTTPS, `false` to use HTTP
+- `HTTPS_CERT_PATH`: Path to the SSL certificate file (required when `USE_HTTPS` is `true`)
+- `HTTPS_KEY_PATH`: Path to the SSL private key file (required when `USE_HTTPS` is `true`)
 - `SQLITE_DB_FILE_PATH`: Path to the SQLite database file
 - `SPA_STATIC_FILES_ROOT_PATH`: Path to the built client files (the server serves the client from this directory in production)
 - `USE_PROXY_TO_SPA_DEVELOPMENT_SERVER`: Set to `true` for development, `false` for production
-- `PROXY_TO_SPA_DEVELOPMENT_SERVER_URL`: URL of the development client server (only needed for development)
+- `PROXY_TO_SPA_DEVELOPMENT_SERVER_URL`: URL of the development client server (required when `USE_PROXY_TO_SPA_DEVELOPMENT_SERVER` is `true`)
 
 ## Database
 
@@ -171,6 +180,41 @@ PROXY_TO_SPA_DEVELOPMENT_SERVER_URL=http://localhost:3200
   - Production: `database.sqlite`
   - Development: `database.Development.sqlite`
 - Ensure the specified database directory exists and has write permissions
+
+## HTTPS Setup
+
+For production deployments with HTTPS support, you'll need to generate SSL certificates. Follow these steps from the `server/certs` directory:
+
+### Generate SSL Certificates
+
+1. **Create a private key:**
+
+   ```bash
+   openssl genrsa -out key.pem
+   ```
+
+2. **Generate a CSR (Certificate Signing Request):**
+
+   ```bash
+   openssl req -new -key key.pem -out csr.pem
+   ```
+
+3. **Generate a certificate:**
+   ```bash
+   openssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem
+   ```
+
+### Enable HTTPS in Environment Configuration
+
+Update your `Server Environment Variables` with the following HTTPS settings:
+
+```properties
+USE_HTTPS=true
+HTTPS_CERT_PATH=certs/cert.pem
+HTTPS_KEY_PATH=certs/key.pem
+```
+
+**Note**: The generated certificate is self-signed and suitable for development or internal use. For production deployments, consider using certificates from a trusted Certificate Authority.
 
 ## Configuration
 
