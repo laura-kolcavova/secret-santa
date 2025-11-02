@@ -139,8 +139,8 @@ Ensure the following environment files exist in the `server` directory:
 PORT=<SERVER PORT HERE>
 JWT_SECRET=<JWT SECRET HERE>
 USE_HTTPS=true
-HTTPS_CERT_PATH=./certs/cert.pem
-HTTPS_KEY_PATH=./certs/key.pem
+HTTPS_CERT_PATH=certs/cert.pem
+HTTPS_KEY_PATH=certs/key.pem
 SQLITE_DB_FILE_PATH=database/database.sqlite
 SPA_STATIC_FILES_ROOT_PATH=../../client/build
 USE_PROXY_TO_SPA_DEVELOPMENT_SERVER=false
@@ -210,8 +210,8 @@ Update your `Server Environment Variables` with the following HTTPS settings:
 
 ```properties
 USE_HTTPS=true
-HTTPS_CERT_PATH=./certs/cert.pem
-HTTPS_KEY_PATH=./certs/key.pem
+HTTPS_CERT_PATH=certs/cert.pem
+HTTPS_KEY_PATH=certs/key.pem
 ```
 
 **Note**: The generated certificate is self-signed and suitable for development or internal use. For production deployments, consider using certificates from a trusted Certificate Authority.

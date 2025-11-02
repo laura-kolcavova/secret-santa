@@ -43,7 +43,7 @@ seedDatabase(appConfig.sqliteDbFilePath);
 const port = appConfig.port;
 
 if (appConfig.useHttps) {
-  const httpsCertificates = loadHttpsCertificates();
+  const httpsCertificates = loadHttpsCertificates(appConfig.httpsCertPath, appConfig.httpsKeyPath);
 
   const httpsServer = https.createServer(httpsCertificates, app);
 
