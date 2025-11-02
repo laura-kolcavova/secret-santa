@@ -13,7 +13,7 @@ import { seedDatabase } from './persistence/shared/databaseSeed';
 import { abortSignalHandler } from './api/shared/middlewares/abortSignalHandler';
 import { csrfProtectionHandler } from './api/shared/middlewares/csrfProtectionHandler';
 import { mapSettingsRoutes } from './api/settings/settingsRoutes';
-import { loadHttpsCertificates } from './api/shared/https/httpsHelper';
+import { loadHttpsCertificates } from './api/shared/https/httpsCertificates';
 
 const app = express();
 
