@@ -1,7 +1,6 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import path from 'path';
 import proxy from 'express-http-proxy';
-import cors from 'cors';
 
 export const mapProxyToSpaDevelopmentServer = (
   app: Application,

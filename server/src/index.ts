@@ -1,17 +1,19 @@
 import express, { json } from 'express';
 import cookieParser from 'cookie-parser';
+import path from 'path';
+import https from 'https';
 
 import { mapUsersEndpoints } from './api/user/usersRoutes';
 import { exceptionHandler } from './api/shared/middlewares/exceptionHandler';
 import { appConfig } from './config/appConfig';
 import { mapDrawGroupsRoutes } from './api/drawGroups/drawGroupsRoutes';
-import path from 'path';
 import { mapProxyToSpaDevelopmentServer, mapSpaStaticFiles } from './api/shared/spa/spaRoutes';
 import { ensureDatabaseDeployed } from './persistence/shared/databaseDeploy';
 import { seedDatabase } from './persistence/shared/databaseSeed';
 import { abortSignalHandler } from './api/shared/middlewares/abortSignalHandler';
 import { csrfProtectionHandler } from './api/shared/middlewares/csrfProtectionHandler';
 import { mapSettingsRoutes } from './api/settings/settingsRoutes';
+import { loadHttpsCertificates } from './api/shared/https/httpsHelper';
 
 const app = express();
 
@@ -40,6 +42,16 @@ seedDatabase(appConfig.sqliteDbFilePath);
 
 const port = appConfig.port;
 
-app.listen(port, () => {
-  console.log(`The server is running at http://localhost:${port}`);
-});
+if (appConfig.useHttps) {
+  const httpsCertificates = loadHttpsCertificates();
+
+  const httpsServer = https.createServer(httpsCertificates, app);
+
+  httpsServer.listen(port, () => {
+    console.log(`The server is running at https://localhost:${port}`);
+  });
+} else {
+  app.listen(port, () => {
+    console.log(`The server is running at http://localhost:${port}`);
+  });
+}

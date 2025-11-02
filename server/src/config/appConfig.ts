@@ -61,6 +61,9 @@ const envAsBool = (envKey: string): boolean | undefined => {
 export interface AppConfig {
   port: number;
   jwtSecret: string;
+  useHttps: boolean;
+  httpsCertPath: string;
+  httpsKeyPath: string;
   sqliteDbFilePath: string;
   spaStaticFilesRootPath: string;
   useProxyToSpaDevelopmentServer: boolean;
@@ -70,6 +73,9 @@ export interface AppConfig {
 export const appConfig: AppConfig = {
   port: envAsNumber(envRequired('PORT'))!,
   jwtSecret: envAsString(envRequired('JWT_SECRET'))!,
+  useHttps: envAsBool(envRequired('USE_HTTPS'))!,
+  httpsCertPath: envAsString('HTTPS_CERT_PATH') || '',
+  httpsKeyPath: envAsString('HTTPS_KEY_PATH') || '',
   sqliteDbFilePath: envAsString(envRequired('SQLITE_DB_FILE_PATH'))!,
   spaStaticFilesRootPath: envAsString(envRequired('SPA_STATIC_FILES_ROOT_PATH'))!,
   useProxyToSpaDevelopmentServer: envAsBool(envRequired('USE_PROXY_TO_SPA_DEVELOPMENT_SERVER'))!,
