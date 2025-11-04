@@ -5,6 +5,7 @@ export type UserTokenPayload = {
   fullName: string;
   firstName: string;
   lastName: string;
+  roles: string[];
 };
 
 export const createUserTokenPayload = (user: User): UserTokenPayload => {
@@ -13,5 +14,10 @@ export const createUserTokenPayload = (user: User): UserTokenPayload => {
     fullName: getFullName(user),
     firstName: user.firstName,
     lastName: user.lastName,
+    roles: [...user.roles],
   };
+};
+
+export const hasRole = (userTokenPayload: UserTokenPayload, role: string) => {
+  return userTokenPayload.roles.includes(role);
 };

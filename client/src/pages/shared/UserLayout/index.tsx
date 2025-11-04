@@ -1,10 +1,12 @@
 import { useLocation } from '@solidjs/router';
-import { Component, JSX } from 'solid-js';
+import { Component, JSX, Show } from 'solid-js';
 import { pages } from '~/navigation/pages';
 import { SidebarNavItem } from './SidebarNavItem';
 import { FormattedMessage } from '~/translation/FormattedMessage';
 import { messages } from './messages';
 import { useLoggedUserContext } from '~/authentication/LoggedUserProvider';
+import { hasRole } from '~/api/user/dto/LoggedUserDto';
+import userRoles from '~/utils/userRoles';
 
 export type UserLayoutProps = {
   children: JSX.Element;
@@ -18,6 +20,7 @@ export const UserLayout: Component<UserLayoutProps> = (props) => {
   const overviewPath = pages.Overview.paths[0];
   const myProfilePath = pages.MyProfile.paths[0];
   const changePinPath = pages.ChangePin.paths[0];
+  const drawGroupsPath = pages.DrawGroups.paths[0];
 
   return (
     <div class="page-container mx-auto py-6">
@@ -51,6 +54,14 @@ export const UserLayout: Component<UserLayoutProps> = (props) => {
                 path={changePinPath}
                 isActive={location.pathname === changePinPath}
               />
+
+              <Show when={hasRole(loggedUserContextState.user, userRoles.DrawGroupManager)}>
+                <SidebarNavItem
+                  label={<FormattedMessage message={messages.drawGroups} />}
+                  path={drawGroupsPath}
+                  isActive={location.pathname === drawGroupsPath}
+                />
+              </Show>
             </ul>
           </nav>
         </div>

@@ -3,4 +3,5 @@ export type LoggedUserDto = {
   fullName: string;
   fistName: string;
   lastName: string;
+  roles: string[];
 };

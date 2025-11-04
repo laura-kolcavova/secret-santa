@@ -1,8 +1,10 @@
 import { normalizeEmail } from '~/application/shared/utils/emailHelper';
 import { comparePin, computePinHash } from '~/application/shared/utils/pinHelper';
-import { User } from '../models/User';
+import { assignRole, User } from '../models/User';
 import { usersCommands } from '~/persistence/users/usersCommands';
 import { usersQueries } from '~/persistence/users/usersQueries';
+import { isDrawGroupManager } from '../utils/userRolesHelper';
+import UserRoles from '../models/UserRoles';
 
 const checkPin = (user: User, pin: string): boolean => {
   return comparePin(pin, user.pinHash);
@@ -12,6 +14,10 @@ const findByEmail = (email: string, abortSignal: AbortSignal): User | undefined 
   const normalizedEmail = normalizeEmail(email);
 
   const user = usersQueries.findByEmail(normalizedEmail, abortSignal);
+
+  if (user && isDrawGroupManager(user.email)) {
+    assignRole(user, UserRoles.DrawGroupManager);
+  }
 
   return user;
 };
@@ -36,6 +42,7 @@ const createUser = (
     lastName,
     department,
     hobbies: [...hobbies],
+    roles: [],
     createdAtUtc: new Date(Date.now()),
   };
 

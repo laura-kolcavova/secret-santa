@@ -40,6 +40,13 @@ export const pages: PageDefinitions = {
     ),
     isProtected: true,
   },
+  [Page.DrawGroups]: {
+    paths: ['/draw-groups'],
+    component: lazy(() =>
+      import('~/pages/DrawGroups').then((module) => ({ default: module.DrawGroups })),
+    ),
+    isProtected: true,
+  },
   [Page.NotFound]: {
     paths: ['*'],
     component: lazy(() =>

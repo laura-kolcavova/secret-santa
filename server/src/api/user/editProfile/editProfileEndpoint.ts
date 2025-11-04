@@ -53,6 +53,7 @@ const handle = (req: Request, res: Response, next: NextFunction) => {
       fullName: getFullName(user),
       fistName: user.firstName,
       lastName: user.lastName,
+      roles: [...user.roles],
     };
 
     res.status(200).json(loggedUserDto);

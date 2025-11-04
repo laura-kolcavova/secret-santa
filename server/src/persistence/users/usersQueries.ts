@@ -32,6 +32,7 @@ const findByEmail = (email: string, abortSignal: AbortSignal): User | undefined 
       lastName: row.lastName,
       department: row.department,
       hobbies: JSON.parse(row.hobbies),
+      roles: [],
       pinHash: row.pinHash,
       createdAtUtc: new Date(row.createdAtUtc),
     };

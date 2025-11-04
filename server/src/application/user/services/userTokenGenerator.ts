@@ -1,8 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 import { appConfig } from '~/config/appConfig';
-import { User } from '../models/User';
-import { createUserTokenPayload } from '../models/UserTokenPayload';
+import { createUserTokenPayload, User } from '../models/User';
 
 const generateUserToken = (user: User) => {
   const userTokenPayload = createUserTokenPayload(user);
