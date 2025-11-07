@@ -96,14 +96,16 @@ const getAllByYear = (year: number, abortSignal: AbortSignal): DrawGroup[] => {
     const drawGroups = Object.values(groupsByGuid).map<DrawGroup>((rows) => {
       const firstRow = rows[0];
 
-      const participants: DrawGroupParticipant[] = rows.map<DrawGroupParticipant>((row) => ({
-        email: row.email,
-        hasDrawn: Boolean(row.hasDrawn),
-        isDrawn: Boolean(row.isDrawn),
-        drawnParticipant: row.drawnParticipantEmail
-          ? { email: row.drawnParticipantEmail }
-          : undefined,
-      }));
+      const participants: DrawGroupParticipant[] = rows
+        .filter((row) => row.email)
+        .map<DrawGroupParticipant>((row) => ({
+          email: row.email,
+          hasDrawn: Boolean(row.hasDrawn),
+          isDrawn: Boolean(row.isDrawn),
+          drawnParticipant: row.drawnParticipantEmail
+            ? { email: row.drawnParticipantEmail }
+            : undefined,
+        }));
 
       return {
         guid: firstRow.guid,
