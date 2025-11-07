@@ -22,7 +22,7 @@ const joinDrawGroup = (
     return unitResultError(drawGroupErrors.userAlreadyJoined());
   }
 
-  drawGroupManager.addParticipant(drawGroup, participantEmail, abortSignal);
+  drawGroupManager.joinDrawGroup(participantEmail, drawGroup, abortSignal);
 
   return unitResultSuccess();
 };

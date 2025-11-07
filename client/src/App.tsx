@@ -29,7 +29,9 @@ const PagesRoutes: Component = () => {
     pageDefinition.isProtected ? (
       <Route
         path={pageDefinition.paths}
-        component={() => <ProtectedRoute component={pageDefinition.component} />}
+        component={() => (
+          <ProtectedRoute component={pageDefinition.component} roles={pageDefinition.roles} />
+        )}
       />
     ) : (
       <Route path={pageDefinition.paths} component={pageDefinition.component} />

@@ -1,12 +1,12 @@
 import { Application, Router } from 'express';
-import { mapGetUserDrawGroup } from './getUserDrawGroup/getUserDrawGroupEndpoint';
 import { mapJoinDrawGroup } from './joinDrawGroup/joinDrawGroupEndpoint';
 import { mapDrawParticipant } from './drawParticipant/drawParticipantEndpoint';
+import { mapGetUserDrawGroupList } from './getUserDrawGroupList/getUserDrawGroupListEndpoint';
 
 export const mapDrawGroupsRoutes = (app: Application) => {
   const router = Router();
 
-  mapGetUserDrawGroup(router);
+  mapGetUserDrawGroupList(router);
   mapJoinDrawGroup(router);
   mapDrawParticipant(router);
 

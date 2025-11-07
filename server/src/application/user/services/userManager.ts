@@ -1,10 +1,9 @@
 import { normalizeEmail } from '~/application/shared/utils/emailHelper';
 import { comparePin, computePinHash } from '~/application/shared/utils/pinHelper';
 import { assignRole, User } from '../models/User';
-import { usersCommands } from '~/persistence/users/usersCommands';
-import { usersQueries } from '~/persistence/users/usersQueries';
 import { isDrawGroupManager } from '../utils/userRolesHelper';
-import UserRoles from '../models/UserRoles';
+import userRoles from '../models/userRoles';
+import { userRepository } from '~/persistence/users/userRepository';
 
 const checkPin = (user: User, pin: string): boolean => {
   return comparePin(pin, user.pinHash);
@@ -13,10 +12,10 @@ const checkPin = (user: User, pin: string): boolean => {
 const findByEmail = (email: string, abortSignal: AbortSignal): User | undefined => {
   const normalizedEmail = normalizeEmail(email);
 
-  const user = usersQueries.findByEmail(normalizedEmail, abortSignal);
+  const user = userRepository.findByEmail(normalizedEmail, abortSignal);
 
   if (user && isDrawGroupManager(user.email)) {
-    assignRole(user, UserRoles.DrawGroupManager);
+    assignRole(user, userRoles.DrawGroupManager);
   }
 
   return user;
@@ -46,7 +45,7 @@ const createUser = (
     createdAtUtc: new Date(Date.now()),
   };
 
-  usersCommands.addUser(user, abortSignal);
+  userRepository.addUser(user, abortSignal);
 
   return user;
 };
@@ -64,7 +63,7 @@ const changeProfile = (
   user.department = department;
   user.hobbies = [...hobbies];
 
-  usersCommands.updateProfile(user, abortSignal);
+  userRepository.updateProfile(user, abortSignal);
 };
 
 const changePin = (user: User, pin: string, abortSignal: AbortSignal): void => {
@@ -72,7 +71,7 @@ const changePin = (user: User, pin: string, abortSignal: AbortSignal): void => {
 
   user.pinHash = pinHash;
 
-  usersCommands.updatePinHash(user, abortSignal);
+  userRepository.updatePinHash(user, abortSignal);
 };
 
 export const userManager = {

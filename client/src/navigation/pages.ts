@@ -1,3 +1,4 @@
+import userRoles from '~/utils/userRoles';
 import { Page } from './Page';
 import { PageDefinition } from './PageDefinition';
 import { lazy } from 'solid-js';
@@ -11,6 +12,7 @@ export const pages: PageDefinitions = {
     paths: ['/login', '/'],
     component: lazy(() => import('~/pages/LogIn').then((module) => ({ default: module.LogIn }))),
     isProtected: false,
+    roles: [],
   },
   [Page.NewProfile]: {
     paths: ['/new-profile'],
@@ -18,6 +20,7 @@ export const pages: PageDefinitions = {
       import('~/pages/NewProfile').then((module) => ({ default: module.NewProfile })),
     ),
     isProtected: false,
+    roles: [],
   },
   [Page.Overview]: {
     paths: ['/overview'],
@@ -25,6 +28,7 @@ export const pages: PageDefinitions = {
       import('~/pages/Overview').then((module) => ({ default: module.Overview })),
     ),
     isProtected: true,
+    roles: [],
   },
   [Page.MyProfile]: {
     paths: ['/my-profile'],
@@ -32,6 +36,7 @@ export const pages: PageDefinitions = {
       import('~/pages/MyProfile').then((module) => ({ default: module.MyProfile })),
     ),
     isProtected: true,
+    roles: [],
   },
   [Page.ChangePin]: {
     paths: ['/change-pin'],
@@ -39,6 +44,7 @@ export const pages: PageDefinitions = {
       import('~/pages/ChangePin').then((module) => ({ default: module.ChangePin })),
     ),
     isProtected: true,
+    roles: [],
   },
   [Page.DrawGroups]: {
     paths: ['/draw-groups'],
@@ -46,6 +52,7 @@ export const pages: PageDefinitions = {
       import('~/pages/DrawGroups').then((module) => ({ default: module.DrawGroups })),
     ),
     isProtected: true,
+    roles: [userRoles.DrawGroupManager],
   },
   [Page.NotFound]: {
     paths: ['*'],
@@ -53,5 +60,6 @@ export const pages: PageDefinitions = {
       import('~/pages/NotFound').then((module) => ({ default: module.NotFound })),
     ),
     isProtected: false,
+    roles: [],
   },
 };
