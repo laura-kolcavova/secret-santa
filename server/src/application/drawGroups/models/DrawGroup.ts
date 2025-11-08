@@ -33,28 +33,7 @@ export const findParticipantByEmail = (
   );
 };
 
-export const drawRandomParticipant = (
-  drawGroup: DrawGroup,
-  participant: DrawGroupParticipant,
-): DrawGroupParticipant | undefined => {
-  if (drawGroup.participants.length <= 1) {
-    return undefined;
-  }
-
-  const participantsToDraw = getParticipantsToDraw(drawGroup, participant);
-
-  if (participantsToDraw.length === 0) {
-    return undefined;
-  }
-
-  const randomIndex = Math.floor(Math.random() * participantsToDraw.length);
-
-  const drawnParticipant = participantsToDraw[randomIndex];
-
-  return drawnParticipant;
-};
-
-const getParticipantsToDraw = (
+export const getParticipantsToDraw = (
   drawGroup: DrawGroup,
   participant: DrawGroupParticipant,
 ): DrawGroupParticipant[] => {

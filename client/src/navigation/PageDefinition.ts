@@ -4,4 +4,5 @@ export type PageDefinition = {
   paths: string[];
   component: Component;
   isProtected: boolean;
+  roles: string[];
 };

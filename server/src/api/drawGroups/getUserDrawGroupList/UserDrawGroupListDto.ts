@@ -1,4 +1,8 @@
-export type UserDrawGroupDto = {
+export type UserDrawGroupListDto = {
+  userDrawGroups: UserDrawGroupListItemDto[];
+};
+
+export type UserDrawGroupListItemDto = {
   drawGroup: DrawGroupDto;
   userStatus: UserStatusDto;
 };

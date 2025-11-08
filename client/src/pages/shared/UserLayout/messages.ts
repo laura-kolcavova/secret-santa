@@ -11,4 +11,8 @@ export const messages = {
     id: 'userLayout.changePin',
     defaultMessage: 'CHANGE PIN',
   },
+  drawGroups: {
+    id: 'userLayout.drawGroups',
+    defaultMessage: 'DRAW GROUPS',
+  },
 };

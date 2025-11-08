@@ -2,24 +2,29 @@ import { normalizeEmail } from '~/application/shared/utils/emailHelper';
 import { DrawGroup } from '../models/DrawGroup';
 import { DrawGroupParticipant } from '../models/DrawGroupParticipant';
 import { DrawnParticipant } from '../models/DrawnParticipant';
-import { drawGroupsQueries } from '~/persistence/drawGroups/drawGroupsQueries';
-import { drawGroupsCommands } from '~/persistence/drawGroups/drawGroupsCommands';
-
-const findByYear = (year: number, abortSignal: AbortSignal): DrawGroup | undefined => {
-  const drawGroup = drawGroupsQueries.findByYear(year, abortSignal);
-
-  return drawGroup;
-};
+import { drawGroupRepository } from '~/persistence/drawGroups/drawGroupRepository';
 
 const findByGuid = (guid: string, abortSignal: AbortSignal): DrawGroup | undefined => {
-  const drawGroup = drawGroupsQueries.findByGuid(guid, abortSignal);
+  const drawGroup = drawGroupRepository.findByGuid(guid, abortSignal);
 
   return drawGroup;
 };
 
-const addParticipant = (
-  drawGroup: DrawGroup,
+const getAllByYear = (year: number, abortSignal: AbortSignal): DrawGroup[] => {
+  const drawGroups = drawGroupRepository.getAllByYear(year, abortSignal);
+
+  return drawGroups;
+};
+
+const getAll = (abortSignal: AbortSignal): DrawGroup[] => {
+  const drawGroups = drawGroupRepository.getAll(abortSignal);
+
+  return drawGroups;
+};
+
+const joinDrawGroup = (
   participantEmail: string,
+  drawGroup: DrawGroup,
   abortSignal: AbortSignal,
 ): DrawGroupParticipant => {
   const normalizedParticipantEmail = normalizeEmail(participantEmail);
@@ -32,17 +37,19 @@ const addParticipant = (
 
   drawGroup.participants.push(newDrawGroupParticipant);
 
-  drawGroupsCommands.addParticipant(drawGroup, newDrawGroupParticipant, abortSignal);
+  drawGroupRepository.addParticipant(drawGroup, newDrawGroupParticipant, abortSignal);
 
   return newDrawGroupParticipant;
 };
 
-const confirmDrawnParticipant = (
-  drawGroup: DrawGroup,
+const drawParticipant = (
   participant: DrawGroupParticipant,
-  drawnParticipant: DrawGroupParticipant,
+  participantsToDraw: DrawGroupParticipant[],
+  drawGroup: DrawGroup,
   abortSignal: AbortSignal,
 ): DrawnParticipant => {
+  const drawnParticipant = getRandomParticipantToDraw(participantsToDraw);
+
   const newDrawnParticipant: DrawnParticipant = {
     email: drawnParticipant.email,
   };
@@ -52,14 +59,29 @@ const confirmDrawnParticipant = (
 
   drawnParticipant.isDrawn = true;
 
-  drawGroupsCommands.confirmDrawnParticipant(drawGroup, participant, abortSignal);
+  drawGroupRepository.confirmDrawnParticipant(drawGroup, participant, abortSignal);
 
   return newDrawnParticipant;
 };
 
 export const drawGroupManager = {
-  findByYear,
   findByGuid,
-  addParticipant,
-  confirmDrawnParticipant,
+  getAllByYear,
+  getAll,
+  joinDrawGroup,
+  drawParticipant,
+};
+
+const getRandomParticipantToDraw = (
+  participantsToDraw: DrawGroupParticipant[],
+): DrawGroupParticipant => {
+  if (participantsToDraw.length === 0) {
+    throw new Error('No participants available to draw');
+  }
+
+  const randomIndex = Math.floor(Math.random() * participantsToDraw.length);
+
+  const drawnParticipant = participantsToDraw[randomIndex];
+
+  return drawnParticipant;
 };

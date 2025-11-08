@@ -11,24 +11,34 @@ const handle = (req: Request, res: Response, next: NextFunction) => {
   try {
     const { abortSignal, loggedUser } = req;
 
-    const user = userManager.findByEmail(loggedUser!.email, abortSignal);
+    const profileDto = getProfile(loggedUser!.email, abortSignal);
 
-    if (!user) {
+    if (!profileDto) {
       res.status(204).send();
 
       return;
     }
 
-    const myProfileDto: ProfileDto = {
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      department: user.department,
-      hobbies: [...user.hobbies],
-    };
-
-    res.status(200).json(myProfileDto);
+    res.status(200).json(profileDto);
   } catch (error) {
     next(error);
   }
+};
+
+const getProfile = (email: string, abortSignal: AbortSignal): ProfileDto | undefined => {
+  const user = userManager.findByEmail(email, abortSignal);
+
+  if (!user) {
+    return undefined;
+  }
+
+  const profileDto: ProfileDto = {
+    email: user.email,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    department: user.department,
+    hobbies: [...user.hobbies],
+  };
+
+  return profileDto;
 };

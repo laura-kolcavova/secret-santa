@@ -21,6 +21,7 @@ const handle = (req: Request, res: Response, next: NextFunction) => {
       fullName: loggedUser.fullName,
       fistName: loggedUser.firstName,
       lastName: loggedUser.lastName,
+      roles: [...loggedUser.roles],
     };
 
     res.status(200).json(loggedUserDto);

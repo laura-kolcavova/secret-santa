@@ -2,7 +2,7 @@ import { Result, resultError, resultSuccess } from '~/application/shared/models/
 import { DrawnParticipant } from '../models/DrawnParticipant';
 import { drawGroupErrors } from '../drawGroupErrors';
 import { drawGroupManager } from './drawGroupManager';
-import { drawRandomParticipant, findParticipantByEmail } from '../models/DrawGroup';
+import { findParticipantByEmail, getParticipantsToDraw } from '../models/DrawGroup';
 import { Mutex } from 'async-mutex';
 
 const mutex = new Mutex();
@@ -31,16 +31,16 @@ const drawParticipant = async (
       return resultError(drawGroupErrors.userAlreadyDrawn());
     }
 
-    const drawnParticipant = drawRandomParticipant(drawGroup, participant);
+    const participantsToDraw = getParticipantsToDraw(drawGroup, participant);
 
-    if (!drawnParticipant) {
+    if (participantsToDraw.length === 0) {
       return resultError(drawGroupErrors.noParticipantsToDraw());
     }
 
-    const newDrawnParticipant = drawGroupManager.confirmDrawnParticipant(
-      drawGroup,
+    const newDrawnParticipant = drawGroupManager.drawParticipant(
       participant,
-      drawnParticipant,
+      participantsToDraw,
+      drawGroup,
       abortSignal,
     );
 
