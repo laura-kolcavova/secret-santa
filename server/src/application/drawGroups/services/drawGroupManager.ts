@@ -101,10 +101,10 @@ const safelyDrawParticipant = (
   // If yes, the second-to-last participant must draw the last participant. For the last participant, the drawing is truly random again.
   // If no, both the second-to-last and last participants draw truly randomly.
   if (participantsToDraw.length === 2) {
-    const prticipantsWhoHaveNotDrawn = getParticipantsWhoHaveNotDrawn(drawGroup);
+    const participantsWhoHaveNotDrawn = getParticipantsWhoHaveNotDrawn(drawGroup);
 
     const lastParticipantWhoHasNotDrawn = excludeParticipant(
-      prticipantsWhoHaveNotDrawn,
+      participantsWhoHaveNotDrawn,
       participant,
     )[0];
 
