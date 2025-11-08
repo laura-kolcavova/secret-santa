@@ -42,7 +42,7 @@ export const userAuthorizationWithRolesHandler = (...roles: string[]) => [
         return;
       }
 
-      if (!roles.every((role) => hasRole(loggedUser!, role))) {
+      if (!roles.some((role) => hasRole(loggedUser!, role))) {
         const problemDetails: ProblemDetails = {
           type: 'https://tools.ietf.org/html/rfc9110#section-15.5.4',
           title: 'Forbidden',
