@@ -33,14 +33,10 @@ export const findParticipantByEmail = (
   );
 };
 
-export const getParticipantsToDraw = (
-  drawGroup: DrawGroup,
-  participant: DrawGroupParticipant,
-): DrawGroupParticipant[] => {
-  const participantNormalizedEmail = normalizeEmail(participant.email);
+export const getUndrawnParticipants = (drawGroup: DrawGroup): DrawGroupParticipant[] => {
+  return drawGroup.participants.filter((drawGroupParticipant) => !drawGroupParticipant.isDrawn);
+};
 
-  return drawGroup.participants.filter(
-    (drawGroupParticipant) =>
-      !drawGroupParticipant.isDrawn && drawGroupParticipant.email != participantNormalizedEmail,
-  );
+export const getParticipantsWhoHaveNotDrawn = (drawGroup: DrawGroup): DrawGroupParticipant[] => {
+  return drawGroup.participants.filter((drawGroupParticipant) => !drawGroupParticipant.hasDrawn);
 };
