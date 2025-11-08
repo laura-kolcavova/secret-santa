@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction, Router } from 'express';
 import { userAuthorizationWithRolesHandler } from '~/api/shared/middlewares/userAuthorizatoinHandler';
 import { drawGroupManager } from '~/application/drawGroups/services/drawGroupManager';
-import { DrawGroupListDto } from './DrawGroupListDto';
-import { DrawGroupListItemDto } from './DrawGroupListItemDto';
+import { DrawGroupListDto, DrawGroupListItemDto } from './DrawGroupListDto';
 import UserRoles from '~/application/user/models/userRoles';
 
 export const mapGetDrawGroupList = (router: Router) => {

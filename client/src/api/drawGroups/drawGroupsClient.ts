@@ -2,12 +2,21 @@ import { AxiosPromise, GenericAbortSignal } from 'axios';
 import { callAxios } from '~/utils/axios';
 import { DrawParticipantResponseDto } from './dto/DrawParticipantResponseDto';
 import { UserDrawGroupListDto } from './dto/UserDrawGroupListDto';
+import { DrawGroupListDto } from './dto/DrawGroupListDto';
 
 const baseUrl = '/api/draw-groups';
 
 const getUserDrawGroupList = (signal?: GenericAbortSignal): AxiosPromise<UserDrawGroupListDto> => {
   return callAxios({
     url: `${baseUrl}/user-list`,
+    method: 'GET',
+    signal: signal,
+  });
+};
+
+const getDrawGroupList = (signal?: GenericAbortSignal): AxiosPromise<DrawGroupListDto> => {
+  return callAxios({
+    url: `${baseUrl}/list`,
     method: 'GET',
     signal: signal,
   });
@@ -34,6 +43,7 @@ const drawParticipant = (
 
 export const drawGroupsClient = {
   getUserDrawGroupList,
+  getDrawGroupList,
   joinDrawGroup,
   drawParticipant,
 };

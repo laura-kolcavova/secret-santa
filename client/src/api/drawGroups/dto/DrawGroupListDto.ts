@@ -1,3 +1,7 @@
+export type DrawGroupListDto = {
+  drawGroups: DrawGroupListItemDto[];
+};
+
 export type DrawGroupListItemDto = {
   guid: string;
   name: string;

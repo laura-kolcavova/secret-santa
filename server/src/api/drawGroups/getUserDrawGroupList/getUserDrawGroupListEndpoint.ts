@@ -1,14 +1,17 @@
 import { Request, Response, NextFunction, Router } from 'express';
 import { userAuthorizationHandler } from '~/api/shared/middlewares/userAuthorizatoinHandler';
 import { drawGroupManager } from '~/application/drawGroups/services/drawGroupManager';
-import { DrawnParticipantDto, UserDrawGroupListItemDto } from './UserDrawGroupListItemDto';
 import { userManager } from '~/application/user/services/userManager';
 import { userErrors } from '~/application/user/userErrors';
 import { createProblemDetails } from '~/api/shared/utils/validationErrorHelper';
 import { getFullName } from '~/application/user/models/User';
 import { DrawGroup, findParticipantByEmail } from '~/application/drawGroups/models/DrawGroup';
 import { Result, resultError, resultSuccess } from '~/application/shared/models/Result';
-import { UserDrawGroupListDto } from './UserDrawGroupListDto';
+import {
+  DrawnParticipantDto,
+  UserDrawGroupListDto,
+  UserDrawGroupListItemDto,
+} from './UserDrawGroupListDto';
 
 export const mapGetUserDrawGroupList = (router: Router) => {
   router.get('/user-list', userAuthorizationHandler, handle);
