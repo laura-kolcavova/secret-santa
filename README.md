@@ -105,7 +105,7 @@ Create profiles, groups and draw a random gift recipient.
    npm run prod
    ```
 
-**Note**: In production, the server hosts both the API and the client application. The client will be available at `http://localhost:<PORT>/` (where `<PORT>` is your configured server port), and the API endpoints will be available at `http://localhost:<PORT>/api/*`.
+**Note**: In production, the server hosts both the API and the client application. The client will be available at `https://localhost:<PORT>/` (where `<PORT>` is your configured server port), and the API endpoints will be available at `https://localhost:<PORT>/api/*`.
 
 ## Environment Configuration
 
@@ -139,9 +139,9 @@ Ensure the following environment files exist in the `server` directory:
 PORT=<SERVER PORT HERE>
 JWT_SECRET=<JWT SECRET HERE>
 USE_HTTPS=true
-HTTPS_CERT_PATH=certs/cert.pem
-HTTPS_KEY_PATH=certs/key.pem
-SQLITE_DB_FILE_PATH=database/database.sqlite
+HTTPS_CERT_PATH=./certs/cert.pem
+HTTPS_KEY_PATH=./certs/key.pem
+SQLITE_DB_FILE_PATH=./database/database.sqlite
 SPA_STATIC_FILES_ROOT_PATH=../../client/build
 USE_PROXY_TO_SPA_DEVELOPMENT_SERVER=false
 PROXY_TO_SPA_DEVELOPMENT_SERVER_URL=
@@ -155,7 +155,7 @@ JWT_SECRET=f0e5ad01-2ef8-4304-8abb-14c51c9cbe56
 USE_HTTPS=false
 HTTPS_CERT_PATH=
 HTTPS_KEY_PATH=
-SQLITE_DB_FILE_PATH=database/database.Development.sqlite
+SQLITE_DB_FILE_PATH=./database/database.Development.sqlite
 SPA_STATIC_FILES_ROOT_PATH=../../client/build
 USE_PROXY_TO_SPA_DEVELOPMENT_SERVER=true
 PROXY_TO_SPA_DEVELOPMENT_SERVER_URL=http://localhost:3200
