@@ -1,8 +1,8 @@
 import { Component } from 'solid-js';
-import { DrawnParticipantDto } from '~/api/drawGroups/dto/UserDrawGroupDto';
 import { useModalContext } from '~/modals/ModalProvider';
 import { EnterIcon } from '~/pages/shared/icons/EnterIcon';
 import { DrawnParticipantModal } from '../DrawnParticipantModal';
+import { DrawnParticipantDto } from '~/api/drawGroups/dto/UserDrawGroupListDto';
 
 export type DrawnParticipantButtonProps = {
   drawnParticipant: DrawnParticipantDto;

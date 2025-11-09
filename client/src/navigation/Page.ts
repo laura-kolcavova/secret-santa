@@ -5,5 +5,6 @@ export enum Page {
   MyProfile = 'MyProfile',
   ChangePin = 'ChangePin',
   DrawGroups = 'DrawGroups',
+  DrawGroupDetail = 'DrawGroupDetail',
   NotFound = 'NotFound',
 }

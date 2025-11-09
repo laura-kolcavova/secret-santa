@@ -1,5 +1,4 @@
-import { Component, createSignal, Match, Show, Switch } from 'solid-js';
-import { DrawGroupDto, UserStatusDto } from '~/api/drawGroups/dto/UserDrawGroupDto';
+import { Component, Match, Show, Switch } from 'solid-js';
 import { useLocalization } from '~/translation/useLocalization';
 import { UserSolidIcon } from '~/pages/shared/icons/UserSolidIcon';
 import { CalendarSolidIcon } from '~/pages/shared/icons/CalendarSolidIcon';
@@ -8,9 +7,9 @@ import { messages } from '../messages';
 import { JoinDrawGroupButton } from './JoinDrawGroupButton';
 import { Countdown } from '~/pages/shared/Countdown';
 import { DrawButton } from './DrawButton';
-import { ExitIcon } from '~/pages/shared/icons/ExitIcon';
 import { DrawnParticipantButton } from './DrawnParticipantButton';
 import { useTimer } from './hooks/useTimer';
+import { DrawGroupDto, UserStatusDto } from '~/api/drawGroups/dto/UserDrawGroupListDto';
 
 export type UserDrawGroupInfoProps = {
   drawGroup: DrawGroupDto;
@@ -89,7 +88,7 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
   };
 
   return (
-    <div class="p-4 rounded shadow-md max-w-md min-w-md min-h-70 flex flex-col bg-white ">
+    <div class="p-4 rounded-lg shadow-md max-w-md min-w-md min-h-70 flex flex-col bg-white ">
       <div class="mb-2 text-lg font-bold text-center text-pallete-6">{drawGroup.name}</div>
 
       <div class="px-4 mb-8 flex items-center justify-between">

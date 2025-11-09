@@ -1,0 +1,56 @@
+import { Component } from 'solid-js';
+import { DrawGroupDetailDto } from '~/api/drawGroups/dto/DrawGroupDetailDto';
+import { useLocalization } from '~/translation/useLocalization';
+import { FormattedMessage } from '~/translation/FormattedMessage';
+import { messages } from '../messages';
+
+export type DrawGroupInfoProps = {
+  drawGroup: DrawGroupDetailDto;
+};
+
+export const DrawGroupInfo: Component<DrawGroupInfoProps> = (props) => {
+  const { formatDate } = useLocalization();
+
+  return (
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+      <h1 class="text-2xl font-bold text-pallete-6 mb-6">{props.drawGroup.name}</h1>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="flex flex-col">
+          <span class="text-sm font-semibold text-gray-500">
+            <FormattedMessage message={messages.year} />
+          </span>
+          <span class="text-lg text-pallete-6">{props.drawGroup.year}</span>
+        </div>
+
+        <div class="flex flex-col">
+          <span class="text-sm font-semibold text-gray-500">
+            <FormattedMessage message={messages.participants} />
+          </span>
+          <span class="text-lg text-pallete-6">{props.drawGroup.participants.length}</span>
+        </div>
+
+        <div class="flex flex-col">
+          <span class="text-sm font-semibold text-gray-500">
+            <FormattedMessage message={messages.drawStarts} />
+          </span>
+          <span class="text-lg text-pallete-6">{formatDate(props.drawGroup.drawStartUtc)}</span>
+        </div>
+
+        <div class="flex flex-col">
+          <span class="text-sm font-semibold text-gray-500">
+            <FormattedMessage message={messages.drawEnds} />
+          </span>
+          <span class="text-lg text-pallete-6">{formatDate(props.drawGroup.drawEndUtc)}</span>
+        </div>
+
+        <div class="flex flex-col">
+          <span class="text-sm font-semibold text-gray-500 ">
+            <FormattedMessage message={messages.createdAt} />
+          </span>
+          <span class="text-lg text-pallete-6">{formatDate(props.drawGroup.createdAtUtc)}</span>
+        </div>
+      </div>
+    </div>
+  );
+};

@@ -1,6 +1,7 @@
 {
     "shared.somethingWentWrong": "Něco se pokazilo",
     "shared.close": "Zavřít",
+    "shared.back": "Zpět",
     "errorFallback.unexpectedError": "Aplikace narazila na neočekávanou chybu.",
     "header.logOut": "Odhlásit se",
     "userLayout.overview": "Přehled",
@@ -71,5 +72,24 @@
     "drawModal.noParticipantsToDraw": "V této skupině není koho losovat",
     "drawModal.youHaveDrawn": "Vylosovali jste:",
     "drawnParticipantModal.label": "Váš obdarovaný",
-    "drawnParticipantModal.hobbies": "Záliby:"
+    "drawnParticipantModal.hobbies": "Záliby:",
+    "drawGroups.noDrawGroups": "Žádné losovací skupiny nejsou k dispozici",
+    "drawGroups.participants": "zůčastněných",
+    "drawGroups.drawStarts": "Losování začíná",
+    "drawGroups.drawEnds": "Losování končí",
+    "drawGroupDetail.drawGroupDetail": "Detail losovací skupiny",
+    "drawGroupDetail.back": "Zpět",
+    "drawGroupDetail.year": "Rok",
+    "drawGroupDetail.drawStarts": "Losování začíná",
+    "drawGroupDetail.drawEnds": "Losování končí",
+    "drawGroupDetail.createdAt": "Vytvořeno",
+    "drawGroupDetail.participants": "Účastníci",
+    "drawGroupDetail.participantsCount": "{count} účastníků",
+    "drawGroupDetail.name": "Jméno",
+    "drawGroupDetail.email": "E-mail",
+    "drawGroupDetail.status": "Stav",
+    "drawGroupDetail.hasDrawn": "Vylosováno",
+    "drawGroupDetail.notDrawnYet": "Ještě nelosováno",
+    "drawGroupDetail.drawnParticipant": "Vylosovaný účastník",
+    "drawGroupDetail.drawGroupNotFound": "Losovací skupina nebyla nalezena"
 }

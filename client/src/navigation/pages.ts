@@ -54,6 +54,14 @@ export const pages: PageDefinitions = {
     isProtected: true,
     roles: [userRoles.DrawGroupManager],
   },
+  [Page.DrawGroupDetail]: {
+    paths: ['/draw-groups/:guid'],
+    component: lazy(() =>
+      import('~/pages/DrawGroupDetail').then((module) => ({ default: module.DrawGroupDetail })),
+    ),
+    isProtected: true,
+    roles: [userRoles.DrawGroupManager],
+  },
   [Page.NotFound]: {
     paths: ['*'],
     component: lazy(() =>
