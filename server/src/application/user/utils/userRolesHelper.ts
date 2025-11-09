@@ -5,7 +5,7 @@ const loadDrawGroupManagers = () => {
   const configPath = './drawGroupManagers.json';
 
   if (!fs.existsSync(configPath)) {
-    throw new Error(`DrawGroupManagers.json filr file not found: ${configPath}`);
+    throw new Error(`DrawGroupManagers.json file not found: ${configPath}`);
   }
 
   const fileContent = fs.readFileSync(configPath, 'utf-8');
@@ -13,10 +13,10 @@ const loadDrawGroupManagers = () => {
   return JSON.parse(fileContent) as { drawGroupManagers: string[] };
 };
 
-const drawGroupManagersConfig = loadDrawGroupManagers();
-
 export const isDrawGroupManager = (email: string): boolean => {
   const normalizedEmail = normalizeEmail(email);
+
+  const drawGroupManagersConfig = loadDrawGroupManagers();
 
   return drawGroupManagersConfig.drawGroupManagers.includes(normalizedEmail);
 };
