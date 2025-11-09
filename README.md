@@ -236,9 +236,9 @@ The application uses a configurable departments list that appears in department 
 
 You can configure which users are allowed to manage (view, create, edit, delete) draw groups by editing the `drawGroupManagers.json` file.
 
-**File Location**: `client/public/drawGroupManagers.json`
+**File Location**: `server/drawGroupManagers.json`
 
-**Default Configuration Example**:
+**Default Configuration**:
 
 ```json
 {
