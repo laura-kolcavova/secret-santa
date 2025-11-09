@@ -210,8 +210,8 @@ Update your `Server Environment Variables` with the following HTTPS settings:
 
 ```properties
 USE_HTTPS=true
-HTTPS_CERT_PATH=certs/cert.pem
-HTTPS_KEY_PATH=certs/key.pem
+HTTPS_CERT_PATH=./certs/cert.pem
+HTTPS_KEY_PATH=./certs/key.pem
 ```
 
 **Note**: The generated certificate is self-signed and suitable for development or internal use. For production deployments, consider using certificates from a trusted Certificate Authority.
@@ -231,6 +231,22 @@ The application uses a configurable departments list that appears in department 
   "departments": ["Department A", "Department B", "Department C"]
 }
 ```
+
+### Draw Group Managers Configuration
+
+You can configure which users are allowed to manage (view, create, edit, delete) draw groups by editing the `drawGroupManagers.json` file.
+
+**File Location**: `client/public/drawGroupManagers.json`
+
+**Default Configuration Example**:
+
+```json
+{
+  "drawGroupManagers": ["admin@secretsanta.com"]
+}
+```
+
+**Note:** Changes take effect immediately without requiring a rebuild, but users must re-login for changes to apply.
 
 ## Features
 
