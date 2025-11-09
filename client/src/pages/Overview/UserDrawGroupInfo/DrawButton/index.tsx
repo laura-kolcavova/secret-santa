@@ -1,9 +1,9 @@
-import { Component, createSignal } from 'solid-js';
+import { Component } from 'solid-js';
 import { FormattedMessage } from '~/translation/FormattedMessage';
 import { messages } from '../../messages';
-import { DrawGroupDto } from '~/api/drawGroups/dto/UserDrawGroupDto';
 import { DrawModal } from '../DrawModal';
 import { useModalContext } from '~/modals/ModalProvider';
+import { DrawGroupDto } from '~/api/drawGroups/dto/UserDrawGroupListDto';
 
 export type DrawButtonProps = {
   drawGroup: DrawGroupDto;

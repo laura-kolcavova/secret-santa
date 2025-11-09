@@ -1,12 +1,12 @@
 import Dialog from '@corvu/dialog';
 import { VoidComponent } from 'solid-js';
-import { DrawnParticipantDto } from '~/api/drawGroups/dto/UserDrawGroupDto';
 import { useModalContext } from '~/modals/ModalProvider';
 import { FormattedMessage } from '~/translation/FormattedMessage';
 import { XMarkIcon } from '~/pages/shared/icons/XMarkIcon';
 import { sharedMessages } from '~/pages/shared/sharedMessages';
 import { HobbyList } from '~/pages/shared/HobbyList';
 import { messages } from './messages';
+import { DrawnParticipantDto } from '~/api/drawGroups/dto/UserDrawGroupListDto';
 
 export type DrawnParticipantModalProps = {
   drawnParticipant: DrawnParticipantDto;

@@ -1,6 +1,5 @@
 import Dialog from '@corvu/dialog';
 import { batch, createEffect, createSignal, Show, VoidComponent } from 'solid-js';
-import { DrawGroupDto } from '~/api/drawGroups/dto/UserDrawGroupDto';
 import { useModalContext } from '~/modals/ModalProvider';
 import { FormattedMessage } from '~/translation/FormattedMessage';
 import { messages } from './messages';
@@ -11,6 +10,7 @@ import { useDrawParticipantErrorHandler } from './hooks/useDrawParticipantErrorH
 import { sharedMessages } from '~/pages/shared/sharedMessages';
 import { DrawnParticipantButton } from './DrawnParticipantButton';
 import { ShakingPresent } from './ShakingPresent';
+import { DrawGroupDto } from '~/api/drawGroups/dto/UserDrawGroupListDto';
 
 export type DrawModalProps = {
   drawGroup: DrawGroupDto;

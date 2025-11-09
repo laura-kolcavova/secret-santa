@@ -4,7 +4,7 @@ import { FormattedMessage } from '~/translation/FormattedMessage';
 import { useJoinDrawGroupMutation } from './hooks/useJoinDrawGroupMutation';
 import { SpinnerIcon } from '~/pages/shared/icons/SpinnerIcon';
 import { useJoinDrawGroupErrorHandler } from './hooks/useJoinDrawGroupErrorHandler';
-import { DrawGroupDto } from '~/api/drawGroups/dto/UserDrawGroupDto';
+import { DrawGroupDto } from '~/api/drawGroups/dto/UserDrawGroupListDto';
 
 export type JoinDrawGroupButtonProps = {
   drawGroup: DrawGroupDto;

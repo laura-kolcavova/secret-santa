@@ -7,4 +7,8 @@ export const sharedMessages = {
     id: 'shared.close',
     defaultMessage: 'CLOSE',
   },
+  back: {
+    id: 'shared.back',
+    defaultMessage: 'BACK',
+  },
 };
