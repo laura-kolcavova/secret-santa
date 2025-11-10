@@ -13,7 +13,7 @@ export type DrawGroupListItemProps = {
 };
 
 export const DrawGroupListItem: Component<DrawGroupListItemProps> = (props) => {
-  const { formatDate } = useLocalization();
+  const { formatDate, formatTime } = useLocalization();
 
   const drawGroupDetailPath = pages.DrawGroupDetail.paths[0].replace(':guid', props.drawGroup.guid);
 
@@ -37,7 +37,11 @@ export const DrawGroupListItem: Component<DrawGroupListItemProps> = (props) => {
           <CalendarSolidIcon class="size-4 mr-1.5" />
           <span class="text-sm">
             <FormattedMessage message={messages.drawStarts} />:{' '}
-            {formatDate(props.drawGroup.drawStartUtc)}
+            {formatDate(props.drawGroup.drawStartUtc)}{' '}
+            {formatTime(props.drawGroup.drawStartUtc, {
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
           </span>
         </div>
 
@@ -45,7 +49,11 @@ export const DrawGroupListItem: Component<DrawGroupListItemProps> = (props) => {
           <CalendarSolidIcon class="size-4 mr-1.5" />
           <span class="text-sm">
             <FormattedMessage message={messages.drawEnds} />:{' '}
-            {formatDate(props.drawGroup.drawEndUtc)}
+            {formatDate(props.drawGroup.drawEndUtc)}{' '}
+            {formatTime(props.drawGroup.drawStartUtc, {
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
           </span>
         </div>
       </div>

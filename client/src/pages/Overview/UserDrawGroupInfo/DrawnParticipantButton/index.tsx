@@ -19,7 +19,7 @@ export const DrawnParticipantButton: Component<DrawnParticipantButtonProps> = ({
 
   return (
     <button
-      class="text-xl font-bold hover:underline cursor-pointer flex items-center justify-center text-pallete-4"
+      class="text-lg font-bold hover:underline cursor-pointer flex items-center justify-center text-pallete-4"
       onClick={showDrawnParticipantCard}>
       {drawnParticipant.fullName}
 

@@ -1,7 +1,6 @@
-import { Component, Match, Show, Switch } from 'solid-js';
+import { Component, Match, Switch } from 'solid-js';
 import { useLocalization } from '~/translation/useLocalization';
 import { UserSolidIcon } from '~/pages/shared/icons/UserSolidIcon';
-import { CalendarSolidIcon } from '~/pages/shared/icons/CalendarSolidIcon';
 import { FormattedMessage } from '~/translation/FormattedMessage';
 import { messages } from '../messages';
 import { JoinDrawGroupButton } from './JoinDrawGroupButton';
@@ -20,7 +19,7 @@ export type UserDrawGroupInfoProps = {
 export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
   const { drawGroup, userStatus, refetchDrawGroup } = props;
 
-  const { formatDate } = useLocalization();
+  const { formatDate, formatTime } = useLocalization();
 
   const { getNowUtc } = useTimer();
 
@@ -42,7 +41,7 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
   const UserHasDrawnHandler: Component = () => {
     return (
       <>
-        <div class="mb-4 text-base font-medium text-gray-600">
+        <div class="mb-2 text-base font-medium text-gray-600">
           <FormattedMessage message={messages.youHaveDrawn} />
         </div>
 
@@ -53,57 +52,55 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
 
   const UserHasJoinedHandler: Component = () => {
     return (
-      <Show
-        when={drawHasStarted()}
-        fallback={
-          <Show
-            when={drawHasEnded()}
-            fallback={
-              <div class="text-base font-medium text-gray-600">
-                <FormattedMessage message={messages.waitForDrawToBegin} />
-              </div>
-            }>
-            <div class="text-base font-medium text-gray-600">
-              <FormattedMessage message={messages.drawHasEnded} />
-            </div>
-          </Show>
-        }>
-        <DrawButton drawGroup={drawGroup} refetchDrawGroup={refetchDrawGroup} />
-      </Show>
+      <Switch fallback={<DrawButton drawGroup={drawGroup} refetchDrawGroup={refetchDrawGroup} />}>
+        <Match when={drawHasEnded()}>
+          <div class="text-base font-medium text-gray-600">
+            <FormattedMessage message={messages.drawHasEnded} />
+          </div>
+        </Match>
+
+        <Match when={!drawHasStarted()}>
+          <div class="text-base font-medium text-gray-600">
+            <FormattedMessage message={messages.waitForDrawToBegin} />
+          </div>
+        </Match>
+      </Switch>
     );
   };
 
   const UserHasNotJoinedHandler: Component = () => {
     return (
-      <Show
-        when={!drawHasEnded()}
+      <Switch
         fallback={
+          <JoinDrawGroupButton drawGroup={drawGroup} refetchDrawGroup={refetchDrawGroup} />
+        }>
+        <Match when={drawHasEnded()}>
           <div class="text-base font-medium text-gray-600">
             <FormattedMessage message={messages.drawHasEnded} />
           </div>
-        }>
-        <JoinDrawGroupButton drawGroup={drawGroup} refetchDrawGroup={refetchDrawGroup} />
-      </Show>
+        </Match>
+
+        <Match when={drawHasStarted()}>
+          <div class="text-base font-medium text-gray-600">
+            <FormattedMessage message={messages.cantJoinDrawAlreadyBegan} />
+          </div>
+        </Match>
+      </Switch>
     );
   };
 
   return (
     <div class="p-4 rounded-lg shadow-md max-w-md min-w-md min-h-70 flex flex-col bg-white ">
-      <div class="mb-2 text-lg font-bold text-center text-pallete-6">{drawGroup.name}</div>
+      <div class="px-4 mb-10 flex items-center justify-between">
+        <div class="text-lg font-bold  text-pallete-6">{drawGroup.name}</div>
 
-      <div class="px-4 mb-8 flex items-center justify-between">
         <div class="text-base font-normal flex items-center text-gray-600">
           <UserSolidIcon class="size-4 mr-1.5" />
-          {drawGroup.participantsCount} <FormattedMessage message={messages.participants} />
-        </div>
-
-        <div class="text-base font-normal flex items-center text-gray-600">
-          <CalendarSolidIcon class="size-4 mr-1.5" />
-          {formatDate(drawGroup.drawStartUtc)}
+          {drawGroup.participantsCount}
         </div>
       </div>
 
-      <div class="flex-1 flex flex-col justify-center items-center mb-2">
+      <div class="flex-1 flex flex-col justify-center items-center mb-10">
         <Switch fallback={<UserHasNotJoinedHandler />}>
           <Match when={userStatus.hasDrawn}>
             <UserHasDrawnHandler />
@@ -115,7 +112,7 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
         </Switch>
       </div>
 
-      <div class="relative z-10">
+      <div class="flex flex-col items-center relative z-10 ">
         <div class="absolute bottom-1/2 left-2 translate-y-1/2 w-20 h-20 -rotate-12">
           <img
             src="/images/present.png"
@@ -134,7 +131,19 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
           />
         </div>
 
+        <span class="text-base font-normal text-gray-600">
+          <FormattedMessage message={messages.drawStartsIn} />
+        </span>
+
         <Countdown sourceDate={getNowUtc()} targetDate={new Date(drawGroup.drawStartUtc)} />
+
+        <span class="mt-1 text-sm font-normal text-gray-600">
+          {formatDate(drawGroup.drawStartUtc)}{' '}
+          {formatTime(drawGroup.drawStartUtc, {
+            hour: '2-digit',
+            minute: '2-digit',
+          })}
+        </span>
       </div>
     </div>
   );

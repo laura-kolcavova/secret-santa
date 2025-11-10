@@ -11,6 +11,18 @@ export type DrawGroup = {
   createdAtUtc: Date;
 };
 
+export const drawHasStarted = (drawGroup: DrawGroup): boolean => {
+  const nowUtc = new Date(Date.now());
+
+  return nowUtc >= drawGroup.drawStartUtc && nowUtc <= drawGroup.drawEndUtc;
+};
+
+export const drawHasEnded = (drawGroup: DrawGroup): boolean => {
+  const nowUtc = new Date(Date.now());
+
+  return nowUtc > drawGroup.drawEndUtc;
+};
+
 export const hasParticipantByEmail = (drawGroup: DrawGroup, participantEmail: string): boolean => {
   const normalizedParticipantEmail = normalizeEmail(participantEmail);
 

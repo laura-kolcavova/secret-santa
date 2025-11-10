@@ -14,8 +14,8 @@ export const useLocalization = () => {
     return new Date(isoString).toLocaleDateString(getLocale());
   };
 
-  const formatTime = (isoString: string): string => {
-    return new Date(isoString).toLocaleTimeString(getLocale());
+  const formatTime = (isoString: string, options?: Intl.DateTimeFormatOptions): string => {
+    return new Date(isoString).toLocaleTimeString(getLocale(), options);
   };
 
   return { formatMessage, formatDate, formatTime };
