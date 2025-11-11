@@ -14,7 +14,7 @@ export type JoinDrawGroupButtonProps = {
 export const JoinDrawGroupButton: Component<JoinDrawGroupButtonProps> = (props) => {
   const { handleError } = useJoinDrawGroupErrorHandler();
 
-  const { mutate, getIsPending, getIsSuccess, getError } = useJoinDrawGroupMutation();
+  const { mutate, getIsPending, getIsError, getIsSuccess, getError } = useJoinDrawGroupMutation();
 
   const joinDrawGroup = (): void => {
     mutate(props.drawGroup.guid);
@@ -27,7 +27,7 @@ export const JoinDrawGroupButton: Component<JoinDrawGroupButtonProps> = (props) 
   });
 
   createEffect(() => {
-    if (getError()) {
+    if (getIsError()) {
       handleError(getError());
     }
   });

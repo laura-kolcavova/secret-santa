@@ -95,5 +95,6 @@
     "drawGroupDetail.hasDrawn": "Vylosováno",
     "drawGroupDetail.notDrawnYet": "Ještě nelosováno",
     "drawGroupDetail.drawnParticipant": "Vylosovaný účastník",
-    "drawGroupDetail.drawGroupNotFound": "Losovací skupina nebyla nalezena"
+    "drawGroupDetail.drawGroupNotFound": "Losovací skupina nebyla nalezena",
+    "editDrawGroupModal.name": "Název"
 }

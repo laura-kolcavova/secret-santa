@@ -4,6 +4,7 @@ import { mapDrawParticipant } from './drawParticipant/drawParticipantEndpoint';
 import { mapGetUserDrawGroupList } from './getUserDrawGroupList/getUserDrawGroupListEndpoint';
 import { mapGetDrawGroupList } from './getDrawGroupList/getDrawGroupListEndpoint';
 import { mapGetDrawGroupDetail } from './getDrawGroupDetail/getDrawGroupDetailEndpoint';
+import { mapEditDrawGroup } from './editDrawGroup/editDrawGroupEndpoint';
 
 export const mapDrawGroupsRoutes = (app: Application) => {
   const router = Router();
@@ -13,6 +14,7 @@ export const mapDrawGroupsRoutes = (app: Application) => {
   mapGetDrawGroupDetail(router);
   mapJoinDrawGroup(router);
   mapDrawParticipant(router);
+  mapEditDrawGroup(router);
 
   app.use('/api/draw-groups', router);
 };

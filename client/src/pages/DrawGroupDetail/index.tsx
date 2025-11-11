@@ -10,19 +10,25 @@ import { DrawGroupInfo } from './DrawGroupInfo';
 import { ParticipantsList } from './ParticipantsList';
 import { messages } from './messages';
 import { pages } from '~/navigation/pages';
+import { EditDrawGroupModal } from './EditDrawGroupModal';
+import { useModalContext } from '~/modals/ModalProvider';
 
 export const DrawGroupDetail: Component = () => {
   const params = useParams<{ guid: string }>();
 
   const navigate = useNavigate();
 
-  const [data] = useDrawGroupDetailQuery(params.guid);
+  const { openModal } = useModalContext();
+
+  const [data, { refetch }] = useDrawGroupDetailQuery(params.guid);
 
   const goBack = () => {
     navigate(pages.DrawGroups.paths[0]);
   };
 
-  const openEditDrawGroupModal = () => {};
+  const openEditDrawGroupModal = () => {
+    openModal(() => <EditDrawGroupModal drawGroup={data()!} refetchDrawGroup={refetch} />);
+  };
 
   return (
     <UserLayout>
@@ -34,6 +40,7 @@ export const DrawGroupDetail: Component = () => {
         </button>
 
         <button
+          disabled={!data()}
           onClick={openEditDrawGroupModal}
           class="px-4 py-2 text-sm font-medium rounded-md focus:outline-none focus:shadow-outline cursor-pointer text-pallete-8 bg-pallete-2 hover:bg-pallete-3 ">
           <FormattedMessage message={sharedMessages.edit} />

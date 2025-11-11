@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction, Router } from 'express';
 import { userAuthorizationWithRolesHandler } from '~/api/shared/middlewares/userAuthorizatoinHandler';
 
-import { joinDrawGroupService } from '~/application/drawGroups/services/joinDrawGroupService';
 import { createProblemDetails } from '~/api/shared/utils/validationErrorHelper';
 import userRoles from '~/application/user/models/userRoles';
 import { editDrawGroupValidation } from './editDrawGroupValidation';
 import { EditDrawGroupRequestDto } from './EditDrawGroupRequestDto';
+import { editDrawGroupService } from '~/application/drawGroups/services/editDrawGroupService';
 
 export const mapEditDrawGroup = (router: Router) => {
   router.put(
-    '/:drawGroupGuid/edit',
+    '/edit',
     userAuthorizationWithRolesHandler(userRoles.DrawGroupManager),
     editDrawGroupValidation,
     handle,
@@ -22,14 +22,16 @@ const handle = (req: Request, res: Response, next: NextFunction) => {
 
     const editDrawGroupRequest = body as EditDrawGroupRequestDto;
 
-    const joinDrawGroupResult = joinDrawGroupService.joinDrawGroup(
-      params.drawGroupGuid,
-      loggedUser!.email,
+    const editDrawGroupResult = editDrawGroupService.editDrawGroup(
+      editDrawGroupRequest.drawGroupGuid,
+      editDrawGroupRequest.name,
+      new Date(editDrawGroupRequest.drawStartUtc),
+      new Date(editDrawGroupRequest.drawEndUtc),
       abortSignal,
     );
 
-    if (!joinDrawGroupResult.isSuccess) {
-      const problemDetails = createProblemDetails(joinDrawGroupResult.error!, req);
+    if (!editDrawGroupResult.isSuccess) {
+      const problemDetails = createProblemDetails(editDrawGroupResult.error!, req);
 
       res.status(400).json(problemDetails);
 

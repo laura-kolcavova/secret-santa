@@ -280,7 +280,36 @@ const confirmDrawnParticipant = (
 
     transaction();
   } catch (error) {
-    console.error('Error confirming drawn participant:', error);
+    console.error('Error updating drawn participant:', error);
+
+    throw error;
+  } finally {
+    db.close();
+  }
+};
+
+const editDrawGroup = (drawGroup: DrawGroup, abortSignal: AbortSignal): void => {
+  abortSignal.throwIfAborted();
+
+  const db = new Database(appConfig.sqliteDbFilePath, { readonly: false });
+
+  try {
+    const stmt = db.prepare(`
+      UPDATE draw_groups
+      SET
+        name = $name,
+        drawStartUtc = $drawStartUtc,
+        drawEndUtc = $drawEndUtc
+      WHERE guid = $guid`);
+
+    stmt.run({
+      guid: drawGroup.guid,
+      name: drawGroup.name,
+      drawStartUtc: drawGroup.drawStartUtc,
+      drawEndUtc: drawGroup.drawEndUtc,
+    });
+  } catch (error) {
+    console.error('Error while updating draw group:', error);
 
     throw error;
   } finally {
@@ -294,4 +323,5 @@ export const drawGroupRepository = {
   getAll,
   addParticipant,
   confirmDrawnParticipant,
+  editDrawGroup,
 };

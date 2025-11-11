@@ -20,7 +20,8 @@ export type DrawModalProps = {
 export const DrawModal: VoidComponent<DrawModalProps> = ({ drawGroup, refetchDrawGroup }) => {
   const { hideModal } = useModalContext();
 
-  const { mutate, getIsPending, getIsSuccess, getData, getError } = useDrawParticipantMutation();
+  const { mutate, getIsPending, getIsError, getIsSuccess, getData, getError } =
+    useDrawParticipantMutation();
 
   const { handleError } = useDrawParticipantErrorHandler();
 
@@ -86,7 +87,7 @@ export const DrawModal: VoidComponent<DrawModalProps> = ({ drawGroup, refetchDra
                       <FormattedMessage message={messages.description} />
                     </Dialog.Description>
 
-                    <Show when={getError()}>
+                    <Show when={getIsError()}>
                       <Alert color="danger" isDismissible={true}>
                         <FormattedMessage message={handleError(getError())} />
                       </Alert>

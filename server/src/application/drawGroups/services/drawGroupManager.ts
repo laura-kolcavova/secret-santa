@@ -71,12 +71,27 @@ const drawParticipantFromDrawGroup = (
   return newDrawnParticipant;
 };
 
+const editDrawGroup = (
+  drawGroup: DrawGroup,
+  name: string,
+  drawStartUtc: Date,
+  drawEndUtc: Date,
+  abortSignal: AbortSignal,
+) => {
+  drawGroup.name = name;
+  drawGroup.drawStartUtc = drawStartUtc;
+  drawGroup.drawEndUtc = drawEndUtc;
+
+  drawGroupRepository.editDrawGroup(drawGroup, abortSignal);
+};
+
 export const drawGroupManager = {
   findByGuid,
   getAllByYear,
   getAll,
   joinDrawGroup,
   drawParticipantFromDrawGroup,
+  editDrawGroup,
 };
 
 const safelyDrawParticipant = (
