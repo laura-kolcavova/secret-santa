@@ -25,10 +25,28 @@ const noParticipantsToDraw = (): ValidationError => ({
   message: 'There are no participants to draw in this group.',
 });
 
+const drawHasAlreadyEnded = (): ValidationError => ({
+  code: 'DrawGroup.DrawHasAlreadyEnded',
+  message: 'Draw has already ended.',
+});
+
+const drawHasAlreadyStarted = (): ValidationError => ({
+  code: 'DrawGroup.DrawHasAlreadyStarted',
+  message: 'Draw has already started.',
+});
+
+const drawNotStartedYet = (): ValidationError => ({
+  code: 'DrawGroup.DrawNotStartedYet',
+  message: 'Draw not started yet.',
+});
+
 export const drawGroupErrors = {
   notFound,
   userAlreadyJoined,
   userNotJoined,
   noParticipantsToDraw,
   userAlreadyDrawn,
+  drawHasAlreadyEnded,
+  drawHasAlreadyStarted,
+  drawNotStartedYet,
 };

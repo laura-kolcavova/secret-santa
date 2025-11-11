@@ -9,7 +9,7 @@ export type DrawGroupInfoProps = {
 };
 
 export const DrawGroupInfo: Component<DrawGroupInfoProps> = (props) => {
-  const { formatDate } = useLocalization();
+  const { formatDate, formatTime } = useLocalization();
 
   return (
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
@@ -34,21 +34,39 @@ export const DrawGroupInfo: Component<DrawGroupInfoProps> = (props) => {
           <span class="text-sm font-semibold text-gray-500">
             <FormattedMessage message={messages.drawStarts} />
           </span>
-          <span class="text-lg text-pallete-6">{formatDate(props.drawGroup.drawStartUtc)}</span>
+          <span class="text-lg text-pallete-6">
+            {formatDate(props.drawGroup.drawStartUtc)}{' '}
+            {formatTime(props.drawGroup.drawStartUtc, {
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
+          </span>
         </div>
 
         <div class="flex flex-col">
           <span class="text-sm font-semibold text-gray-500">
             <FormattedMessage message={messages.drawEnds} />
           </span>
-          <span class="text-lg text-pallete-6">{formatDate(props.drawGroup.drawEndUtc)}</span>
+          <span class="text-lg text-pallete-6">
+            {formatDate(props.drawGroup.drawEndUtc)}{' '}
+            {formatTime(props.drawGroup.drawStartUtc, {
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
+          </span>
         </div>
 
         <div class="flex flex-col">
           <span class="text-sm font-semibold text-gray-500 ">
             <FormattedMessage message={messages.createdAt} />
           </span>
-          <span class="text-lg text-pallete-6">{formatDate(props.drawGroup.createdAtUtc)}</span>
+          <span class="text-lg text-pallete-6">
+            {formatDate(props.drawGroup.createdAtUtc)}{' '}
+            {formatTime(props.drawGroup.drawStartUtc, {
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
+          </span>
         </div>
       </div>
     </div>

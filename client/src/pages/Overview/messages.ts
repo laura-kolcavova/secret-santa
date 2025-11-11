@@ -3,10 +3,6 @@ export const messages = {
     id: 'overview.drawInThisYearNotStartedYet',
     defaultMessage: 'DRAW IN THIS YEAR NOT STARTED YET',
   },
-  participants: {
-    id: 'overview.participants',
-    defaultMessage: 'PARTICIPANTS',
-  },
   joinDraw: {
     id: 'overview.joinDraw',
     defaultMessage: 'JOIN DRAW',
@@ -30,5 +26,9 @@ export const messages = {
   youHaveDrawn: {
     id: 'overview.youHaveDrawn',
     defaultMessage: 'YOU HAVE DRAWN:',
+  },
+  drawStartsIn: {
+    id: 'overview.drawStartsIn',
+    defaultMessage: 'THE DRAW WILL START IN:',
   },
 };
