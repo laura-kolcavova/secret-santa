@@ -4,8 +4,8 @@ import { drawGroupsClient } from '~/api/drawGroups/drawGroupsClient';
 
 export const useJoinDrawGroupMutation = () => {
   const [getIsPending, setIsPending] = createSignal<boolean>(false);
-  const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
   const [getIsError, setIsError] = createSignal<boolean>(false);
+  const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
   const [getError, setError] = createSignal<unknown>(undefined);
 
   const { createAbortSignal, finishAbortSignal } = useAbortController();
@@ -13,8 +13,8 @@ export const useJoinDrawGroupMutation = () => {
   const mutateAsync = async (drawGroupGuid: string): Promise<void> => {
     batch(() => {
       setIsPending(true);
-      setIsSuccess(false);
       setIsError(false);
+      setIsSuccess(false);
       setError(undefined);
     });
 
@@ -24,8 +24,8 @@ export const useJoinDrawGroupMutation = () => {
       await drawGroupsClient.joinDrawGroup(drawGroupGuid, signal);
 
       batch(() => {
-        setIsSuccess(true);
         setIsPending(false);
+        setIsSuccess(true);
       });
     } catch (error) {
       batch(() => {
@@ -42,5 +42,5 @@ export const useJoinDrawGroupMutation = () => {
     mutateAsync(drawGroupGuid);
   };
 
-  return { mutate, getIsPending, getIsSuccess, getIsError, getError };
+  return { mutate, getIsPending, getIsError, getIsSuccess, getError };
 };

@@ -5,8 +5,8 @@ import { userClient } from '~/api/user/userClient';
 
 export const useLoginMutation = () => {
   const [getIsPending, setIsPending] = createSignal<boolean>(false);
-  const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
   const [getIsError, setIsError] = createSignal<boolean>(false);
+  const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
   const [getError, setError] = createSignal<unknown>(undefined);
 
   const { createAbortSignal, finishAbortSignal } = useAbortController();
@@ -14,8 +14,8 @@ export const useLoginMutation = () => {
   const mutateAsync = async (loginRequest: LoginRequestDto) => {
     batch(() => {
       setIsPending(true);
-      setIsSuccess(false);
       setIsError(false);
+      setIsSuccess(false);
       setError(undefined);
     });
 
@@ -25,8 +25,8 @@ export const useLoginMutation = () => {
       await userClient.login(loginRequest, signal);
 
       batch(() => {
-        setIsSuccess(true);
         setIsPending(false);
+        setIsSuccess(true);
       });
     } catch (error) {
       batch(() => {
@@ -43,5 +43,5 @@ export const useLoginMutation = () => {
     mutateAsync(loginRequest);
   };
 
-  return { mutate, getIsPending, getIsSuccess, getIsError, getError };
+  return { mutate, getIsPending, getIsError, getIsSuccess, getError };
 };

@@ -53,7 +53,7 @@ export const DrawModal: VoidComponent<DrawModalProps> = ({ drawGroup, refetchDra
     <Dialog open={true} onEscapeKeyDown={hideModal}>
       <Dialog.Portal>
         <Dialog.Overlay class="fixed inset-0 z-50 bg-black/25 data-open:animate-in data-open:fade-in-0% data-closed:animate-out data-closed:fade-out-0%" />
-        <Dialog.Content class="min-w-180 min-h-80 fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 rounded-md border-4 px-6 py-5 data-open:animate-in data-open:fade-in-0% data-open:zoom-in-95% data-open:slide-in-from-top-10% data-closed:animate-out data-closed:fade-out-0% data-closed:zoom-out-95% data-closed:slide-out-to-top-10% border-pallete-2 bg-white flex flex-col">
+        <Dialog.Content class="min-w-180 min-h-120 fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 rounded-md border-4 px-6 py-5 data-open:animate-in data-open:fade-in-0% data-open:zoom-in-95% data-open:slide-in-from-top-10% data-closed:animate-out data-closed:fade-out-0% data-closed:zoom-out-95% data-closed:slide-out-to-top-10% border-pallete-2 bg-white flex flex-col">
           <div class="mb-8 h-10 relative">
             <Dialog.Label class="text-2xl font-bold text-center pr-10 -mr-10 text-pallete-6 ">
               {drawGroup.name}
@@ -66,7 +66,7 @@ export const DrawModal: VoidComponent<DrawModalProps> = ({ drawGroup, refetchDra
             </Dialog.Close>
           </div>
 
-          <div class="flex-1 mb-8">
+          <div class="flex-1 mb-8 flex flex-col justify-center">
             <Show
               when={!getIsDrawing()}
               fallback={

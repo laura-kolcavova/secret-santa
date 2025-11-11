@@ -20,4 +20,8 @@ export const messages = {
     id: 'drawModal.youHaveDrawn',
     defaultMessage: 'YOU HAVE DRAWN:',
   },
+  checkOutMyHobbies: {
+    id: 'drawModal.checkOutMyHobbies',
+    defaultMessage: 'CHECK OUT MY HOBBIES:',
+  },
 };

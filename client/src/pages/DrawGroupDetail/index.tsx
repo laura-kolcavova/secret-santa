@@ -22,13 +22,21 @@ export const DrawGroupDetail: Component = () => {
     navigate(pages.DrawGroups.paths[0]);
   };
 
+  const openEditDrawGroupModal = () => {};
+
   return (
     <UserLayout>
-      <div class="mb-4">
+      <div class="mb-4 flex items-center justify-end gap-4">
         <button
           onClick={goBack}
           class="px-4 py-2 text-sm font-medium rounded-md focus:outline-none focus:shadow-outline cursor-pointer text-pallete-8 bg-pallete-4 hover:bg-pallete-5 ">
           ← <FormattedMessage message={sharedMessages.back} />
+        </button>
+
+        <button
+          onClick={openEditDrawGroupModal}
+          class="px-4 py-2 text-sm font-medium rounded-md focus:outline-none focus:shadow-outline cursor-pointer text-pallete-8 bg-pallete-2 hover:bg-pallete-3 ">
+          <FormattedMessage message={sharedMessages.edit} />
         </button>
       </div>
 
