@@ -19,6 +19,10 @@ const editDrawGroup = (
     return unitResultError(drawGroupErrors.notFound());
   }
 
+  if (drawEndUtc < drawStartUtc) {
+    return unitResultError(drawGroupErrors.invalidDrawPeriod());
+  }
+
   drawGroupManager.editDrawGroup(drawGroup, name, drawStartUtc, drawEndUtc, abortSignal);
 
   return unitResultSuccess();

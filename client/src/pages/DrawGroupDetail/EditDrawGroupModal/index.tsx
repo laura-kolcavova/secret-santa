@@ -46,6 +46,17 @@ export const EditDrawGroupModal: VoidComponent<EditDrawGroupModalProps> = ({
     }
   });
 
+  const changeDrawStartUtc = (newDrawStartUtc: Date) => {
+    setDrawStartUtc(newDrawStartUtc);
+
+    if (getDrawEndUtc() < newDrawStartUtc) {
+      const newDrawEndUtc = new Date(newDrawStartUtc);
+      newDrawEndUtc.setDate(newDrawEndUtc.getDate() + 1);
+
+      setDrawEndUtc(newDrawEndUtc);
+    }
+  };
+
   return (
     <Dialog open={true} onEscapeKeyDown={hideModal}>
       <Dialog.Portal>
@@ -92,7 +103,7 @@ export const EditDrawGroupModal: VoidComponent<EditDrawGroupModalProps> = ({
                 <DateTimePickerInput
                   label={<FormattedMessage message={messages.drawStarts} />}
                   value={getDrawStartUtc()}
-                  onChange={(newValue) => setDrawStartUtc(newValue)}
+                  onChange={(newValue) => changeDrawStartUtc(newValue)}
                 />
               </div>
 
@@ -100,6 +111,7 @@ export const EditDrawGroupModal: VoidComponent<EditDrawGroupModalProps> = ({
                 <DateTimePickerInput
                   label={<FormattedMessage message={messages.drawEnds} />}
                   value={getDrawEndUtc()}
+                  min={getDrawStartUtc()}
                   onChange={(newValue) => setDrawEndUtc(newValue)}
                 />
               </div>

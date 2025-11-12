@@ -40,6 +40,11 @@ const drawNotStartedYet = (): ValidationError => ({
   message: 'Draw not started yet.',
 });
 
+const invalidDrawPeriod = (): ValidationError => ({
+  code: 'DrawGroup.InvalidDrawPeriod',
+  message: 'Draw end date must be after draw start date.',
+});
+
 export const drawGroupErrors = {
   notFound,
   userAlreadyJoined,
@@ -49,4 +54,5 @@ export const drawGroupErrors = {
   drawHasAlreadyEnded,
   drawHasAlreadyStarted,
   drawNotStartedYet,
+  invalidDrawPeriod,
 };
