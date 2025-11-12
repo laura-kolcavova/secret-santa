@@ -49,7 +49,7 @@ export const DrawGroupInfo: Component<DrawGroupInfoProps> = (props) => {
           </span>
           <span class="text-lg text-pallete-6">
             {formatDate(props.drawGroup.drawEndUtc)}{' '}
-            {formatTime(props.drawGroup.drawStartUtc, {
+            {formatTime(props.drawGroup.drawEndUtc, {
               hour: '2-digit',
               minute: '2-digit',
             })}

@@ -96,5 +96,7 @@
     "drawGroupDetail.notDrawnYet": "Ještě nelosováno",
     "drawGroupDetail.drawnParticipant": "Vylosovaný účastník",
     "drawGroupDetail.drawGroupNotFound": "Losovací skupina nebyla nalezena",
-    "editDrawGroupModal.name": "Název"
+    "editDrawGroupModal.name": "Název",
+    "editDrawGroupModal.drawStarts": "Losování začíná",
+    "editDrawGroupModal.drawEnds": "Losování končí"
 }

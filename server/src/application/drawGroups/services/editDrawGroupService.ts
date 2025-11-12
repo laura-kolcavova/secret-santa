@@ -19,6 +19,8 @@ const editDrawGroup = (
     return unitResultError(drawGroupErrors.notFound());
   }
 
+  drawGroupManager.editDrawGroup(drawGroup, name, drawStartUtc, drawEndUtc, abortSignal);
+
   return unitResultSuccess();
 };
 

@@ -305,8 +305,8 @@ const editDrawGroup = (drawGroup: DrawGroup, abortSignal: AbortSignal): void => 
     stmt.run({
       guid: drawGroup.guid,
       name: drawGroup.name,
-      drawStartUtc: drawGroup.drawStartUtc,
-      drawEndUtc: drawGroup.drawEndUtc,
+      drawStartUtc: drawGroup.drawStartUtc.toISOString(),
+      drawEndUtc: drawGroup.drawEndUtc.toISOString(),
     });
   } catch (error) {
     console.error('Error while updating draw group:', error);

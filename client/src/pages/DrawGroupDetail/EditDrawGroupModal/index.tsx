@@ -9,6 +9,7 @@ import { useEditDrawGroupMutation } from './hooks/useEditDrawGroupMutation';
 import { useEditDrawGroupErrorHandler } from './hooks/useEditDrawGroupErrorHandler';
 import { Alert } from '~/pages/shared/Alert';
 import { messages } from './messages';
+import { DateTimePickerInput } from '~/pages/shared/DateTimePickerInput';
 
 export type EditDrawGroupModalProps = {
   drawGroup: DrawGroupDetailDto;
@@ -26,13 +27,15 @@ export const EditDrawGroupModal: VoidComponent<EditDrawGroupModalProps> = ({
   const { handleError } = useEditDrawGroupErrorHandler();
 
   const [getName, setName] = createSignal<string>(drawGroup.name);
+  const [getDrawStartUtc, setDrawStartUtc] = createSignal<Date>(new Date(drawGroup.drawStartUtc));
+  const [getDrawEndUtc, setDrawEndUtc] = createSignal<Date>(new Date(drawGroup.drawEndUtc));
 
   const save = () => {
     mutate({
       drawGroupGuid: drawGroup.guid,
       name: getName(),
-      drawStartUtc: '',
-      drawEndUtc: '',
+      drawStartUtc: getDrawStartUtc().toISOString(),
+      drawEndUtc: getDrawEndUtc().toISOString(),
     });
   };
 
@@ -82,6 +85,22 @@ export const EditDrawGroupModal: VoidComponent<EditDrawGroupModalProps> = ({
                   class="block w-full py-2 px-3 border rounded shadow focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
                   value={getName()}
                   onInput={(e) => setName(e.currentTarget.value)}
+                />
+              </div>
+
+              <div class="mb-6">
+                <DateTimePickerInput
+                  label={<FormattedMessage message={messages.drawStarts} />}
+                  value={getDrawStartUtc()}
+                  onChange={(newValue) => setDrawStartUtc(newValue)}
+                />
+              </div>
+
+              <div class="mb-6">
+                <DateTimePickerInput
+                  label={<FormattedMessage message={messages.drawEnds} />}
+                  value={getDrawEndUtc()}
+                  onChange={(newValue) => setDrawEndUtc(newValue)}
                 />
               </div>
             </form>
