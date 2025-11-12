@@ -57,6 +57,11 @@ export const EditDrawGroupModal: VoidComponent<EditDrawGroupModalProps> = ({
     }
   };
 
+  const handleSubmit = (e: Event) => {
+    e.preventDefault();
+    save();
+  };
+
   return (
     <Dialog open={true} onEscapeKeyDown={hideModal}>
       <Dialog.Portal>
@@ -81,7 +86,7 @@ export const EditDrawGroupModal: VoidComponent<EditDrawGroupModalProps> = ({
               </Alert>
             </Show>
 
-            <form class="w-full">
+            <form class="w-full" onSubmit={handleSubmit}>
               <div class="mb-6">
                 <label class="block mb-2 text-sm font-bold text-pallete-4" for="first-name">
                   <FormattedMessage message={messages.name} />
@@ -92,6 +97,7 @@ export const EditDrawGroupModal: VoidComponent<EditDrawGroupModalProps> = ({
                   name="name"
                   type="text"
                   required
+                  autocomplete="off"
                   maxLength="256"
                   class="block w-full py-2 px-3 border rounded shadow focus:outline-none focus:shadow-outline text-gray-900 bg-gray-100"
                   value={getName()}

@@ -7,6 +7,7 @@ import { CalendarSolidIcon } from '~/pages/shared/icons/CalendarSolidIcon';
 import { FormattedMessage } from '~/translation/FormattedMessage';
 import { messages } from '../messages';
 import { pages } from '~/navigation/pages';
+import { getDrawStatus } from '../utils/drawStatus';
 
 export type DrawGroupListItemProps = {
   drawGroup: DrawGroupListItemDto;
@@ -17,12 +18,21 @@ export const DrawGroupListItem: Component<DrawGroupListItemProps> = (props) => {
 
   const drawGroupDetailPath = pages.DrawGroupDetail.paths[0].replace(':guid', props.drawGroup.guid);
 
+  const drawStatus = getDrawStatus(props.drawGroup);
+
   return (
     <A
       href={drawGroupDetailPath}
-      class="block p-6 rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow duration-200 cursor-pointer border border-gray-100 hover:border-pallete-5">
-      <div class="mb-4">
-        <h3 class="text-xl font-bold text-center text-pallete-6">{props.drawGroup.name}</h3>
+      class="block py-4 px-6 rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow duration-200 cursor-pointer border border-gray-100 hover:border-pallete-5">
+      <div class="flex items-center gap-3 mb-4">
+        <h3 class="text-lg font-bold text-pallete-6 truncate flex-1" title={props.drawGroup.name}>
+          {props.drawGroup.name}
+        </h3>
+
+        <span
+          class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap ${drawStatus.class}`}>
+          <FormattedMessage message={drawStatus.message} />
+        </span>
       </div>
 
       <div class="flex flex-col gap-2">
