@@ -27,6 +27,10 @@ export const messages = {
     id: 'drawGroupDetail.participantsCount',
     defaultMessage: '{count} PARTICIPANTS',
   },
+  status: {
+    id: 'drawGroupDetail.status',
+    defaultMessage: 'STATUS',
+  },
   name: {
     id: 'drawGroupDetail.name',
     defaultMessage: 'NAME',
@@ -34,10 +38,6 @@ export const messages = {
   email: {
     id: 'drawGroupDetail.email',
     defaultMessage: 'EMAIL',
-  },
-  status: {
-    id: 'drawGroupDetail.status',
-    defaultMessage: 'STATUS',
   },
   hasDrawn: {
     id: 'drawGroupDetail.hasDrawn',
@@ -54,5 +54,17 @@ export const messages = {
   drawGroupNotFound: {
     id: 'drawGroupDetail.drawGroupNotFound',
     defaultMessage: 'DRAW GROUP NOT FOUND',
+  },
+  statusDrawNotStarted: {
+    id: 'drawGroupDetail.statusDrawNotStarted',
+    defaultMessage: 'DRAW NOT STARTED',
+  },
+  statusDrawInProgress: {
+    id: 'drawGroupDetail.statusDrawInProgress',
+    defaultMessage: 'DRAW IN PROGRESS',
+  },
+  statusDrawEnded: {
+    id: 'drawGroupDetail.statusDrawEnded',
+    defaultMessage: 'DRAW ENDED',
   },
 };

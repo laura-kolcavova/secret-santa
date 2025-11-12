@@ -26,8 +26,8 @@ export const useChangePinMutation = () => {
       await userClient.changePin(changePinRequest, signal);
 
       batch(() => {
-        setIsSuccess(true);
         setIsPending(false);
+        setIsSuccess(true);
       });
     } catch (error) {
       batch(() => {
@@ -44,5 +44,5 @@ export const useChangePinMutation = () => {
     changePinAsync(changePinRequest);
   };
 
-  return { changePin, getIsPending, getIsSuccess, getIsError, getError };
+  return { changePin, getIsPending, getIsError, getIsSuccess, getError };
 };

@@ -1,35 +1,32 @@
 import { batch, createSignal } from 'solid-js';
 import { useAbortController } from '~/abort/useAbortController';
 import { drawGroupsClient } from '~/api/drawGroups/drawGroupsClient';
-import { DrawParticipantResponseDto } from '~/api/drawGroups/dto/DrawParticipantResponseDto';
+import { EditDrawGroupRequestDto } from '~/api/drawGroups/dto/EditDrawGroupRequestDto';
 
-export const useDrawParticipantMutation = () => {
+export const useEditDrawGroupMutation = () => {
   const [getIsPending, setIsPending] = createSignal<boolean>(false);
   const [getIsError, setIsError] = createSignal<boolean>(false);
   const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
   const [getError, setError] = createSignal<unknown>(undefined);
-  const [getData, setData] = createSignal<DrawParticipantResponseDto | undefined>(undefined);
 
   const { createAbortSignal, finishAbortSignal } = useAbortController();
 
-  const mutateAsync = async (drawGroupGuid: string): Promise<void> => {
+  const mutateAsync = async (editDrawGroupRequest: EditDrawGroupRequestDto) => {
     batch(() => {
       setIsPending(true);
       setIsError(false);
       setIsSuccess(false);
       setError(undefined);
-      setData(undefined);
     });
 
     try {
       const signal = createAbortSignal();
 
-      const response = await drawGroupsClient.drawParticipant(drawGroupGuid, signal);
+      await drawGroupsClient.editDrawGroup(editDrawGroupRequest, signal);
 
       batch(() => {
         setIsPending(false);
         setIsSuccess(true);
-        setData(response.data);
       });
     } catch (error) {
       batch(() => {
@@ -42,9 +39,9 @@ export const useDrawParticipantMutation = () => {
     }
   };
 
-  const mutate = (drawGroupGuid: string): void => {
-    mutateAsync(drawGroupGuid);
+  const mutate = (editDrawGroupRequest: EditDrawGroupRequestDto) => {
+    mutateAsync(editDrawGroupRequest);
   };
 
-  return { mutate, getIsPending, getIsError, getIsSuccess, getError, getData };
+  return { mutate, mutateAsync, getIsPending, getIsError, getIsSuccess, getError };
 };

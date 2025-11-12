@@ -19,7 +19,6 @@ const drawGroup = () => `
         SELECT
             1
         FROM draw_groups
-        WHERE name = 'Christmas 2025' AND YEAR = 2025
         LIMIT 1)`;
 
 export const seedDatabase = (sqliteDbFilePath: string) => {

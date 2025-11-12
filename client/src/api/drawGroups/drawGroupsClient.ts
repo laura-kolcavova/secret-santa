@@ -4,6 +4,7 @@ import { DrawParticipantResponseDto } from './dto/DrawParticipantResponseDto';
 import { UserDrawGroupListDto } from './dto/UserDrawGroupListDto';
 import { DrawGroupListDto } from './dto/DrawGroupListDto';
 import { DrawGroupDetailDto } from './dto/DrawGroupDetailDto';
+import { EditDrawGroupRequestDto } from './dto/EditDrawGroupRequestDto';
 
 const baseUrl = '/api/draw-groups';
 
@@ -53,10 +54,23 @@ const drawParticipant = (
   });
 };
 
+const editDrawGroup = (
+  editDrawGroupRequest: EditDrawGroupRequestDto,
+  signal?: GenericAbortSignal,
+): AxiosPromise<DrawParticipantResponseDto> => {
+  return callAxios({
+    url: `${baseUrl}/edit`,
+    method: 'PUT',
+    data: editDrawGroupRequest,
+    signal: signal,
+  });
+};
+
 export const drawGroupsClient = {
   getUserDrawGroupList,
   getDrawGroupList,
   getDrawGroupDetail,
   joinDrawGroup,
   drawParticipant,
+  editDrawGroup,
 };

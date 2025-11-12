@@ -5,8 +5,8 @@ import { userClient } from '~/api/user/userClient';
 
 export const useNewProfileMutation = () => {
   const [getIsPending, setIsPending] = createSignal<boolean>(false);
-  const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
   const [getIsError, setIsError] = createSignal<boolean>(false);
+  const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
   const [getError, setError] = createSignal<unknown>(undefined);
 
   const { createAbortSignal, finishAbortSignal } = useAbortController();
@@ -14,8 +14,8 @@ export const useNewProfileMutation = () => {
   const newProfileAsync = async (newProfileRequest: NewProfileRequestDto) => {
     batch(() => {
       setIsPending(true);
-      setIsSuccess(false);
       setIsError(false);
+      setIsSuccess(false);
       setError(undefined);
     });
 
@@ -25,8 +25,8 @@ export const useNewProfileMutation = () => {
       await userClient.newProfile(newProfileRequest, signal);
 
       batch(() => {
-        setIsSuccess(true);
         setIsPending(false);
+        setIsSuccess(true);
       });
     } catch (error) {
       batch(() => {
@@ -43,5 +43,5 @@ export const useNewProfileMutation = () => {
     newProfileAsync(newProfileRequest);
   };
 
-  return { newProfile, getIsPending, getIsSuccess, getIsError, getError };
+  return { newProfile, getIsPending, getIsError, getIsSuccess, getError };
 };

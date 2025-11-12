@@ -21,10 +21,10 @@ export const DrawnParticipantModal: VoidComponent<DrawnParticipantModalProps> = 
     <Dialog open={true} onEscapeKeyDown={hideModal}>
       <Dialog.Portal>
         <Dialog.Overlay class="fixed inset-0 z-50 bg-black/25 data-open:animate-in data-open:fade-in-0% data-closed:animate-out data-closed:fade-out-0%" />
-        <Dialog.Content class=" min-w-lg min-h-lg fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 rounded-md border-1 px-6 py-5 data-open:animate-in data-open:fade-in-0% data-open:zoom-in-95% data-open:slide-in-from-top-10% data-closed:animate-out data-closed:fade-out-0% data-closed:zoom-out-95% data-closed:slide-out-to-top-10% border-gray-900 bg-white flex flex-col">
+        <Dialog.Content class="min-w-lg min-h-120 fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 rounded-md border-1 px-6 py-5 data-open:animate-in data-open:fade-in-0% data-open:zoom-in-95% data-open:slide-in-from-top-10% data-closed:animate-out data-closed:fade-out-0% data-closed:zoom-out-95% data-closed:slide-out-to-top-10% border-gray-900 bg-white flex flex-col">
           <div class="mb-6 h-10 relative">
             <Dialog.Label class="text-xl font-medium text-center pr-10 -mr-10 text-pallete-6">
-              Váš obdarovaný
+              <FormattedMessage message={messages.label} />
             </Dialog.Label>
 
             <Dialog.Close
@@ -61,7 +61,7 @@ export const DrawnParticipantModal: VoidComponent<DrawnParticipantModalProps> = 
             </div>
           </div>
 
-          <div class="flex justify-center">
+          <div class="flex items-center justify-center gap-8">
             <Dialog.Close
               class="py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-2 hover:bg-pallete-3 text-pallete-8"
               onClick={hideModal}>

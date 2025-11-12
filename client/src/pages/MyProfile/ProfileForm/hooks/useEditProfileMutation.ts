@@ -16,8 +16,8 @@ export const useEditProfileMutation = () => {
   const editProfileAsync = async (editProfileRequest: EditProfileRequestDto) => {
     batch(() => {
       setIsPending(true);
-      setIsSuccess(false);
       setIsError(false);
+      setIsSuccess(false);
       setError(undefined);
       setData(undefined);
     });
@@ -28,8 +28,8 @@ export const useEditProfileMutation = () => {
       const { data } = await userClient.editProfile(editProfileRequest, signal);
 
       batch(() => {
-        setIsSuccess(true);
         setIsPending(false);
+        setIsSuccess(true);
         setData(data);
       });
     } catch (error) {
@@ -47,5 +47,5 @@ export const useEditProfileMutation = () => {
     editProfileAsync(editProfileRequest);
   };
 
-  return { editProfile, getIsPending, getIsSuccess, getIsError, getError, getData };
+  return { editProfile, getIsPending, getIsError, getIsSuccess, getError, getData };
 };

@@ -3,12 +3,24 @@ export const sharedMessages = {
     id: 'shared.somethingWentWrong',
     defaultMessage: 'SOMETHING WENT WRONG',
   },
+  back: {
+    id: 'shared.back',
+    defaultMessage: 'BACK',
+  },
   close: {
     id: 'shared.close',
     defaultMessage: 'CLOSE',
   },
-  back: {
-    id: 'shared.back',
-    defaultMessage: 'BACK',
+  cancel: {
+    id: 'shared.cancel',
+    defaultMessage: 'CANCEL',
+  },
+  save: {
+    id: 'shared.save',
+    defaultMessage: 'SAVE',
+  },
+  edit: {
+    id: 'shared.edit',
+    defaultMessage: 'EDIT',
   },
 };

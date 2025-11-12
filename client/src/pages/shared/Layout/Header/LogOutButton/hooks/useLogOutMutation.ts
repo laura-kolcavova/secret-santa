@@ -4,6 +4,7 @@ import { userClient } from '~/api/user/userClient';
 
 export const useLogOutMutation = () => {
   const [getIsPending, setIsPending] = createSignal<boolean>(false);
+  const [getIsError, setIsError] = createSignal<boolean>(false);
   const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
   const [getError, setError] = createSignal<unknown>(undefined);
 
@@ -12,6 +13,7 @@ export const useLogOutMutation = () => {
   const muateAsync = async () => {
     batch(() => {
       setIsPending(true);
+      setIsError(false);
       setIsSuccess(false);
       setError(undefined);
     });
@@ -28,6 +30,7 @@ export const useLogOutMutation = () => {
     } catch (error) {
       batch(() => {
         setIsPending(false);
+        setIsError(true);
         setError(error);
       });
     } finally {
@@ -39,5 +42,5 @@ export const useLogOutMutation = () => {
     muateAsync();
   };
 
-  return { mutate, getIsPending, getIsSuccess, getError };
+  return { mutate, getIsPending, getIsError, getIsSuccess, getError };
 };
