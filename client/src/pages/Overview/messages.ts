@@ -31,4 +31,8 @@ export const messages = {
     id: 'overview.drawStartsIn',
     defaultMessage: 'THE DRAW WILL START IN:',
   },
+  checkOutMyHobbies: {
+    id: 'overview.checkOutMyHobbies',
+    defaultMessage: 'CHECK OUT MY HOBBIES:',
+  },
 };
