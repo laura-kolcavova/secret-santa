@@ -1,6 +1,8 @@
 import {
+  batch,
   createContext,
   createEffect,
+  createSignal,
   Match,
   Switch,
   useContext,
@@ -41,17 +43,28 @@ export const LoggedUserProvider: ParentComponent = (props) => {
 
   const [state, setState] = createStore<LoggedUserContextState>(getInitState());
 
+  const [getIsReady, setIsReady] = createSignal<boolean>(false);
+
   createEffect(() => {
-    if (dataLoggedUser()) {
-      setState({
-        isAuthenticated: true,
-        user: dataLoggedUser()!,
+    if (dataLoggedUser.state === 'ready') {
+      batch(() => {
+        setIsReady(true);
+
+        if (dataLoggedUser()) {
+          setState({
+            isAuthenticated: true,
+            user: dataLoggedUser()!,
+          });
+        }
       });
     }
   });
 
   const refresh = () => {
-    refetchLoggedUser();
+    batch(() => {
+      setIsReady(false);
+      refetchLoggedUser();
+    });
   };
 
   const clear = () => {
@@ -80,7 +93,8 @@ export const LoggedUserProvider: ParentComponent = (props) => {
             </span>
           </div>
         </Match>
-        <Match when={!dataLoggedUser.loading}>{props.children}</Match>
+
+        <Match when={getIsReady()}>{props.children}</Match>
       </Switch>
     </LoggedUserContext.Provider>
   );
