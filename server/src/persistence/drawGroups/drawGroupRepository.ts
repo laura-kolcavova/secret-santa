@@ -192,6 +192,35 @@ const getAll = (abortSignal: AbortSignal): DrawGroup[] => {
   }
 };
 
+const existsWithNameAndYear = (name: string, year: number, abortSignal: AbortSignal): boolean => {
+  abortSignal.throwIfAborted();
+
+  const db = new Database(appConfig.sqliteDbFilePath, { readonly: false });
+
+  try {
+    const stmt = db.prepare(`
+        SELECT
+            1
+        FROM draw_groups
+        WHERE year=$year
+        AND name=$name
+        LIMIT 1`);
+
+    const rows = stmt.all({
+      year: year,
+      name: name,
+    }) as any[];
+
+    return rows.length > 0;
+  } catch (error) {
+    console.error('Error checking if draw group with name and year exists:', error);
+
+    throw error;
+  } finally {
+    db.close();
+  }
+};
+
 const addParticipant = (
   drawGroup: DrawGroup,
   participant: DrawGroupParticipant,
@@ -290,6 +319,47 @@ const confirmDrawnParticipant = (
   }
 };
 
+const addDrawGroup = (drawGroup: DrawGroup, abortSignal: AbortSignal): void => {
+  abortSignal.throwIfAborted();
+
+  const db = new Database(appConfig.sqliteDbFilePath, { readonly: false });
+
+  try {
+    const stmt = db.prepare(`
+      INSERT INTO draw_groups (
+        guid,
+        name,
+        year,
+        drawStartUtc,
+        drawEndUtc,
+        createdAtUtc
+      )
+      VALUES (
+        $guid,
+        $name,
+        $year,
+        $drawStartUtc,
+        $drawEndUtc,
+        $createdAtUtc
+      )`);
+
+    stmt.run({
+      guid: drawGroup.guid,
+      name: drawGroup.name,
+      year: drawGroup.year,
+      drawStartUtc: drawGroup.drawStartUtc.toISOString(),
+      drawEndUtc: drawGroup.drawEndUtc.toISOString(),
+      createdAtUtc: drawGroup.createdAtUtc.toISOString(),
+    });
+  } catch (error) {
+    console.error('Error while adding draw group:', error);
+
+    throw error;
+  } finally {
+    db.close();
+  }
+};
+
 const editDrawGroup = (drawGroup: DrawGroup, abortSignal: AbortSignal): void => {
   abortSignal.throwIfAborted();
 
@@ -323,7 +393,9 @@ export const drawGroupRepository = {
   findByGuid,
   getAllByYear,
   getAll,
+  existsWithNameAndYear,
   addParticipant,
   confirmDrawnParticipant,
+  addDrawGroup,
   editDrawGroup,
 };

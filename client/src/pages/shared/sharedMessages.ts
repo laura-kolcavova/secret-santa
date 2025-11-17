@@ -15,6 +15,10 @@ export const sharedMessages = {
     id: 'shared.cancel',
     defaultMessage: 'CANCEL',
   },
+  create: {
+    id: 'shared.create',
+    defaultMessage: 'CREATE',
+  },
   save: {
     id: 'shared.save',
     defaultMessage: 'SAVE',

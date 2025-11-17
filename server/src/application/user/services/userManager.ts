@@ -42,7 +42,7 @@ const createUser = (
     department,
     hobbies: [...hobbies],
     roles: [],
-    createdAtUtc: new Date(Date.now()),
+    createdAtUtc: new Date(),
   };
 
   userRepository.addUser(user, abortSignal);

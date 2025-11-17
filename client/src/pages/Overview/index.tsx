@@ -20,15 +20,17 @@ export const Overview: Component = () => {
     <UserLayout>
       <Switch
         fallback={
-          <For each={data()!.userDrawGroups}>
-            {(userDrawGroup) => (
-              <UserDrawGroupInfo
-                drawGroup={userDrawGroup.drawGroup}
-                userStatus={userDrawGroup.userStatus}
-                refetchDrawGroup={refetchDrawGroup}
-              />
-            )}
-          </For>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <For each={data()!.userDrawGroups}>
+              {(userDrawGroup) => (
+                <UserDrawGroupInfo
+                  drawGroup={userDrawGroup.drawGroup}
+                  userStatus={userDrawGroup.userStatus}
+                  refetchDrawGroup={refetchDrawGroup}
+                />
+              )}
+            </For>
+          </div>
         }>
         <Match when={data.loading}>
           <div class="py-24">

@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction, Router } from 'express';
 import { userAuthorizationWithRolesHandler } from '~/api/shared/middlewares/userAuthorizatoinHandler';
-
 import { createProblemDetails } from '~/api/shared/utils/validationErrorHelper';
 import userRoles from '~/application/user/models/userRoles';
 import { editDrawGroupValidation } from './editDrawGroupValidation';

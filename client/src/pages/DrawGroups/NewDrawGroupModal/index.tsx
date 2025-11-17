@@ -1,39 +1,35 @@
 import Dialog from '@corvu/dialog';
 import { createEffect, createSignal, Show, VoidComponent } from 'solid-js';
-import { DrawGroupDetailDto } from '~/api/drawGroups/dto/DrawGroupDetailDto';
 import { useModalContext } from '~/modals/ModalProvider';
 import { XMarkIcon } from '~/pages/shared/icons/XMarkIcon';
 import { sharedMessages } from '~/pages/shared/sharedMessages';
 import { FormattedMessage } from '~/translation/FormattedMessage';
-import { useEditDrawGroupMutation } from './hooks/useEditDrawGroupMutation';
-import { useEditDrawGroupErrorHandler } from './hooks/useEditDrawGroupErrorHandler';
 import { Alert } from '~/pages/shared/Alert';
 import { messages } from './messages';
 import { DateTimePickerInput } from '~/pages/shared/DateTimePickerInput';
+import { useCreateDrawGroupMutation } from './hooks/useCreateDrawGroupMutation';
+import { useCreateDrawGroupErrorHandler } from './hooks/useCreateDrawGroupErrorHandler';
 import { createNextDayDate } from '~/utils/date';
 
-export type EditDrawGroupModalProps = {
-  drawGroup: DrawGroupDetailDto;
-  refetchDrawGroup: () => void;
+export type NewDrawGroupModalProps = {
+  redirectToNewDrawGroup: (drawGroupGuid: string) => void;
 };
 
-export const EditDrawGroupModal: VoidComponent<EditDrawGroupModalProps> = ({
-  drawGroup,
-  refetchDrawGroup,
+export const NewDrawGroupModal: VoidComponent<NewDrawGroupModalProps> = ({
+  redirectToNewDrawGroup,
 }) => {
   const { hideModal } = useModalContext();
 
-  const { mutate, getIsError, getIsSuccess, getError } = useEditDrawGroupMutation();
+  const { mutate, getIsError, getIsSuccess, getError, getData } = useCreateDrawGroupMutation();
 
-  const { handleError } = useEditDrawGroupErrorHandler();
+  const { handleError } = useCreateDrawGroupErrorHandler();
 
-  const [getName, setName] = createSignal<string>(drawGroup.name);
-  const [getDrawStartUtc, setDrawStartUtc] = createSignal<Date>(new Date(drawGroup.drawStartUtc));
-  const [getDrawEndUtc, setDrawEndUtc] = createSignal<Date>(new Date(drawGroup.drawEndUtc));
+  const [getName, setName] = createSignal<string>('');
+  const [getDrawStartUtc, setDrawStartUtc] = createSignal<Date>(new Date());
+  const [getDrawEndUtc, setDrawEndUtc] = createSignal<Date>(createNextDayDate(getDrawStartUtc()));
 
   const save = () => {
     mutate({
-      drawGroupGuid: drawGroup.guid,
       name: getName(),
       drawStartUtc: getDrawStartUtc().toISOString(),
       drawEndUtc: getDrawEndUtc().toISOString(),
@@ -42,7 +38,10 @@ export const EditDrawGroupModal: VoidComponent<EditDrawGroupModalProps> = ({
 
   createEffect(() => {
     if (getIsSuccess()) {
-      refetchDrawGroup();
+      const drawGroupGuid = getData()!.drawGroupGuid;
+
+      redirectToNewDrawGroup(drawGroupGuid);
+
       hideModal();
     }
   });
@@ -69,7 +68,7 @@ export const EditDrawGroupModal: VoidComponent<EditDrawGroupModalProps> = ({
         <Dialog.Content class="min-w-lg min-h-120 fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 rounded-md border-1 px-6 py-5 data-open:animate-in data-open:fade-in-0% data-open:zoom-in-95% data-open:slide-in-from-top-10% data-closed:animate-out data-closed:fade-out-0% data-closed:zoom-out-95% data-closed:slide-out-to-top-10% border-gray-900 bg-white flex flex-col">
           <div class="mb-8 h-10 relative">
             <Dialog.Label class="text-xl font-medium text-center pr-10 -mr-10 text-pallete-6 ">
-              {drawGroup.name}
+              <FormattedMessage message={messages.newDrawGroup} />
             </Dialog.Label>
 
             <Dialog.Close

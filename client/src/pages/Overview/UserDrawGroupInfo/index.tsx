@@ -90,8 +90,8 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
   };
 
   return (
-    <div class="p-4 rounded-lg shadow-md max-w-md min-w-md min-h-70 flex flex-col bg-white ">
-      <div class="px-4 mb-10 flex items-center justify-between">
+    <div class="p-4 px-6 rounded-lg shadow-md max-w-md min-w-md min-h-70 flex flex-col bg-white hover:shadow-lg transition-shadow duration-200 border border-gray-100 hover:border-pallete-5">
+      <div class="mb-10 flex items-center justify-between">
         <div class="text-lg font-bold  text-pallete-6">{drawGroup.name}</div>
 
         <div class="text-base font-normal flex items-center text-gray-600">

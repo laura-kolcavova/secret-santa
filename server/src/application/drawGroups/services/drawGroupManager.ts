@@ -26,6 +26,12 @@ const getAll = (abortSignal: AbortSignal): DrawGroup[] => {
   return drawGroups;
 };
 
+const existsWithNameAndYear = (name: string, year: number, abortSignal: AbortSignal): boolean => {
+  const exists = drawGroupRepository.existsWithNameAndYear(name, year, abortSignal);
+
+  return exists;
+};
+
 const joinDrawGroup = (
   participantEmail: string,
   drawGroup: DrawGroup,
@@ -71,13 +77,38 @@ const drawParticipantFromDrawGroup = (
   return newDrawnParticipant;
 };
 
+const createDrawGroup = (
+  name: string,
+  drawStartUtc: Date,
+  drawEndUtc: Date,
+  abortSignal: AbortSignal,
+): string => {
+  const year = drawStartUtc.getFullYear();
+
+  const guid = crypto.randomUUID();
+
+  const drawGroup: DrawGroup = {
+    guid: guid,
+    name: name,
+    year: year,
+    drawStartUtc: drawStartUtc,
+    drawEndUtc: drawEndUtc,
+    participants: [],
+    createdAtUtc: new Date(),
+  };
+
+  drawGroupRepository.addDrawGroup(drawGroup, abortSignal);
+
+  return guid;
+};
+
 const editDrawGroup = (
   drawGroup: DrawGroup,
   name: string,
   drawStartUtc: Date,
   drawEndUtc: Date,
   abortSignal: AbortSignal,
-) => {
+): void => {
   drawGroup.name = name;
   drawGroup.drawStartUtc = drawStartUtc;
   drawGroup.drawEndUtc = drawEndUtc;
@@ -89,8 +120,10 @@ export const drawGroupManager = {
   findByGuid,
   getAllByYear,
   getAll,
+  existsWithNameAndYear,
   joinDrawGroup,
   drawParticipantFromDrawGroup,
+  createDrawGroup,
   editDrawGroup,
 };
 
