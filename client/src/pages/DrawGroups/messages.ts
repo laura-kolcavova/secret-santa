@@ -1,4 +1,8 @@
 export const messages = {
+  newDrawGroup: {
+    id: 'drawGroups.newDrawGroup',
+    defaultMessage: 'NEW DRAW GROUP',
+  },
   noDrawGroups: {
     id: 'drawGroups.noDrawGroups',
     defaultMessage: 'NO DRAW GROUPS AVAILABLE',

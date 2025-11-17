@@ -2,7 +2,7 @@ import { messages } from '../messages';
 import { DrawGroupListItemDto } from '~/api/drawGroups/dto/DrawGroupListDto';
 
 export const drawHasStarted = (drawGroup: DrawGroupListItemDto): boolean => {
-  const nowUtc = new Date(Date.now());
+  const nowUtc = new Date();
   const drawStartUtc = new Date(drawGroup.drawStartUtc);
   const drawEndUtc = new Date(drawGroup.drawEndUtc);
 
@@ -10,7 +10,7 @@ export const drawHasStarted = (drawGroup: DrawGroupListItemDto): boolean => {
 };
 
 export const drawHasEnded = (drawGroup: DrawGroupListItemDto): boolean => {
-  const nowUtc = new Date(Date.now());
+  const nowUtc = new Date();
   const drawEndUtc = new Date(drawGroup.drawEndUtc);
 
   return nowUtc > drawEndUtc;

@@ -12,13 +12,13 @@ export type DrawGroup = {
 };
 
 export const drawHasStarted = (drawGroup: DrawGroup): boolean => {
-  const nowUtc = new Date(Date.now());
+  const nowUtc = new Date();
 
   return nowUtc >= drawGroup.drawStartUtc && nowUtc <= drawGroup.drawEndUtc;
 };
 
 export const drawHasEnded = (drawGroup: DrawGroup): boolean => {
-  const nowUtc = new Date(Date.now());
+  const nowUtc = new Date();
 
   return nowUtc > drawGroup.drawEndUtc;
 };

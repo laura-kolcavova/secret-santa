@@ -1,8 +1,8 @@
 import {
-  NewProfileResult,
-  registerResultError,
-  registerResultSuccess,
-} from '../models/NewProfileResult';
+  UnitResult,
+  unitResultError,
+  unitResultSuccess,
+} from '~/application/shared/models/UnitResult';
 import { userErrors } from '../userErrors';
 import { userManager } from './userManager';
 
@@ -16,11 +16,11 @@ const newProfile = (
     hobbies: string[];
   },
   abortSignal: AbortSignal,
-): NewProfileResult => {
+): UnitResult => {
   const user = userManager.findByEmail(newProfileModel.email, abortSignal);
 
   if (user) {
-    return registerResultError(userErrors.emailAlreadyExists());
+    return unitResultError(userErrors.emailAlreadyExists());
   }
 
   userManager.createUser(
@@ -33,7 +33,7 @@ const newProfile = (
     abortSignal,
   );
 
-  return registerResultSuccess();
+  return unitResultSuccess();
 };
 
 export const newProfileService = {
