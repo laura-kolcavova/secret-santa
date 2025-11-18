@@ -28,6 +28,8 @@ export const NewDrawGroupModal: VoidComponent<NewDrawGroupModalProps> = ({
   const [getDrawStartUtc, setDrawStartUtc] = createSignal<Date>(new Date());
   const [getDrawEndUtc, setDrawEndUtc] = createSignal<Date>(createNextDayDate(getDrawStartUtc()));
 
+  let form: HTMLFormElement | undefined;
+
   const save = () => {
     mutate({
       name: getName(),
@@ -58,6 +60,7 @@ export const NewDrawGroupModal: VoidComponent<NewDrawGroupModalProps> = ({
 
   const handleSubmit = (e: Event) => {
     e.preventDefault();
+
     save();
   };
 
@@ -85,7 +88,7 @@ export const NewDrawGroupModal: VoidComponent<NewDrawGroupModalProps> = ({
               </Alert>
             </Show>
 
-            <form class="w-full" onSubmit={handleSubmit}>
+            <form class="w-full" ref={form} onSubmit={handleSubmit}>
               <div class="mb-6">
                 <label class="block mb-2 text-sm font-bold text-pallete-4" for="first-name">
                   <FormattedMessage message={messages.name} />
@@ -132,7 +135,9 @@ export const NewDrawGroupModal: VoidComponent<NewDrawGroupModalProps> = ({
 
             <button
               class="py-2 px-4 rounded font-bold focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
-              onClick={save}>
+              onClick={() => {
+                form?.requestSubmit();
+              }}>
               <FormattedMessage message={sharedMessages.save} />
             </button>
           </div>
