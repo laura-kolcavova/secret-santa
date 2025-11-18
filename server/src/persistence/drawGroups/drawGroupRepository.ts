@@ -55,7 +55,7 @@ const findByGuid = (guid: string, abortSignal: AbortSignal): DrawGroup | undefin
       createdAtUtc: new Date(firstRow.createdAtUtc),
     };
   } catch (error) {
-    console.error('Error finding draw group by year:', error);
+    console.error('Error while finding draw group by year:', error);
 
     throw error;
   } finally {
@@ -120,7 +120,7 @@ const getAllByYear = (year: number, abortSignal: AbortSignal): DrawGroup[] => {
 
     return drawGroups;
   } catch (error) {
-    console.error('Error finding draw group by year:', error);
+    console.error('Error while finding draw group by year:', error);
 
     throw error;
   } finally {
@@ -184,7 +184,7 @@ const getAll = (abortSignal: AbortSignal): DrawGroup[] => {
 
     return drawGroups;
   } catch (error) {
-    console.error('Error finding draw group by year:', error);
+    console.error('Error while finding draw group by year:', error);
 
     throw error;
   } finally {
@@ -213,7 +213,7 @@ const existsWithNameAndYear = (name: string, year: number, abortSignal: AbortSig
 
     return rows.length > 0;
   } catch (error) {
-    console.error('Error checking if draw group with name and year exists:', error);
+    console.error('Error while checking if draw group with name and year exists:', error);
 
     throw error;
   } finally {
@@ -251,7 +251,7 @@ const addParticipant = (
       email: participant.email,
     });
   } catch (error) {
-    console.error('Error adding participant to draw group:', error);
+    console.error('Error while adding participant to draw group:', error);
 
     throw error;
   } finally {
@@ -311,7 +311,7 @@ const confirmDrawnParticipant = (
 
     transaction();
   } catch (error) {
-    console.error('Error updating drawn participant:', error);
+    console.error('Error while confirming drawn participant:', error);
 
     throw error;
   } finally {
@@ -389,6 +389,29 @@ const editDrawGroup = (drawGroup: DrawGroup, abortSignal: AbortSignal): void => 
   }
 };
 
+const deleteDrawGroup = (drawGroup: DrawGroup, abortSignal: AbortSignal): void => {
+  abortSignal.throwIfAborted();
+
+  const db = new Database(appConfig.sqliteDbFilePath, { readonly: false });
+
+  try {
+    const stmt = db.prepare(`
+      DELETE FROM draw_groups
+      WHERE guid = $guid
+      LIMIT 1`);
+
+    stmt.run({
+      guid: drawGroup.guid,
+    });
+  } catch (error) {
+    console.error('Error while deleting draw group:', error);
+
+    throw error;
+  } finally {
+    db.close();
+  }
+};
+
 export const drawGroupRepository = {
   findByGuid,
   getAllByYear,
@@ -398,4 +421,5 @@ export const drawGroupRepository = {
   confirmDrawnParticipant,
   addDrawGroup,
   editDrawGroup,
+  deleteDrawGroup,
 };

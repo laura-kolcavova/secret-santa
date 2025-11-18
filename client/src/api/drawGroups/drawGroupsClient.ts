@@ -80,6 +80,17 @@ const editDrawGroup = (
   });
 };
 
+const deleteDrawGroup = (
+  drawGroupGuid: string,
+  signal?: GenericAbortSignal,
+): AxiosPromise<void> => {
+  return callAxios({
+    url: `${baseUrl}/${drawGroupGuid}`,
+    method: 'DELETE',
+    signal: signal,
+  });
+};
+
 export const drawGroupsClient = {
   getUserDrawGroupList,
   getDrawGroupList,
@@ -88,4 +99,5 @@ export const drawGroupsClient = {
   drawParticipant,
   createDrawGroup,
   editDrawGroup,
+  deleteDrawGroup,
 };

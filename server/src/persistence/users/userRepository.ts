@@ -37,7 +37,7 @@ const findByEmail = (email: string, abortSignal: AbortSignal): User | undefined 
       createdAtUtc: new Date(row.createdAtUtc),
     };
   } catch (error) {
-    console.error('Error finding user by email:', error);
+    console.error('Error while finding user by email:', error);
 
     throw error;
   } finally {
@@ -81,7 +81,7 @@ const addUser = (user: User, abortSignal: AbortSignal): void => {
       createdAtUtc: user.createdAtUtc.toISOString(),
     });
   } catch (error) {
-    console.error('Error adding user:', error);
+    console.error('Error while adding user:', error);
 
     throw error;
   } finally {
@@ -112,7 +112,7 @@ const updateProfile = (user: User, abortSignal: AbortSignal): void => {
       hobbies: JSON.stringify(user.hobbies),
     });
   } catch (error) {
-    console.error('Error updating user profile:', error);
+    console.error('Error while updating user profile:', error);
 
     throw error;
   } finally {
@@ -137,7 +137,7 @@ const updatePinHash = (user: User, abortSignal: AbortSignal): void => {
       pinHash: user.pinHash,
     });
   } catch (error) {
-    console.error('Error updating user PIN hash:', error);
+    console.error('Error while updating user PIN hash:', error);
 
     throw error;
   } finally {

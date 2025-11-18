@@ -1,5 +1,5 @@
 import { Component, Match, Switch } from 'solid-js';
-import { useParams, useNavigate } from '@solidjs/router';
+import { useParams } from '@solidjs/router';
 import { UserLayout } from '../shared/UserLayout';
 import { useDrawGroupDetailQuery } from './hooks/useDrawGroupDetailQuery';
 import { Alert } from '../shared/Alert';
@@ -9,43 +9,16 @@ import { SpinnerIcon } from '../shared/icons/SpinnerIcon';
 import { DrawGroupInfo } from './DrawGroupInfo';
 import { ParticipantsList } from './ParticipantsList';
 import { messages } from './messages';
-import { pages } from '~/navigation/pages';
-import { EditDrawGroupModal } from './EditDrawGroupModal';
-import { useModalContext } from '~/modals/ModalProvider';
+import { HeaderButtons } from './HeaderButtons';
 
 export const DrawGroupDetail: Component = () => {
   const params = useParams<{ guid: string }>();
 
-  const navigate = useNavigate();
-
-  const { openModal } = useModalContext();
-
   const [data, { refetch }] = useDrawGroupDetailQuery(params.guid);
-
-  const goBack = () => {
-    navigate(pages.DrawGroups.paths[0]);
-  };
-
-  const openEditDrawGroupModal = () => {
-    openModal(() => <EditDrawGroupModal drawGroup={data()!} refetchDrawGroup={refetch} />);
-  };
 
   return (
     <UserLayout>
-      <div class="mb-4 flex items-center justify-end gap-4">
-        <button
-          onClick={goBack}
-          class="px-4 py-2 text-sm font-medium rounded-md focus:outline-none focus:shadow-outline cursor-pointer text-pallete-8 bg-pallete-4 hover:bg-pallete-5 ">
-          ← <FormattedMessage message={sharedMessages.back} />
-        </button>
-
-        <button
-          disabled={!data()}
-          onClick={openEditDrawGroupModal}
-          class="px-4 py-2 text-sm font-medium rounded-md focus:outline-none focus:shadow-outline cursor-pointer text-pallete-8 bg-pallete-2 hover:bg-pallete-3 ">
-          <FormattedMessage message={sharedMessages.edit} />
-        </button>
-      </div>
+      <HeaderButtons drawGroup={data()} refetch={refetch} />
 
       <Switch
         fallback={
