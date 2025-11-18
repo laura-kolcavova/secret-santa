@@ -27,4 +27,8 @@ export const sharedMessages = {
     id: 'shared.edit',
     defaultMessage: 'EDIT',
   },
+  delete: {
+    id: 'shared.delete',
+    defaultMessage: 'DELETE',
+  },
 };

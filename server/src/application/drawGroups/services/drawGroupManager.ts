@@ -116,6 +116,10 @@ const editDrawGroup = (
   drawGroupRepository.editDrawGroup(drawGroup, abortSignal);
 };
 
+const deleteDrawGroup = (drawGroup: DrawGroup, abortSignal: AbortSignal): void => {
+  drawGroupRepository.deleteDrawGroup(drawGroup, abortSignal);
+};
+
 export const drawGroupManager = {
   findByGuid,
   getAllByYear,
@@ -125,6 +129,7 @@ export const drawGroupManager = {
   drawParticipantFromDrawGroup,
   createDrawGroup,
   editDrawGroup,
+  deleteDrawGroup,
 };
 
 const safelyDrawParticipant = (

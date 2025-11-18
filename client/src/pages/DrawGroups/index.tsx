@@ -33,7 +33,7 @@ export const DrawGroups: Component = () => {
         <button
           disabled={data.loading}
           onClick={openNewDrawGroupModal}
-          class="px-4 py-2 text-sm font-medium rounded-md focus:outline-none focus:shadow-outline cursor-pointer text-pallete-8 bg-pallete-2 hover:bg-pallete-3 ">
+          class="px-4 py-2 text-sm font-medium rounded-md focus:outline-none focus:shadow-outline cursor-pointer text-pallete-8 bg-pallete-4 hover:bg-pallete-5">
           <FormattedMessage message={messages.newDrawGroup} />
         </button>
       </div>

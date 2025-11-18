@@ -1,0 +1,47 @@
+import { batch, createSignal } from 'solid-js';
+import { useAbortController } from '~/abort/useAbortController';
+import { drawGroupsClient } from '~/api/drawGroups/drawGroupsClient';
+import { EditDrawGroupRequestDto } from '~/api/drawGroups/dto/EditDrawGroupRequestDto';
+
+export const useDeleteDrawGroupMutation = () => {
+  const [getIsPending, setIsPending] = createSignal<boolean>(false);
+  const [getIsError, setIsError] = createSignal<boolean>(false);
+  const [getIsSuccess, setIsSuccess] = createSignal<boolean>(false);
+  const [getError, setError] = createSignal<unknown>(undefined);
+
+  const { createAbortSignal, finishAbortSignal } = useAbortController();
+
+  const mutateAsync = async (drawGroupGuid: string) => {
+    batch(() => {
+      setIsPending(true);
+      setIsError(false);
+      setIsSuccess(false);
+      setError(undefined);
+    });
+
+    try {
+      const signal = createAbortSignal();
+
+      await drawGroupsClient.deleteDrawGroup(drawGroupGuid, signal);
+
+      batch(() => {
+        setIsPending(false);
+        setIsSuccess(true);
+      });
+    } catch (error) {
+      batch(() => {
+        setIsPending(false);
+        setIsError(true);
+        setError(error);
+      });
+    } finally {
+      finishAbortSignal();
+    }
+  };
+
+  const mutate = (drawGroupGuid: string) => {
+    mutateAsync(drawGroupGuid);
+  };
+
+  return { mutate, mutateAsync, getIsPending, getIsError, getIsSuccess, getError };
+};

@@ -18,7 +18,7 @@ export const DrawnParticipantModal: VoidComponent<DrawnParticipantModalProps> = 
   const { hideModal } = useModalContext();
 
   return (
-    <Dialog open={true} onEscapeKeyDown={hideModal}>
+    <Dialog open={true} onEscapeKeyDown={hideModal} onOutsidePointer={hideModal}>
       <Dialog.Portal>
         <Dialog.Overlay class="fixed inset-0 z-50 bg-black/25 data-open:animate-in data-open:fade-in-0% data-closed:animate-out data-closed:fade-out-0%" />
         <Dialog.Content class="min-w-lg min-h-120 fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 rounded-md border-1 px-6 py-5 data-open:animate-in data-open:fade-in-0% data-open:zoom-in-95% data-open:slide-in-from-top-10% data-closed:animate-out data-closed:fade-out-0% data-closed:zoom-out-95% data-closed:slide-out-to-top-10% border-gray-900 bg-white flex flex-col">
