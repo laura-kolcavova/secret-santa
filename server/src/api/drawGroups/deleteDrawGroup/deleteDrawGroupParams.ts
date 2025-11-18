@@ -1,3 +1,3 @@
-export type JoinDrawGroupParams = {
+export type DeleteDrawGroupParams = {
   drawGroupGuid: string;
 };
