@@ -370,6 +370,7 @@ const editDrawGroup = (drawGroup: DrawGroup, abortSignal: AbortSignal): void => 
       UPDATE draw_groups
       SET
         name = $name,
+        year = $year,
         drawStartUtc = $drawStartUtc,
         drawEndUtc = $drawEndUtc
       WHERE guid = $guid`);
@@ -377,6 +378,7 @@ const editDrawGroup = (drawGroup: DrawGroup, abortSignal: AbortSignal): void => 
     stmt.run({
       guid: drawGroup.guid,
       name: drawGroup.name,
+      year: drawGroup.year,
       drawStartUtc: drawGroup.drawStartUtc.toISOString(),
       drawEndUtc: drawGroup.drawEndUtc.toISOString(),
     });

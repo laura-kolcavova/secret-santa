@@ -109,9 +109,12 @@ const editDrawGroup = (
   drawEndUtc: Date,
   abortSignal: AbortSignal,
 ): void => {
+  const year = drawStartUtc.getFullYear();
+
   drawGroup.name = name;
   drawGroup.drawStartUtc = drawStartUtc;
   drawGroup.drawEndUtc = drawEndUtc;
+  drawGroup.year = year;
 
   drawGroupRepository.editDrawGroup(drawGroup, abortSignal);
 };
