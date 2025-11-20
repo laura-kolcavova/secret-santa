@@ -14,7 +14,9 @@ export const DrawButton: Component<DrawButtonProps> = ({ drawGroup, refetchDrawG
   const { openModal } = useModalContext();
 
   const draw = () => {
-    openModal(() => <DrawModal drawGroup={drawGroup} refetchDrawGroup={refetchDrawGroup} />);
+    openModal((index) => (
+      <DrawModal drawGroup={drawGroup} index={index} refetchDrawGroup={refetchDrawGroup} />
+    ));
   };
 
   return (
