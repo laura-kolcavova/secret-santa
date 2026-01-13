@@ -55,7 +55,6 @@ const NewProfileComponent: Component = () => {
   };
 
   const removeHobby = (hobbyToRemove: string) => {
-    console.log('remove', hobbyToRemove);
     setHobbies(produce((hobbies) => hobbies.splice(hobbies.indexOf(hobbyToRemove), 1)));
   };
 

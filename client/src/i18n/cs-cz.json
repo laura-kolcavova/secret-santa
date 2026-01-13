@@ -8,6 +8,8 @@
     "shared.edit": "Upravit",
     "shared.delete": "Smazat",
     "errorFallback.unexpectedError": "Aplikace narazila na neočekávanou chybu.",
+    "errorFallback.reloadPage": "Obnovit stránku",
+    "errorFallback.goBack": "Zpět",
     "header.logOut": "Odhlásit se",
     "userLayout.overview": "Přehled",
     "userLayout.myProfile": "Můj profil",

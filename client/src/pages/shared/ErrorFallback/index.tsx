@@ -45,13 +45,13 @@ export const ErrorFallback: Component<ErrorFallbackProps> = ({ error }) => {
           <button
             class="w-1/2 py-2 px-4 rounded text-white font-bold bg-blue-500 hover:bg-blue-600 focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
             onClick={reload}>
-            Obnovit stránku
+            <FormattedMessage message={messages.reloadPage} />
           </button>
 
           <button
             class="w-1/2 py-2 px-4 rounded text-white font-bold bg-blue-500 hover:bg-blue-600 focus:outline-none focus:shadow-outline cursor-pointer flex items-center justify-center bg-pallete-2 hover:bg-pallete-3 text-pallete-8"
             onClick={goBack}>
-            Zpět
+            <FormattedMessage message={messages.goBack} />
           </button>
         </div>
       </div>
