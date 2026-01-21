@@ -60,7 +60,7 @@ export const DrawGroupListItem: Component<DrawGroupListItemProps> = (props) => {
           <span class="text-sm">
             <FormattedMessage message={messages.drawEnds} />:{' '}
             {formatDate(props.drawGroup.drawEndUtc)}{' '}
-            {formatTime(props.drawGroup.drawStartUtc, {
+            {formatTime(props.drawGroup.drawEndUtc, {
               hour: '2-digit',
               minute: '2-digit',
             })}
