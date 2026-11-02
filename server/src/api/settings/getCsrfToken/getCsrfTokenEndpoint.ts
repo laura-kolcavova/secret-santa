@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction, Router } from 'express';
+import { generateCsrfToken } from '~/api/shared/middlewares/csrfProtectionHandler';
 
 export const mapGetCsrfToken = (router: Router) => {
   router.get('/csrf-token', handle);
@@ -7,7 +8,7 @@ export const mapGetCsrfToken = (router: Router) => {
 const handle = (req: Request, res: Response, next: NextFunction) => {
   try {
     const responseDto = {
-      csrfToken: req.csrfToken(),
+      csrfToken: generateCsrfToken(req, res),
     };
 
     res.json(responseDto);

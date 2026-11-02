@@ -1,10 +1,17 @@
-import csrf from 'csurf';
+import { doubleCsrf } from 'csrf-csrf';
 import { COOKIE_XSRF_TOKEN_NAME } from '../constants';
+import { appConfig } from '~/config/appConfig';
 
-export const csrfProtectionHandler = csrf({
-  cookie: {
-    key: COOKIE_XSRF_TOKEN_NAME,
+const { doubleCsrfProtection, generateCsrfToken } = doubleCsrf({
+  getSecret: () => appConfig.jwtSecret,
+  getSessionIdentifier: () => '',
+  cookieName: COOKIE_XSRF_TOKEN_NAME,
+  cookieOptions: {
     sameSite: 'strict',
-    httpOnly: false,
+    secure: appConfig.useHttps,
   },
 });
+
+export const csrfProtectionHandler = doubleCsrfProtection;
+
+export { generateCsrfToken };
