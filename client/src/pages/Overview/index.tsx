@@ -20,7 +20,7 @@ export const Overview: Component = () => {
     <UserLayout>
       <Switch
         fallback={
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 gap-6">
             <For each={data()!.userDrawGroups}>
               {(userDrawGroup) => (
                 <UserDrawGroupInfo

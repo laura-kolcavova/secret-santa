@@ -5,6 +5,7 @@ import {
 } from '~/application/shared/models/UnitResult';
 import { userErrors } from '../userErrors';
 import { userManager } from './userManager';
+import { drawGroupManager } from '~/application/drawGroups/services/drawGroupManager';
 
 const newProfile = (
   newProfileModel: {
@@ -32,6 +33,13 @@ const newProfile = (
     newProfileModel.hobbies,
     abortSignal,
   );
+
+  // New users sometimes missed the join button, so auto-join when the choice is unambiguous
+  const openDrawGroups = drawGroupManager.getAllOpenOfCurrentYear(abortSignal);
+
+  if (openDrawGroups.length === 1) {
+    drawGroupManager.joinDrawGroup(newProfileModel.email, openDrawGroups[0], abortSignal);
+  }
 
   return unitResultSuccess();
 };
