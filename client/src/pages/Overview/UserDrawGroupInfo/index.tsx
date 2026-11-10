@@ -90,7 +90,7 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
   };
 
   return (
-    <div class="p-4 px-6 rounded-lg shadow-md max-w-md min-w-md min-h-70 flex flex-col bg-white hover:shadow-lg transition-shadow duration-200 border border-gray-100 hover:border-pallete-5">
+    <div class="p-4 px-6 rounded-lg shadow-md max-w-lg min-w-md min-h-70 flex flex-col bg-white hover:shadow-lg transition-shadow duration-200 border border-gray-100 hover:border-pallete-5">
       <div class="mb-10 flex items-center justify-between">
         <div class="text-lg font-bold  text-pallete-6">{drawGroup.name}</div>
 
@@ -112,7 +112,7 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
         </Switch>
       </div>
 
-      <div class="flex flex-col items-center relative z-10 ">
+      <div class="flex flex-col items-center relative z-10">
         <div class="absolute bottom-1/2 left-2 translate-y-1/2 w-20 h-20 -rotate-12">
           <img
             src="/images/present.png"
