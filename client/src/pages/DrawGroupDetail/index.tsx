@@ -8,6 +8,7 @@ import { sharedMessages } from '../shared/sharedMessages';
 import { SpinnerIcon } from '../shared/icons/SpinnerIcon';
 import { DrawGroupInfo } from './DrawGroupInfo';
 import { ParticipantsList } from './ParticipantsList';
+import { OtherUsersList } from './OtherUsersList';
 import { messages } from './messages';
 import { HeaderButtons } from './HeaderButtons';
 
@@ -26,6 +27,8 @@ export const DrawGroupDetail: Component = () => {
             <DrawGroupInfo drawGroup={data()!} />
 
             <ParticipantsList participants={data()!.participants} />
+
+            <OtherUsersList users={data()!.nonParticipants} />
           </>
         }>
         <Match when={data.loading}>

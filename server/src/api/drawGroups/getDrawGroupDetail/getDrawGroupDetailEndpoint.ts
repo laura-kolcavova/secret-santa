@@ -4,6 +4,7 @@ import { drawGroupManager } from '~/application/drawGroups/services/drawGroupMan
 import UserRoles from '~/application/user/models/userRoles';
 import {
   DrawGroupDetailDto,
+  DrawGroupNonParticipantDetailDto,
   DrawGroupParticipantDetailDto,
   DrawnParticipanDetaiLDto,
 } from './DrawGroupDetailDto';
@@ -33,6 +34,8 @@ const handle = (req: Request<GetDrawGroupDetailParams>, res: Response, next: Nex
       const problemDetails = createProblemDetails(drawGroupDetailDtoResult.error!, req);
 
       res.status(400).json(problemDetails);
+
+      return;
     }
 
     const drawGroupDetailDto = drawGroupDetailDtoResult.value!;
@@ -85,6 +88,13 @@ const getDrawGroupDetail = (
     participantDetailDtos.push(participantDetailDto);
   }
 
+  const participantEmails = new Set(drawGroup.participants.map((p) => p.email));
+
+  const nonParticipantDtos: DrawGroupNonParticipantDetailDto[] = userManager
+    .findAll(abortSignal)
+    .filter((u) => !participantEmails.has(u.email))
+    .map((u) => ({ email: u.email, fullName: `${u.firstName} ${u.lastName}` }));
+
   const drawGroupDetailDto: DrawGroupDetailDto = {
     guid: drawGroup.guid,
     name: drawGroup.name,
@@ -92,6 +102,7 @@ const getDrawGroupDetail = (
     drawStartUtc: drawGroup.drawStartUtc.toISOString(),
     drawEndUtc: drawGroup.drawEndUtc.toISOString(),
     participants: participantDetailDtos,
+    nonParticipants: nonParticipantDtos,
     createdAtUtc: drawGroup.createdAtUtc.toISOString(),
   };
 

@@ -45,6 +45,44 @@ const findByEmail = (email: string, abortSignal: AbortSignal): User | undefined 
   }
 };
 
+const findAll = (abortSignal: AbortSignal): User[] => {
+  abortSignal.throwIfAborted();
+
+  const db = new Database(appConfig.sqliteDbFilePath, { readonly: true });
+
+  try {
+    const stmt = db.prepare(`
+        SELECT
+            email,
+            firstName,
+            lastName,
+            department,
+            hobbies,
+            pinHash,
+            createdAtUtc
+        FROM users`);
+
+    const rows = stmt.all() as any[];
+
+    return rows.map((row) => ({
+      email: row.email,
+      firstName: row.firstName,
+      lastName: row.lastName,
+      department: row.department,
+      hobbies: JSON.parse(row.hobbies),
+      roles: [],
+      pinHash: row.pinHash,
+      createdAtUtc: new Date(row.createdAtUtc),
+    }));
+  } catch (error) {
+    console.error('Error while finding all users:', error);
+
+    throw error;
+  } finally {
+    db.close();
+  }
+};
+
 const addUser = (user: User, abortSignal: AbortSignal): void => {
   abortSignal.throwIfAborted();
 
@@ -147,6 +185,7 @@ const updatePinHash = (user: User, abortSignal: AbortSignal): void => {
 
 export const userRepository = {
   findByEmail,
+  findAll,
   addUser,
   updateProfile,
   updatePinHash,

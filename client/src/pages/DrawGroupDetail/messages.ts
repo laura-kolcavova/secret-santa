@@ -67,4 +67,8 @@ export const messages = {
     id: 'drawGroupDetail.statusDrawEnded',
     defaultMessage: 'DRAW ENDED',
   },
+  otherUsers: {
+    id: 'drawGroupDetail.otherUsers',
+    defaultMessage: 'OTHER USERS',
+  },
 };

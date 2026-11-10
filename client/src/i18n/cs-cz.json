@@ -117,5 +117,6 @@
     "drawGroupDetail.drawGroupNotFound": "Losovací skupina nebyla nalezena",
     "drawGroupDetail.statusDrawNotStarted": "Losování nezačalo",
     "drawGroupDetail.statusDrawInProgress": "Losování probíhá",
-    "drawGroupDetail.statusDrawEnded": "Losování skončilo"
+    "drawGroupDetail.statusDrawEnded": "Losování skončilo",
+    "drawGroupDetail.otherUsers": "Nezúčastnění uživatelé"
 }
