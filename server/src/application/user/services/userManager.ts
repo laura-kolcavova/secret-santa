@@ -21,6 +21,10 @@ const findByEmail = (email: string, abortSignal: AbortSignal): User | undefined 
   return user;
 };
 
+const findAll = (abortSignal: AbortSignal): User[] => {
+  return userRepository.findAll(abortSignal);
+};
+
 const createUser = (
   email: string,
   pin: string,
@@ -77,6 +81,7 @@ const changePin = (user: User, pin: string, abortSignal: AbortSignal): void => {
 export const userManager = {
   checkPin,
   findByEmail,
+  findAll,
   createUser,
   changeProfile,
   changePin,

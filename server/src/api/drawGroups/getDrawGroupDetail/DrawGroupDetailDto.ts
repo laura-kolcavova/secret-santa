@@ -5,7 +5,13 @@ export type DrawGroupDetailDto = {
   drawStartUtc: string;
   drawEndUtc: string;
   participants: DrawGroupParticipantDetailDto[];
+  nonParticipants: DrawGroupNonParticipantDetailDto[];
   createdAtUtc: string;
+};
+
+export type DrawGroupNonParticipantDetailDto = {
+  email: string;
+  fullName: string;
 };
 
 export type DrawGroupParticipantDetailDto = {
