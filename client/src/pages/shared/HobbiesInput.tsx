@@ -26,7 +26,7 @@ export const HobbiesInput: Component<HobbiesInputProps> = (props) => {
     }
   };
 
-  const handleAddButtonClick = () => {
+  const commitHobby = () => {
     addHobby();
     setInputValue('');
   };
@@ -35,8 +35,7 @@ export const HobbiesInput: Component<HobbiesInputProps> = (props) => {
     if (e.key === 'Enter') {
       e.preventDefault();
 
-      addHobby();
-      setInputValue('');
+      commitHobby();
     }
   };
 
@@ -53,12 +52,14 @@ export const HobbiesInput: Component<HobbiesInputProps> = (props) => {
           value={getInputValue()}
           onInput={(e) => setInputValue(e.currentTarget.value)}
           onKeyDown={handleKeyDown}
+          // Blur fires before the form submits, so text left in the box is kept on Save
+          onBlur={commitHobby}
         />
 
         <button
           type="button"
           class="px-3 py-2 rounded-md text-base font-normal cursor-pointer bg-pallete-4 hover:bg-pallete-5 text-pallete-8"
-          onClick={handleAddButtonClick}
+          onClick={commitHobby}
           disabled={!getHobbyFromInput()}>
           <PlusIcon class="size-5" />
         </button>
