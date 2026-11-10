@@ -128,6 +128,72 @@ const getAllByYear = (year: number, abortSignal: AbortSignal): DrawGroup[] => {
   }
 };
 
+const getAllOpenByYear = (year: number, abortSignal: AbortSignal): DrawGroup[] => {
+  abortSignal.throwIfAborted();
+
+  const db = new Database(appConfig.sqliteDbFilePath, { readonly: true });
+
+  try {
+    // Dates are stored as ISO strings, so string comparison matches time order
+    const stmt = db.prepare(`
+        SELECT
+            dg.guid,
+            dg.year,
+            dg.name,
+            dg.drawStartUtc,
+            dg.drawEndUtc,
+            dg.createdAtUtc,
+            dgp.email,
+            dgp.hasDrawn,
+            dgp.isDrawn,
+            dgp.drawnParticipantEmail
+        FROM draw_groups dg
+        LEFT JOIN draw_group_participants dgp ON dg.id = dgp.drawGroupId
+        WHERE dg.year = $year AND dg.drawStartUtc > $nowUtc`);
+
+    const rows = stmt.all({ year: year, nowUtc: new Date().toISOString() }) as any[];
+
+    if (rows.length === 0) {
+      return [];
+    }
+
+    const groupsByGuid = _.groupBy(rows, 'guid');
+
+    const drawGroups = Object.values(groupsByGuid).map<DrawGroup>((rows) => {
+      const firstRow = rows[0];
+
+      const participants: DrawGroupParticipant[] = rows
+        .filter((row) => row.email)
+        .map<DrawGroupParticipant>((row) => ({
+          email: row.email,
+          hasDrawn: Boolean(row.hasDrawn),
+          isDrawn: Boolean(row.isDrawn),
+          drawnParticipant: row.drawnParticipantEmail
+            ? { email: row.drawnParticipantEmail }
+            : undefined,
+        }));
+
+      return {
+        guid: firstRow.guid,
+        year: firstRow.year,
+        name: firstRow.name,
+        drawStartUtc: new Date(firstRow.drawStartUtc),
+        drawEndUtc: new Date(firstRow.drawEndUtc),
+        createdAtUtc: new Date(firstRow.createdAtUtc),
+        participants,
+      };
+    });
+
+    return drawGroups;
+  } catch (error) {
+    console.error('Error while getting open draw groups by year:', error);
+
+    throw error;
+  } finally {
+    db.close();
+  }
+};
+
 const getAll = (abortSignal: AbortSignal): DrawGroup[] => {
   abortSignal.throwIfAborted();
 
@@ -417,6 +483,7 @@ const deleteDrawGroup = (drawGroup: DrawGroup, abortSignal: AbortSignal): void =
 export const drawGroupRepository = {
   findByGuid,
   getAllByYear,
+  getAllOpenByYear,
   getAll,
   existsWithNameAndYear,
   addParticipant,

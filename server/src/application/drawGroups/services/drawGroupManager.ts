@@ -20,6 +20,14 @@ const getAllByYear = (year: number, abortSignal: AbortSignal): DrawGroup[] => {
   return drawGroups;
 };
 
+const getAllOpenOfCurrentYear = (abortSignal: AbortSignal): DrawGroup[] => {
+  const currentYear = new Date().getFullYear();
+
+  const drawGroups = drawGroupRepository.getAllOpenByYear(currentYear, abortSignal);
+
+  return drawGroups;
+};
+
 const getAll = (abortSignal: AbortSignal): DrawGroup[] => {
   const drawGroups = drawGroupRepository.getAll(abortSignal);
 
@@ -126,6 +134,7 @@ const deleteDrawGroup = (drawGroup: DrawGroup, abortSignal: AbortSignal): void =
 export const drawGroupManager = {
   findByGuid,
   getAllByYear,
+  getAllOpenOfCurrentYear,
   getAll,
   existsWithNameAndYear,
   joinDrawGroup,
