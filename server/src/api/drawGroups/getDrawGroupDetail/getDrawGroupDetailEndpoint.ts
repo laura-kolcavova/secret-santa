@@ -9,11 +9,9 @@ import {
   DrawnParticipanDetaiLDto,
 } from './DrawGroupDetailDto';
 import { getDrawGroupDetailValidation } from './getDrawGroupDetailValidation';
-import { Result, resultError, resultSuccess } from '~/application/shared/models/Result';
 import { userManager } from '~/application/user/services/userManager';
-import { userErrors } from '~/application/user/userErrors';
 import { GetDrawGroupDetailParams } from './GetDrawGroupDetailParams';
-import { createProblemDetails } from '~/api/shared/utils/validationErrorHelper';
+import { getFullName } from '~/application/user/models/User';
 
 export const mapGetDrawGroupDetail = (router: Router) => {
   router.get(
@@ -28,17 +26,7 @@ const handle = (req: Request<GetDrawGroupDetailParams>, res: Response, next: Nex
   try {
     const { abortSignal, params } = req;
 
-    const drawGroupDetailDtoResult = getDrawGroupDetail(params.drawGroupGuid, abortSignal);
-
-    if (!drawGroupDetailDtoResult.isSuccess) {
-      const problemDetails = createProblemDetails(drawGroupDetailDtoResult.error!, req);
-
-      res.status(400).json(problemDetails);
-
-      return;
-    }
-
-    const drawGroupDetailDto = drawGroupDetailDtoResult.value!;
+    const drawGroupDetailDto = getDrawGroupDetail(params.drawGroupGuid, abortSignal);
 
     if (!drawGroupDetailDto) {
       res.status(204).send();
@@ -55,21 +43,23 @@ const handle = (req: Request<GetDrawGroupDetailParams>, res: Response, next: Nex
 const getDrawGroupDetail = (
   guid: string,
   abortSignal: AbortSignal,
-): Result<DrawGroupDetailDto | undefined> => {
+): DrawGroupDetailDto | undefined => {
   const drawGroup = drawGroupManager.findByGuid(guid, abortSignal);
 
   if (!drawGroup) {
-    return resultSuccess(undefined);
+    return undefined;
   }
+
+  var users = userManager.findAll(abortSignal);
+
+  const usersByEmail = new Map(users.map((user) => [user.email, user]));
 
   const participantDetailDtos: DrawGroupParticipantDetailDto[] = [];
 
-  for (var participant of drawGroup.participants) {
-    var user = userManager.findByEmail(participant.email, abortSignal);
+  for (const participant of drawGroup.participants) {
+    const user = usersByEmail.get(participant.email);
 
-    if (!user) {
-      return resultError(userErrors.notFound());
-    }
+    const fullName = user ? getFullName(user) : '';
 
     const drawnParticipantDetailDto: DrawnParticipanDetaiLDto | undefined =
       participant.drawnParticipant === undefined
@@ -79,8 +69,8 @@ const getDrawGroupDetail = (
           };
 
     const participantDetailDto: DrawGroupParticipantDetailDto = {
-      email: user.email,
-      fullName: `${user.firstName} ${user.lastName}`,
+      email: participant.email,
+      fullName: fullName,
       hasDrawn: participant.hasDrawn,
       drawnParticipant: drawnParticipantDetailDto,
     };
@@ -88,12 +78,26 @@ const getDrawGroupDetail = (
     participantDetailDtos.push(participantDetailDto);
   }
 
-  const participantEmails = new Set(drawGroup.participants.map((p) => p.email));
+  const participantsByEmail = new Map(
+    drawGroup.participants.map((participant) => [participant.email, participant]),
+  );
 
-  const nonParticipantDtos: DrawGroupNonParticipantDetailDto[] = userManager
-    .findAll(abortSignal)
-    .filter((u) => !participantEmails.has(u.email))
-    .map((u) => ({ email: u.email, fullName: `${u.firstName} ${u.lastName}` }));
+  const nonParticipantDetailDtos: DrawGroupNonParticipantDetailDto[] = [];
+
+  for (const user of users) {
+    const participant = participantsByEmail.get(user.email);
+
+    if (participant) {
+      continue;
+    }
+
+    const nonParticipantDetailDto: DrawGroupNonParticipantDetailDto = {
+      email: user.email,
+      fullName: getFullName(user),
+    };
+
+    nonParticipantDetailDtos.push(nonParticipantDetailDto);
+  }
 
   const drawGroupDetailDto: DrawGroupDetailDto = {
     guid: drawGroup.guid,
@@ -102,9 +106,9 @@ const getDrawGroupDetail = (
     drawStartUtc: drawGroup.drawStartUtc.toISOString(),
     drawEndUtc: drawGroup.drawEndUtc.toISOString(),
     participants: participantDetailDtos,
-    nonParticipants: nonParticipantDtos,
+    nonParticipants: nonParticipantDetailDtos,
     createdAtUtc: drawGroup.createdAtUtc.toISOString(),
   };
 
-  return resultSuccess(drawGroupDetailDto);
+  return drawGroupDetailDto;
 };
