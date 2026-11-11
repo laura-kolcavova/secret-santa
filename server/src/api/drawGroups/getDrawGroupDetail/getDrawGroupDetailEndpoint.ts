@@ -62,10 +62,14 @@ const getDrawGroupDetail = (
     return resultSuccess(undefined);
   }
 
+  var users = userManager.findAll(abortSignal);
+
+  const usersByEmail = new Map(users.map((user) => [user.email, user]));
+
   const participantDetailDtos: DrawGroupParticipantDetailDto[] = [];
 
   for (var participant of drawGroup.participants) {
-    var user = userManager.findByEmail(participant.email, abortSignal);
+    var user = usersByEmail.get(participant.email);
 
     if (!user) {
       return resultError(userErrors.notFound());
@@ -88,12 +92,11 @@ const getDrawGroupDetail = (
     participantDetailDtos.push(participantDetailDto);
   }
 
-  const participantEmails = new Set(drawGroup.participants.map((p) => p.email));
+  const participantEmails = new Set(drawGroup.participants.map((participant) => participant.email));
 
-  const nonParticipantDtos: DrawGroupNonParticipantDetailDto[] = userManager
-    .findAll(abortSignal)
-    .filter((u) => !participantEmails.has(u.email))
-    .map((u) => ({ email: u.email, fullName: `${u.firstName} ${u.lastName}` }));
+  const nonParticipantDtos: DrawGroupNonParticipantDetailDto[] = users
+    .filter((user) => !participantEmails.has(user.email))
+    .map((user) => ({ email: user.email, fullName: `${user.firstName} ${user.lastName}` }));
 
   const drawGroupDetailDto: DrawGroupDetailDto = {
     guid: drawGroup.guid,
