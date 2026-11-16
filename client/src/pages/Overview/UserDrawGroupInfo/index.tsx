@@ -1,4 +1,4 @@
-import { Component, Match, Switch } from 'solid-js';
+import { Component, Match, Show, Switch } from 'solid-js';
 import { useLocalization } from '~/translation/useLocalization';
 import { UserSolidIcon } from '~/pages/shared/icons/UserSolidIcon';
 import { FormattedMessage } from '~/translation/FormattedMessage';
@@ -131,9 +131,11 @@ export const UserDrawGroupInfo: Component<UserDrawGroupInfoProps> = (props) => {
           />
         </div>
 
-        <span class="text-base font-normal text-gray-600">
-          <FormattedMessage message={messages.drawStartsIn} />
-        </span>
+        <Show when={!drawHasStarted() && !drawHasEnded()}>
+          <span class="text-base font-normal text-gray-600">
+            <FormattedMessage message={messages.drawStartsIn} />
+          </span>
+        </Show>
 
         <Countdown sourceDate={getNowUtc()} targetDate={new Date(drawGroup.drawStartUtc)} />
 
